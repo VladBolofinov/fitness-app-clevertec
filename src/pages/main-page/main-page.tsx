@@ -29,6 +29,7 @@ export const MainPage: React.FC = () => {
                 </p>
             </div>
             <p className='read-the-docs'>Click on the Vite and React logos to learn more</p>
+            <h1>HELLO WORLD!</h1>
         </>
     );
 };
