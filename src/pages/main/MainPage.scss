@@ -1,0 +1,36 @@
+.mainWrapper {
+    display: flex;
+    height: 1024px;
+    background-image: url('../../assets/background-img/MainPage_light.png');
+}
+.siderStyles {
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
+    background: var(--character-light-primary-inverse);
+}
+.headerStyles {
+    background: var(--primary-light-1);
+    height: 168px;
+    width: 1232px;
+    padding: 16px 24px;
+}
+.centerContentWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.menuWrapper {
+    height: 216px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-left: 16px;
+}
+.menuItem {
+    height: 42px;
+    display: flex;
+    align-items: center;
+    .menuItemName {
+        margin-left: 10px;
+    }
+}
