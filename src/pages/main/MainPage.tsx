@@ -1,12 +1,21 @@
+import 'antd/dist/antd.css';
 import './MainPage.scss';
 import '../../variables.css';
-import { Layout } from 'antd';
-import React from 'react';
-import Icon, {CalendarTwoTone} from '@ant-design/icons';
+
+import { Layout, Menu } from 'antd';
+import React, { useState } from 'react';
+
+import Icon, {CalendarTwoTone, HeartFilled, IdcardOutlined, TrophyFilled} from '@ant-design/icons';
 import type { CustomIconComponentProps } from '@ant-design/icons/lib/components/Icon';
+import {
+    MenuFoldOutlined,
+    MenuUnfoldOutlined,
+} from '@ant-design/icons';
+
 const { Header, Footer, Sider, Content } = Layout;
 
 export const MainPage: React.FC = () => {
+    const [collapsed, setCollapsed] = useState(false);
     const MainLogoSvg = () => (
         <svg width="133" height="34" viewBox="0 0 133 34" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M86.2627 16.1457H90.9234V19.1985H90.9924C91.1996 18.7215 91.5103 18.2445 91.9246 17.7993C92.3043 17.3541 92.7531 17.0043 93.271 16.6863C93.7543 16.3683 94.3067 16.1457 94.8936 15.9549C95.446 15.7959 96.0674 15.7323 96.6888 15.7005C96.9995 15.7005 97.3448 15.7641 97.7591 15.8595V20.0571C97.5174 20.0253 97.2412 19.9935 96.9305 19.9617C96.5853 19.9299 96.2745 19.8981 95.9984 19.8981C95.1007 19.8981 94.3412 20.0571 93.7198 20.3115C93.0984 20.5977 92.5805 20.9793 92.2008 21.4563C91.821 21.9333 91.5448 22.4739 91.4067 23.11C91.2341 23.746 91.165 24.4456 91.165 25.177V32.6606H86.2627V16.1457Z" fill="#10239E"/>
@@ -24,27 +33,58 @@ export const MainPage: React.FC = () => {
     const MainLogoIcon = (props: Partial<CustomIconComponentProps>) => (
         <Icon component={MainLogoSvg} {...props} />
     );
+
     return (
         <Layout className='mainWrapper'>
-            <Sider className='siderStyles' width={208}>
-                <MainLogoIcon style={{ margin: '44px 0 50px 29px' }}/>
-                <div className='menuWrapper'>
-                    <div className='menuItem'>
-                        <CalendarTwoTone twoToneColor='var(--primary-light-9)' />
-                        <span className='menuItemName'>Календарь</span>
-                    </div>
-                    <div className='menuItem'>Тренировки</div>
-                    <div className='menuItem'>Достижения</div>
-                    <div className='menuItem'>Профиль</div>
-                </div>
-                <div></div>
+            <Sider theme={"light"} width={208} trigger={null} collapsible collapsed={collapsed}>
+                <MainLogoIcon style={{ margin: '44px 0 67px 29px' }}/>
+                    <Menu
+                        theme="light"
+                        mode="inline"
+                        items={[
+                            {
+                                key: '1',
+                                icon: <CalendarTwoTone twoToneColor='var(--primary-light-9)' />,
+                                label: 'Календарь',
+                                style: {padding: '0 16px'}
+                            },
+                            {
+                                key: '2',
+                                icon: <HeartFilled style={{ color: 'var(--primary-light-9)' }} />,
+                                label: 'Тренировки',
+                                style: {padding: '0 16px'}
+                            },
+                            {
+                                key: '3',
+                                icon: <TrophyFilled style={{ color: 'var(--primary-light-9)' }}/>,
+                                label: 'Достижения',
+                                style: {padding: '0 16px'}
+                            },
+                            {
+                                key: '4',
+                                icon: <IdcardOutlined style={{ color: 'var(--primary-light-9)' }} />,
+                                label: 'Профиль',
+                                style: {padding: '0 16px'}
+                            },
+                            {
+                                key: '5',
+                                icon: <IdcardOutlined style={{ color: 'var(--primary-light-9)' }} />,
+                                label: 'Выход',
+                                style: { position: 'absolute', bottom: '0'}
+                            }
+                        ]}
+                    />
             </Sider>
             <Layout className='centerContentWrapper'>
-                <Header className='headerStyles'>Header</Header>
+                <Header>
+                    {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
+                        className: 'trigger',
+                        onClick: () => setCollapsed(!collapsed),
+                    })}
+                </Header>
                 <Content>Content</Content>
                 <Footer>Footer</Footer>
             </Layout>
         </Layout>
     );
 };
-
