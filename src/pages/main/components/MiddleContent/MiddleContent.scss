@@ -1,0 +1,89 @@
+.app-usage {
+    padding: 24px 50px 24px 24px;
+    width: 752px;
+    height: 216px;
+    box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.04);
+    background: var(--character-light-primary-inverse);
+    border-radius: 2px;
+    font-size: 16px;
+    line-height: 130%;
+    color: var(--primary-light-9);
+    margin: 24px 0 0 24px;
+}
+.app-descr {
+    margin: 24px 0 0 24px;
+    padding: 24px 70px 24px 24px;
+    border-radius: 2px;
+    width: 752px;
+    height: 126px;
+    box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.04);
+    background: var(--character-light-primary-inverse);
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 130%;
+    color: var(--character-light-title-85);
+}
+.app-usage-item-wrapper {
+    width: 752px;
+    height: 101px;
+    margin: 16px 0 0 24px;
+    display: flex;
+    justify-content: space-between;
+}
+.app-usage-item {
+    width: 240px;
+    height: 101px;
+    background: var(--character-light-primary-inverse);
+    border-radius: 2px;
+}
+.item-title {
+    height: 45px;
+    border-bottom: 1px solid;
+    border-bottom-color: var(--character-light-dividers);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.item-btn-wrapper {
+    display: flex;
+    height: 55px;
+    justify-content: center;
+    align-items: center;
+}
+.ant-btn-link {
+    color: var(--primary-light-6);;
+}
+.bottom-content-wrapper {
+    margin-top: 24px;
+    padding: 0px 24px;
+    height: 283px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    .ant-btn-link {
+        font-size: 16px;
+    }
+}
+.download-section {
+    border-radius: 2px;
+    width: 240px;
+    height: 127px;
+    box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.02);
+    background: var(--character-light-primary-inverse);
+}
+.download-link-descr {
+    height: 71px;
+    border-bottom: 1px solid;
+    border-bottom-color: var(--character-light-dividers);
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    .ant-btn-text {
+        color: var(--character-light-secondary-45);
+    }
+}
+.os-links {
+    height: 55px;
+    display: flex;
+    align-items: center;
+}
