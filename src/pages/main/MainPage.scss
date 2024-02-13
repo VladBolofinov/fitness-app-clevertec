@@ -23,7 +23,7 @@
     flex-direction: column;
     justify-content: space-between;
 }
-.btn-trigger {
+.btn-trigger, .btn-trigger-collapsed {
     border:none;
     background: none;
     padding: 0;
@@ -32,7 +32,7 @@
     cursor: pointer;
 }
 #menu-icon-exit {
-    margin-top: 835px;
+    margin-top: 665px;
     box-shadow: inset 0 1px 0 0 var(--character-light-dividers);
 }
 
@@ -47,7 +47,32 @@
     .collapsed-style-header {
         height: 132px;
     }
-    .btn-trigger {
+    .btn-trigger, .btn-trigger-collapsed {
         top: 565px;
+    }
+    #menu-icon-exit {
+        margin-top: 835px;
+    }
+}
+
+@media screen and (max-width: 360px) {
+    .ant-layout-sider {
+        position: absolute;
+    }
+    .btn-trigger {
+        top: 24px;
+        left: 0;
+        transition: all 0.2s;
+    }
+    .btn-trigger-collapsed {
+        top: 24px;
+        left: 106px;
+        transition: all 0.2s;
+    }
+    .ant-layout-header {
+        height: 166px;
+    }
+    #menu-icon-exit {
+        margin-top: 342px;
     }
 }

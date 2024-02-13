@@ -1,9 +1,11 @@
 import './HeaderContent.scss';
-import {Breadcrumb, Button, Typography} from "antd";
+import {Breadcrumb, Button, Grid, Typography} from "antd";
 import { SettingOutlined} from "@ant-design/icons";
 import React from "react";
 const { Title} = Typography;
+const { useBreakpoint } = Grid;
 export const HeaderContent = ({collapsed}) => {
+    const screens = useBreakpoint();
     return (
         //настрой потом breadcrumb под react-router
         <>
@@ -13,7 +15,8 @@ export const HeaderContent = ({collapsed}) => {
                 <Typography className='header-wrapper'>
                     <Title className='main-header-text' level={1}>Приветствуем тебя в CleverFit— приложении,
                         <br/>которое поможет тебе добиться своей мечты!</Title>
-                    <Button icon={(collapsed) ? false :<SettingOutlined />} type={"text"}>Настройки</Button>
+                    {(screens.xs) ? <Button shape={"circle"} icon={<SettingOutlined />}/> : <Button icon={(!screens.lg) ? false :<SettingOutlined />} type={"text"}>Настройки</Button> }
+
                 </Typography>
         </>
     );

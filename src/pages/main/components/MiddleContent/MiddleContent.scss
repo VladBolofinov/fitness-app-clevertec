@@ -134,3 +134,35 @@
         height: 489px;
     }
 }
+@media screen and (max-width: 360px) {
+    .app-usage, .app-usage.collapsed {
+        margin: 24px 0 0 16px;
+        padding: 16px;
+        width: 328px;
+        height: 368px;
+    }
+    .app-descr, .app-descr.collapsed {
+        width: 328px;
+        height: 188px;
+        margin: 24px 0 0 16px;
+    }
+    .app-usage-item-wrapper, .app-usage-item-wrapper.collapsed {
+        flex-direction: column;
+        width: 328px;
+        height: 319px;
+        margin: 16px 0 0 16px
+    }
+    .app-usage-item, .app-usage-item.collapsed {
+        width: 328px;
+        height: 101px;
+        .item-title {
+            height: 45px;
+        }
+    }
+    .bottom-content-wrapper, .bottom-content-wrapper.collapsed {
+        width: 360px;
+        height: 191px;
+        flex-direction: column-reverse;
+        align-items: center;
+    }
+}
