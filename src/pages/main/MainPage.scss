@@ -2,6 +2,7 @@
     max-width: 1440px;
     height: 1024px;
     background-image: url('../../assets/background-img/MainPage_light.png');
+    background-size: auto 100%;
 }
 .ant-menu-inline {
     border-right: none;
@@ -14,7 +15,6 @@
     height: 168px;
     padding: 16px 24px;
 }
-
 .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
     background-color: white;
 }
@@ -31,4 +31,23 @@
     top: 479px;
     cursor: pointer;
 }
+#menu-icon-exit {
+    margin-top: 835px;
+    box-shadow: inset 0 1px 0 0 var(--character-light-dividers);
+}
 
+@media screen and (max-width: 834px) {
+    .ant-layout {
+        background-position: center;
+        height: 1194px;
+    }
+    .ant-layout-header {
+        height: 194px;
+    }
+    .collapsed-style-header {
+        height: 132px;
+    }
+    .btn-trigger {
+        top: 565px;
+    }
+}

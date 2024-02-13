@@ -12,7 +12,7 @@
 }
 .app-descr {
     margin: 24px 0 0 24px;
-    padding: 24px 70px 24px 24px;
+    padding: 24px;
     border-radius: 2px;
     width: 752px;
     height: 126px;
@@ -86,4 +86,51 @@
     height: 55px;
     display: flex;
     align-items: center;
+}
+
+@media screen and (max-width: 834px) {
+    .app-usage {
+        width: 578px;
+        height: 258px;
+        padding: 24px;
+    }
+    .app-usage.collapsed {
+        width: 722px;
+        height: 216px;
+    }
+    .app-descr {
+        width: 578px;
+    }
+    .app-descr.collapsed {
+        width: 722px;
+    }
+    .app-usage-item-wrapper {
+        width: 578px;
+        height: 122px;
+    }
+    .app-usage-item-wrapper.collapsed {
+        width: 722px;
+        height: 101px;
+    }
+    .app-usage-item {
+        width: 182px;
+        height: 122px;
+        .item-title {
+            height: 66px;
+            padding: 0 25px;
+        }
+    }
+    .app-usage-item.collapsed {
+        width: 230px;
+        height: 101px;
+        .item-title {
+            height: 45px;
+        }
+    }
+    .bottom-content-wrapper {
+        height: 364px;
+    }
+    .bottom-content-wrapper.collapsed {
+        height: 489px;
+    }
 }

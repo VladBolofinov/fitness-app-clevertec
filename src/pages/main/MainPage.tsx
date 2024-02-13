@@ -83,7 +83,7 @@ export const MainPage: React.FC = () => {
             <Sider theme={"light"} width={208} trigger={null} collapsible collapsed={collapsed}>
                 {(collapsed)
                     ? <MainLogoIconSm style={{ margin: '49px 0 50px 0px', display: 'flex', justifyContent: 'center' }}/>
-                    : <MainLogoIconLg style={{ margin: '44px 0 67px 29px' }}/>}
+                    : <MainLogoIconLg style={{ margin: '44px 0 50px 29px' }}/>}
                     <Menu
                         theme="light"
                         mode="inline"
@@ -116,20 +116,21 @@ export const MainPage: React.FC = () => {
                                 key: '5',
                                 icon: <RollbackIcon />,
                                 label: 'Выход',
-                                style: {marginTop: '650px', boxShadow: 'inset 0 1px 0 0 var(--character-light-dividers)', padding: '0 16px' }
+                                id: 'menu-icon-exit',
+                                style: {padding: '0 16px' }
                             }
                         ]}
                     />
             </Sider>
             <Layout className='centerContentWrapper'>
-                <Header>
-                    <HeaderContent/>
+                <Header className={(collapsed) ? 'collapsed-style-header' : ''}>
+                    <HeaderContent collapsed={collapsed}/>
                 </Header>
                 <Content>
                     <button className='btn-trigger' onClick={() => setCollapsed(!collapsed)}>
                         {(collapsed) ? <BtnIconNotCollapsedLg/> : <BtnIconCollapsedLg/>}
                     </button>
-                    <MiddleContent/>
+                    <MiddleContent collapsed={collapsed}/>
                 </Content>
             </Layout>
         </Layout>
