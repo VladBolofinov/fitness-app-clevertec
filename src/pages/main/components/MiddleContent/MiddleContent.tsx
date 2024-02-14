@@ -1,13 +1,15 @@
 import './MiddleContent.scss';
 import {Button} from 'antd';
-import Icon, {
+import {
     AndroidFilled, AppleFilled,
     CalendarOutlined,
     HeartFilled,
     IdcardOutlined,
 } from '@ant-design/icons';
-import React from "react";
-export const MiddleContent = ({collapsed}) => {
+interface IMiddleContentProps {
+    collapsed: boolean;
+}
+export const MiddleContent = ({collapsed}:IMiddleContentProps) => {
     return (
         <>
             <div className={(collapsed) ? 'app-usage collapsed' : 'app-usage'}>

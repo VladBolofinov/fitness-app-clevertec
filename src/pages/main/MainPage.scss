@@ -56,17 +56,20 @@
 }
 
 @media screen and (max-width: 360px) {
+    .ant-layout {
+        height: 1355px;
+    }
     .ant-layout-sider {
         position: absolute;
     }
     .btn-trigger {
         top: 24px;
-        left: 0;
+        left: 105px;
         transition: all 0.2s;
     }
     .btn-trigger-collapsed {
         top: 24px;
-        left: 106px;
+        left: 0;
         transition: all 0.2s;
     }
     .ant-layout-header {

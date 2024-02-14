@@ -19,7 +19,6 @@ const { Header, Sider, Content } = Layout;
 export const MainPage: React.FC = () => {
     const [collapsed, setCollapsed] = useState(false);
     const screens = useBreakpoint();
-    console.log(screens);
     const MainLogoSvgLg = () => (
         <svg width="133" height="34" viewBox="0 0 133 34" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M86.2627 16.1457H90.9234V19.1985H90.9924C91.1996 18.7215 91.5103 18.2445 91.9246 17.7993C92.3043 17.3541 92.7531 17.0043 93.271 16.6863C93.7543 16.3683 94.3067 16.1457 94.8936 15.9549C95.446 15.7959 96.0674 15.7323 96.6888 15.7005C96.9995 15.7005 97.3448 15.7641 97.7591 15.8595V20.0571C97.5174 20.0253 97.2412 19.9935 96.9305 19.9617C96.5853 19.9299 96.2745 19.8981 95.9984 19.8981C95.1007 19.8981 94.3412 20.0571 93.7198 20.3115C93.0984 20.5977 92.5805 20.9793 92.2008 21.4563C91.821 21.9333 91.5448 22.4739 91.4067 23.11C91.2341 23.746 91.165 24.4456 91.165 25.177V32.6606H86.2627V16.1457Z" fill="#10239E"/>
@@ -86,8 +85,6 @@ export const MainPage: React.FC = () => {
             </svg>
         </svg>
     );
-
-
     const BtnSvgCollapsedSm = () => (
         <svg width="32" height="48" viewBox="0 0 32 48" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M0 0L32 5.81818V42.1818L0 48V0Z" fill="white" />
@@ -96,10 +93,6 @@ export const MainPage: React.FC = () => {
             </svg>
         </svg>
     );
-
-
-
-
     const MainLogoIconLg = (props: Partial<CustomIconComponentProps>) => (
         <Icon component={MainLogoSvgLg} {...props} />
     );
@@ -213,27 +206,27 @@ export const MainPage: React.FC = () => {
             }
             <Layout className='centerContentWrapper'>
                 <Header className={(collapsed) ? 'collapsed-style-header' : ''}>
-                    <HeaderContent collapsed={collapsed}/>
+                    <HeaderContent/>
                 </Header>
-                <Content>
-                    {/*возможно исправь на relative position если тесты не пройдёт*/}
-                        {(screens.xs)
-                            ?
-                            <button className={(!collapsed) ? 'btn-trigger-collapsed' : 'btn-trigger'}
-                                    data-test-id='sider-switch'
-                                    onClick={() => setCollapsed(!collapsed)}>
-                                (collapsed) ? <BtnIconNotCollapsedSm/> : <BtnIconCollapsedSm/>
-                            </button>
-
-                            :
-                            <button className={(!collapsed) ? 'btn-trigger-collapsed' : 'btn-trigger'}
-                                    data-test-id='sider-switch-mobile'
-                                    onClick={() => setCollapsed(!collapsed)}>
-                                (collapsed) ? <BtnIconNotCollapsedLg/> : <BtnIconCollapsedLg/>
-                            </button>
-                            }
-
-                    <MiddleContent collapsed={collapsed}/>
+                <Content >
+                    {screens.xs ? (
+                        <button
+                            data-test-id = 'sider-switch-mobile'
+                            className={collapsed ? 'btn-trigger-collapsed' : 'btn-trigger'}
+                            onClick={() => setCollapsed(!collapsed)}
+                        >
+                            {collapsed ? <BtnIconNotCollapsedSm /> : <BtnIconCollapsedSm />}
+                        </button>
+                    ) : (
+                        <button
+                            data-test-id = 'sider-switch'
+                            className={collapsed ? 'btn-trigger-collapsed' : 'btn-trigger'}
+                            onClick={() => setCollapsed(!collapsed)}
+                        >
+                            {collapsed ? <BtnIconNotCollapsedLg /> : <BtnIconCollapsedLg />}
+                        </button>
+                    )}
+                    <MiddleContent collapsed={collapsed} />
                 </Content>
             </Layout>
         </Layout>
