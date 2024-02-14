@@ -1,0 +1,81 @@
+.ant-layout {
+    max-width: 1440px;
+    height: 1024px;
+    background-image: url('../../assets/background-img/MainPage_light.png');
+    background-size: auto 100%;
+}
+.ant-menu-inline {
+    border-right: none;
+}
+.ant-menu-vertical {
+    border-right: none;
+}
+.ant-layout-header {
+    background: var(--primary-light-1);
+    height: 168px;
+    padding: 16px 24px;
+}
+.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
+    background-color: white;
+}
+.centerContentWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.btn-trigger, .btn-trigger-collapsed {
+    border:none;
+    background: none;
+    padding: 0;
+    position: absolute;
+    top: 479px;
+    cursor: pointer;
+}
+#menu-icon-exit {
+    margin-top: 665px;
+    box-shadow: inset 0 1px 0 0 var(--character-light-dividers);
+}
+
+@media screen and (max-width: 834px) {
+    .ant-layout {
+        background-position: center;
+        height: 1194px;
+    }
+    .ant-layout-header {
+        height: 194px;
+    }
+    .collapsed-style-header {
+        height: 132px;
+    }
+    .btn-trigger, .btn-trigger-collapsed {
+        top: 565px;
+    }
+    #menu-icon-exit {
+        margin-top: 835px;
+    }
+}
+
+@media screen and (max-width: 360px) {
+    .ant-layout {
+        height: 1355px;
+    }
+    .ant-layout-sider {
+        position: absolute;
+    }
+    .btn-trigger {
+        top: 24px;
+        left: 105px;
+        transition: all 0.2s;
+    }
+    .btn-trigger-collapsed {
+        top: 24px;
+        left: 0;
+        transition: all 0.2s;
+    }
+    .ant-layout-header {
+        height: 166px;
+    }
+    #menu-icon-exit {
+        margin-top: 342px;
+    }
+}
