@@ -1,3 +1,3 @@
 export interface IMainPageComponentsProps {
-    collapsed: boolean;
+    collapsed?: boolean;
 }
