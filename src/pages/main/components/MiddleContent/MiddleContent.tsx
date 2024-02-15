@@ -1,15 +1,7 @@
 import './MiddleContent.scss';
-import {Button} from 'antd';
-import {
-    AndroidFilled, AppleFilled,
-    CalendarOutlined,
-    HeartFilled,
-    IdcardOutlined,
-} from '@ant-design/icons';
-interface IMiddleContentProps {
-    collapsed: boolean;
-}
-export const MiddleContent = ({collapsed}:IMiddleContentProps) => {
+import { IMainPageComponentsProps } from "@pages/main/components/types/IMainPageComponentsProps";
+import React from "react";
+export const MiddleContent:React.FC<IMainPageComponentsProps> = ({collapsed}:IMainPageComponentsProps) => {
     return (
         <>
             <div className={(collapsed) ? 'app-usage collapsed' : 'app-usage'}>
@@ -21,39 +13,6 @@ export const MiddleContent = ({collapsed}:IMiddleContentProps) => {
             </div>
             <div className={(collapsed) ? 'app-descr collapsed' : 'app-descr'}>
                 CleverFit — это не просто приложение, а твой личный помощник в мире фитнеса. Не откладывай на завтра — начни тренироваться уже сегодня!
-            </div>
-            <div className={(collapsed) ? 'app-usage-item-wrapper collapsed' : 'app-usage-item-wrapper'}>
-                <div className={(collapsed) ? 'app-usage-item collapsed' : 'app-usage-item'}>
-                    <div className='item-title'>Расписать тренировки</div>
-                    <div className="item-btn-wrapper">
-                        <Button icon={<HeartFilled />} type={"link"}>Настройки</Button>
-                    </div>
-                </div>
-                <div className={(collapsed) ? 'app-usage-item collapsed' : 'app-usage-item'}>
-                    <div className='item-title'>Назначить календарь</div>
-                    <div className="item-btn-wrapper">
-                        <Button icon={<CalendarOutlined />} type={"link"}>Календарь</Button>
-                    </div>
-                </div>
-                <div className={(collapsed) ? 'app-usage-item collapsed' : 'app-usage-item'}>
-                    <div className='item-title'>Заполнить профиль</div>
-                    <div className="item-btn-wrapper">
-                        <Button icon={<IdcardOutlined />} type={"link"}>Профиль</Button>
-                    </div>
-                </div>
-            </div>
-            <div className={(collapsed) ? 'bottom-content-wrapper collapsed' : 'bottom-content-wrapper'}>
-                <Button type={"link"}>Смотреть отзывы</Button>
-                <div className="download-section">
-                    <div className="download-link-descr">
-                        <Button type={"link"}>Скачать на телефон</Button>
-                        <Button type={"text"}>Доступно в PRO-тарифе</Button>
-                    </div>
-                    <div className="os-links">
-                        <Button icon={<AndroidFilled />} type={"text"}>Android OS</Button>
-                        <Button icon={<AppleFilled />} type={"text"}>Apple OS</Button>
-                    </div>
-                </div>
             </div>
         </>
     );

@@ -31,10 +31,6 @@
     top: 479px;
     cursor: pointer;
 }
-#menu-icon-exit {
-    margin-top: 665px;
-    box-shadow: inset 0 1px 0 0 var(--character-light-dividers);
-}
 
 @media screen and (max-width: 834px) {
     .ant-layout {
@@ -49,9 +45,6 @@
     }
     .btn-trigger, .btn-trigger-collapsed {
         top: 565px;
-    }
-    #menu-icon-exit {
-        margin-top: 835px;
     }
 }
 
@@ -74,8 +67,5 @@
     }
     .ant-layout-header {
         height: 166px;
-    }
-    #menu-icon-exit {
-        margin-top: 342px;
     }
 }

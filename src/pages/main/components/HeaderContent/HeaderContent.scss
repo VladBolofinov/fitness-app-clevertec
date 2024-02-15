@@ -5,18 +5,16 @@
 .ant-typography .main-header-text {
     font-weight: 700;
     line-height: 130%;
-    margin-top: 0px;
+    margin-top: 0;
 }
-
 @media screen and (max-width: 834px) {
     .ant-typography .main-header-text {
         font-weight: 500;
         font-size: 24px;
     }
 }
-@media screen and (max-width: 834px) {
+@media screen and (max-width: 360px) {
     .ant-typography .main-header-text {
-        font-weight: 500;
         font-size: 20px;
     }
 }

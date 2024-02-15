@@ -3,13 +3,11 @@ html, body {
     margin: 0 auto;
     font-family: var(--font-family);
 }
-
 @media screen and (max-width: 834px) {
     html, body {
         width: 834px;
     }
 }
-
 @media screen and (max-width: 360px) {
     html, body {
         width: 360px;
