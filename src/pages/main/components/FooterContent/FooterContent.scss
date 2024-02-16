@@ -94,7 +94,7 @@
         height: 489px;
     }
 }
-@media screen and (max-width: 360px) {
+@media screen and (min-width: 300px) and (max-width: 834px) {
     .app-usage-item-wrapper, .app-usage-item-wrapper.collapsed {
         flex-direction: column;
         width: 328px;

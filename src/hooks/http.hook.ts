@@ -1,6 +1,7 @@
 import axios from "axios";
+import {history} from "@redux/configure-store";
 export const useHttp = () => {
-    const getToken = async (email  = 'vlad.bolofinov@gmail.com', password= 'Qwerty123') => {
+    const getToken = async (email, password) => {
         try {
             const response = await axios({
                 method: 'post',
@@ -11,9 +12,12 @@ export const useHttp = () => {
                 }
             })
             console.log(response);
+            if (response.status === 200) {
+                history.push('/main');
+            }
             return response.data.accessToken;
         } catch (e) {
-            //console.log(e.response);
+            console.log(e.response);
             return e.response.status;
         }
     }

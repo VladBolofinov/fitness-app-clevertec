@@ -11,8 +11,6 @@ import {HeaderContent} from "@pages/main/components/HeaderContent/HeaderContent"
 import {MiddleContent} from "@pages/main/components/MiddleContent/MiddleContent";
 import {FooterContent} from "@pages/main/components/FooterContent/FooterContent";
 import {SiderContent} from "@pages/main/components/SiderContent/SiderContent";
-import {useAppDispatch, useAppSelector} from "@hooks/typed-react-redux-hooks";
-import {fetchToken} from "@redux/reducers/apiRequestSlice";
 
 
 const { useBreakpoint } = Grid;
@@ -21,11 +19,7 @@ const { Header, Content } = Layout;
 export const MainPage: React.FC = () => {
     const [collapsed, setCollapsed] = useState(false);
     const screens = useBreakpoint();
-    const {jwt} = useAppSelector(state => state.apiRequestSlice);
-    const dispatch = useAppDispatch();
-    useEffect(() => {
-        dispatch(fetchToken({email:"vlad.bolofinov@gmail.com",password:"Qwerty123"}));
-    },[])
+
     return (
         <Layout className='mainWrapper'>
             <SiderContent collapsed={collapsed}/>
@@ -34,7 +28,6 @@ export const MainPage: React.FC = () => {
                     <HeaderContent/>
                 </Header>
                 <Content >
-                    {jwt}
                     <button
                         data-test-id={screens.xs ? 'sider-switch-mobile' : 'sider-switch'}
                         className={collapsed ? 'btn-trigger-collapsed' : 'btn-trigger'}

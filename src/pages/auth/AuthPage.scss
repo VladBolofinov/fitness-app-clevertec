@@ -1,0 +1,16 @@
+.auth-wrapper {
+    width: 1440px;
+    height: 1024px;
+    background-image: url('../../assets/background-img/Auth-page-light-blur.png');
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.entry-form {
+    border-radius: 2px;
+    width: 539px;
+    height: 742px;
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
+    background: var(--character-light-primary-inverse);
+}

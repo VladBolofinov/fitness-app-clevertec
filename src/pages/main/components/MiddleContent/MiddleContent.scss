@@ -23,8 +23,7 @@
     line-height: 130%;
     color: var(--character-light-title-85);
 }
-
-@media screen and (max-width: 834px) {
+@media screen and (min-width: 834px) and (max-width: 1024px) {
     .app-usage {
         width: 578px;
         height: 258px;
@@ -41,7 +40,7 @@
         width: 722px;
     }
 }
-@media screen and (max-width: 360px) {
+@media screen and (min-width: 300px) and (max-width: 834px) {
     .app-usage, .app-usage.collapsed {
         margin: 24px 0 0 16px;
         padding: 16px;

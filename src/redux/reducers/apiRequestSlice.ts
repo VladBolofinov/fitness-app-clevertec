@@ -6,6 +6,8 @@ const initialState: IApiRequest = {
     jwt: '',
     error: '',
     isLoadingToken: false,
+    inputLoginValue: '',
+    inputPasswordValue: ''
 }
 
 export const fetchToken = createAsyncThunk(
@@ -19,7 +21,14 @@ export const fetchToken = createAsyncThunk(
 export const apiRequestSlice = createSlice({
     name: 'apiRequestSlice',
     initialState,
-    reducers: {},
+    reducers: {
+        setInputLoginValue(state, action: PayloadAction<string>) {
+            state.inputLoginValue = action.payload;
+        },
+        setInputPasswordValue(state, action: PayloadAction<string>) {
+            state.inputPasswordValue = action.payload;
+        },
+    },
     extraReducers:
         (builder) => {
             builder.addCase(fetchToken.pending, (state) => {state.isLoadingToken = true;})
@@ -27,6 +36,7 @@ export const apiRequestSlice = createSlice({
                     state.isLoadingToken = false;
                     state.error = '';
                     state.jwt = action.payload;
+                    localStorage.setItem('jwtToken', action.payload);
                 })
                 .addCase(fetchToken.rejected, (state) => {
                     state.isLoadingToken = false;
