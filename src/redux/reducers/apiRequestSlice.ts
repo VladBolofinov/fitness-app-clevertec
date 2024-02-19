@@ -7,14 +7,15 @@ const initialState: IApiRequest = {
     error: '',
     isLoadingToken: false,
     inputLoginValue: '',
-    inputPasswordValue: ''
+    inputPasswordValue: '',
+    inputRememberUser: false
 }
 
 export const fetchToken = createAsyncThunk(
     'apiRequest/fetchToken',
-    ({email, password}:{email:string, password: string}) => {
+    ({email, password, rememberUser}:{email:string, password: string, rememberUser: boolean}) => {
         const {getToken} = useHttp();
-        return getToken(email, password);
+        return getToken(email, password, rememberUser);
     }
 )
 
@@ -28,15 +29,26 @@ export const apiRequestSlice = createSlice({
         setInputPasswordValue(state, action: PayloadAction<string>) {
             state.inputPasswordValue = action.payload;
         },
+        setInputRememberUser(state) {
+            state.inputRememberUser = !state.inputRememberUser;
+        }
     },
     extraReducers:
         (builder) => {
             builder.addCase(fetchToken.pending, (state) => {state.isLoadingToken = true;})
                 .addCase(fetchToken.fulfilled, (state,action:PayloadAction<string>) => {
+                    //типизируй экшен нормально
                     state.isLoadingToken = false;
                     state.error = '';
-                    state.jwt = action.payload;
-                    localStorage.setItem('jwtToken', action.payload);
+                    const {token, inputCheck} = action.payload;
+                    if (token) {
+                        state.jwt = token;
+                        if (inputCheck) {
+                            localStorage.setItem('jwtToken', token);
+                        } else {
+                            sessionStorage.setItem('jwtToken', token);
+                        }
+                    }
                 })
                 .addCase(fetchToken.rejected, (state) => {
                     state.isLoadingToken = false;

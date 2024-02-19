@@ -10,6 +10,7 @@ import {IMainPageComponentsProps} from "@pages/main/components/types/IMainPageCo
 import React from "react";
 const { Sider } = Layout;
 const { useBreakpoint } = Grid;
+import {history} from "@redux/configure-store";
 
 export const SiderContent: React.FC<IMainPageComponentsProps> = ({collapsed}) => {
     const screens = useBreakpoint();
@@ -33,6 +34,12 @@ export const SiderContent: React.FC<IMainPageComponentsProps> = ({collapsed}) =>
                     theme="light"
                     mode="inline"
                     items={[...menuItems]}
+                    onClick={(item) => {
+                        if (item.key === '5') {
+                            sessionStorage.clear();
+                            localStorage.clear();
+                            history.push('/auth');
+                    }}}
                 />
             </Sider>}
         </>

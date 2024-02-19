@@ -1,7 +1,7 @@
 import axios from "axios";
 import {history} from "@redux/configure-store";
 export const useHttp = () => {
-    const getToken = async (email, password) => {
+    const getToken = async (email, password, rememberUser) => {
         try {
             const response = await axios({
                 method: 'post',
@@ -15,9 +15,9 @@ export const useHttp = () => {
             if (response.status === 200) {
                 history.push('/main');
             }
-            return response.data.accessToken;
+            return {token: response.data.accessToken, inputCheck: rememberUser};
         } catch (e) {
-            console.log(e.response);
+            console.log(e.response.data);
             return e.response.status;
         }
     }

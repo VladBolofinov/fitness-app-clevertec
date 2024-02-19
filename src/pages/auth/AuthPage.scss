@@ -7,10 +7,53 @@
     justify-content: center;
     align-items: center;
 }
-.entry-form {
+.wrapper-entry-form {
+    font-family: var(--font-family);
     border-radius: 2px;
     width: 539px;
     height: 742px;
     box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
     background: var(--character-light-primary-inverse);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 64px;
+}
+.entry-form {
+    width: 368px;
+    height: 380px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 48px;
+}
+.ant-tabs-tab, .ant-tabs-tab-active {
+    display: flex;
+    width: 184px;
+    justify-content: center;
+}
+.ant-tabs-nav-list {
+    width: 386px;
+}
+.ant-tabs-top > .ant-tabs-nav {
+    margin-bottom: 32px;
+}
+.ant-form-item-control {
+    margin-bottom: 16px;
+}
+.checkbox-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 24px;
+}
+.ant-tabs-content {
+    width: 368px;
+}
+.ant-tabs-content-holder {
+    display: flex;
+    justify-content: center;
+}
+.ant-btn {
+    height: 40px;
 }

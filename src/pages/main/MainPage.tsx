@@ -11,7 +11,7 @@ import {HeaderContent} from "@pages/main/components/HeaderContent/HeaderContent"
 import {MiddleContent} from "@pages/main/components/MiddleContent/MiddleContent";
 import {FooterContent} from "@pages/main/components/FooterContent/FooterContent";
 import {SiderContent} from "@pages/main/components/SiderContent/SiderContent";
-
+import {history} from "@redux/configure-store";
 
 const { useBreakpoint } = Grid;
 const { Header, Content } = Layout;
@@ -19,6 +19,14 @@ const { Header, Content } = Layout;
 export const MainPage: React.FC = () => {
     const [collapsed, setCollapsed] = useState(false);
     const screens = useBreakpoint();
+
+    useEffect(() => {
+        const hasTokenLocalSt: string | null = localStorage.getItem('jwtToken');
+        const hasTokenSessionSt: string | null = sessionStorage.getItem('jwtToken');
+        if (!hasTokenSessionSt && !hasTokenLocalSt) {
+            history.push('/auth');
+        }
+    }, []);
 
     return (
         <Layout className='mainWrapper'>
@@ -46,4 +54,3 @@ export const MainPage: React.FC = () => {
         </Layout>
     );
 };
-
