@@ -8,6 +8,7 @@ const initialState: IApiRequest = {
     isLoadingToken: false,
     inputLoginValue: '',
     inputPasswordValue: '',
+    inputPassDuplicate: '',
     inputRememberUser: true
 }
 
@@ -31,6 +32,9 @@ export const apiRequestSlice = createSlice({
         },
         setInputRememberUser(state) {
             state.inputRememberUser = !state.inputRememberUser;
+        },
+        setPasswordDuplicateValue(state, action: PayloadAction<string>) {
+            state.inputPassDuplicate = action.payload;
         }
     },
     extraReducers:

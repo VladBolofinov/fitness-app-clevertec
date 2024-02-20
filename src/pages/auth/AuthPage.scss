@@ -39,11 +39,15 @@
 .ant-form-item-explain-error {
     font-size: 12px;
 }
+.ant-input-group-wrapper-status-error .ant-input-group-addon {
+    color: var(--character-light-title-85);
+}
 .checkbox-wrapper {
     display: flex;
     align-items: center;
     justify-content: space-between;
     height: 24px;
+    margin-top: 24px;
 }
 .ant-tabs-content {
     width: 368px;
@@ -54,4 +58,7 @@
 }
 .ant-btn {
     height: 40px;
+}
+.ant-form-item-explain {
+    font-size: 12px;
 }

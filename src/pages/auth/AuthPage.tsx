@@ -8,18 +8,20 @@ import {Tabs, Input, Checkbox, Button, Form} from "antd";
 import {
     EyeInvisibleOutlined,
     EyeTwoTone,
-    GooglePlusOutlined, LockOutlined,
-    UserOutlined
+    GooglePlusOutlined,
 } from "@ant-design/icons";
 
 export const AuthPage: React.FC = () => {
+    const [form] = Form.useForm();
 
     const dispatch = useAppDispatch();
-    const { setInputPasswordValue, setInputLoginValue, setInputRememberUser} = apiRequestSlice.actions;
+    const { setInputPasswordValue, setInputLoginValue, setInputRememberUser, setPasswordDuplicateValue} = apiRequestSlice.actions;
     const {inputLoginValue, inputPasswordValue, inputRememberUser} = useAppSelector(state => state.apiRequestSlice);
-        const onFinish = (values: any) => {
-            console.log('Received values of form: ', values);
-        };
+    const sendAuthData = () => {
+        const value = form.getFieldsValue();
+        const {login, password, remember} = value;
+        dispatch(fetchToken({email:login, password:password, rememberUser: remember}));
+    }
     return (
         <div className='auth-wrapper'>
             <div className="wrapper-entry-form">
@@ -27,21 +29,19 @@ export const AuthPage: React.FC = () => {
                 <div className="entry-form">
                     <Tabs
                         defaultActiveKey="1"
-                        //onChange={onChange}
                         items={[
                             {
                                 label: `Вход`,
                                 key: '1',
                                 children: <>
                                     <Form
-                                        name="normal_login"
-                                        className="login-form"
+                                        form={form}
+                                        name="enter-account"
                                         initialValues={{ remember: true }}
-                                        onFinish={onFinish}
                                     >
                                         <Form.Item
-                                            name="username"
-                                            rules={[{ required: true, message: '' }]}
+                                            name="login"
+                                            rules={[{ required: true, type: "email", message: '' }]}
                                         >
                                             <Input
                                                 addonBefore="e-mail:"
@@ -50,7 +50,7 @@ export const AuthPage: React.FC = () => {
                                         </Form.Item>
                                         <Form.Item
                                             name="password"
-                                            rules={[{ required: true, message: 'Please input your Password!' }]}
+                                            rules={[{ required: true, message: '' }, { pattern: /^(?=.*[A-Z])(?=.*\d).{8,}$/, message: ''}]}
                                         >
                                             <Input.Password
                                                 placeholder="Пароль"
@@ -61,20 +61,24 @@ export const AuthPage: React.FC = () => {
                                         <Form.Item>
                                             <div className='checkbox-wrapper'>
                                             <Form.Item name="remember" valuePropName="checked" noStyle>
-                                                <Checkbox onChange={(e) => dispatch(setInputRememberUser())}>Запомнить меня</Checkbox>
+                                                <Checkbox onChange={() => dispatch(setInputRememberUser())}>Запомнить меня</Checkbox>
                                             </Form.Item>
                                             <Button type="link">Забыли пароль?</Button>
                                             </div>
                                         </Form.Item>
-                                        <Form.Item>
-                                            <div className="btn-wrapper">
+                                        <Form.Item shouldUpdate>
+                                            {() => (<>
                                                 <Button type="primary"
                                                         block
                                                         htmlType={"submit"}
+                                                        disabled={Boolean(form.getFieldsError().filter(({ errors }) => errors.length).length)
+                                                            || !(form.isFieldTouched('login') && form.isFieldTouched('password'))}
                                                         style={{marginTop: '0px'}}
-                                                        onClick={() => dispatch(fetchToken({email:inputLoginValue, password:inputPasswordValue, rememberUser: inputRememberUser}))}>Войти</Button>
-                                                <Button block htmlType={"submit"} style={{marginTop: '16px'}} icon={<GooglePlusOutlined />} onClick={()=>history.push('/result/error')}>Войти через Google</Button>
-                                            </div>
+                                                        onClick={sendAuthData}>Войти</Button>
+                                                <Button block htmlType={"submit"} style={{marginTop: '16px'}} icon={<GooglePlusOutlined />}
+                                                onClick={()=>history.push('/result/error')}>Войти через Google</Button>
+                                                </>
+                                            )}
                                         </Form.Item>
                                     </Form>
                                 </>
@@ -84,14 +88,12 @@ export const AuthPage: React.FC = () => {
                                 key: '2',
                                 children: <>
                                     <Form
-                                        name="normal_login"
-                                        className="login-form"
+                                        name="registration"
                                         initialValues={{ remember: true }}
-                                        onFinish={onFinish}
                                     >
                                         <Form.Item
-                                            name="username"
-                                            rules={[{ required: true, message: '' }]}
+                                            name="login"
+                                            rules={[{ required: true, type: "email", message: '' }]}
                                         >
                                             <Input
                                                 addonBefore="e-mail:"
@@ -100,7 +102,9 @@ export const AuthPage: React.FC = () => {
                                         </Form.Item>
                                         <Form.Item
                                             name="password"
-                                            rules={[{ required: true, message: 'Please input your Password!' }]}
+                                            help='Пароль не менее 8 латинских букв с заглавной и цифрой'
+                                            rules={[{ required: true }, { pattern: /^(?=.*[A-Z])(?=.*\d).{8,}$/,
+                                                message: 'Пароль не менее 8 латинских букв с заглавной и цифрой'}]}
                                         >
                                             <Input.Password
                                                 placeholder="Пароль"
@@ -110,22 +114,39 @@ export const AuthPage: React.FC = () => {
                                             />
                                         </Form.Item>
                                         <Form.Item
-                                            name="password"
-                                            rules={[{ required: true, message: 'Please input your Password!' }]}
+                                            name="password-compare"
+                                            dependencies={['password']}
+                                            rules={[{required: true, message: ''},
+                                                ({ getFieldValue }) => ({
+                                                    validator(_, value) {
+                                                        if (!value || getFieldValue('password') === value) {
+                                                            return Promise.resolve();
+                                                        }
+                                                        return Promise.reject(new Error('Пароли не совпадают'));
+                                                    },
+                                                }),
+                                            ]}
                                         >
                                             <Input.Password
                                                 placeholder="Повторите пароль"
-                                                style={{marginTop: '22px'}}
+                                                style={{marginTop: '16px'}}
                                                 iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
-                                                onChange={(e) => dispatch(setInputPasswordValue(e.target.value))}
+                                                onChange={(e) => dispatch(setPasswordDuplicateValue(e.target.value))}
                                             />
                                         </Form.Item>
                                         <Form.Item>
-                                            <Button type="primary"
+                                                <Button
+                                                    type="primary"
                                                     block
-                                                    htmlType={"submit"}
+                                                    htmlType="submit"
                                                     style={{marginTop: '32px'}}
-                                                    onClick={() => dispatch(fetchToken({email:inputLoginValue, password:inputPasswordValue, rememberUser: inputRememberUser}))}>Войти</Button>
+                                                    onClick={() => dispatch(fetchToken({email:inputLoginValue, password:inputPasswordValue, rememberUser: inputRememberUser}))}
+                                                    disabled={
+                                                        true
+                                                    }
+                                                >
+                                                    Войти
+                                                </Button>
                                             <Button block htmlType={"submit"} style={{marginTop: '16px'}} icon={<GooglePlusOutlined />} onClick={()=>history.push('/result/error')}>Войти через Google</Button>
                                         </Form.Item>
                                     </Form>
