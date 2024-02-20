@@ -8,7 +8,7 @@ const initialState: IApiRequest = {
     isLoadingToken: false,
     inputLoginValue: '',
     inputPasswordValue: '',
-    inputRememberUser: false
+    inputRememberUser: true
 }
 
 export const fetchToken = createAsyncThunk(

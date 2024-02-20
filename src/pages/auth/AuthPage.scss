@@ -27,6 +27,7 @@
     flex-direction: column;
     margin-top: 48px;
 }
+
 .ant-tabs-tab, .ant-tabs-tab-active {
     display: flex;
     width: 184px;
@@ -35,11 +36,8 @@
 .ant-tabs-nav-list {
     width: 386px;
 }
-.ant-tabs-top > .ant-tabs-nav {
-    margin-bottom: 32px;
-}
-.ant-form-item-control {
-    margin-bottom: 16px;
+.ant-form-item-explain-error {
+    font-size: 12px;
 }
 .checkbox-wrapper {
     display: flex;

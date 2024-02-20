@@ -41,10 +41,11 @@ export const AuthPage: React.FC = () => {
                                     >
                                         <Form.Item
                                             name="username"
-                                            rules={[{ required: true, message: 'Please input your Username!' }]}
+                                            rules={[{ required: true, message: '' }]}
                                         >
                                             <Input
                                                 addonBefore="e-mail:"
+                                                style={{marginBottom: '8px'}}
                                                 onChange={(e) => dispatch(setInputLoginValue(e.target.value))}/>
                                         </Form.Item>
                                         <Form.Item
@@ -90,10 +91,11 @@ export const AuthPage: React.FC = () => {
                                     >
                                         <Form.Item
                                             name="username"
-                                            rules={[{ required: true, message: 'Please input your Username!' }]}
+                                            rules={[{ required: true, message: '' }]}
                                         >
                                             <Input
                                                 addonBefore="e-mail:"
+                                                style={{marginTop: '10px'}}
                                                 onChange={(e) => dispatch(setInputLoginValue(e.target.value))}/>
                                         </Form.Item>
                                         <Form.Item
@@ -102,6 +104,7 @@ export const AuthPage: React.FC = () => {
                                         >
                                             <Input.Password
                                                 placeholder="Пароль"
+                                                style={{marginTop: '7px'}}
                                                 iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
                                                 onChange={(e) => dispatch(setInputPasswordValue(e.target.value))}
                                             />
@@ -112,6 +115,7 @@ export const AuthPage: React.FC = () => {
                                         >
                                             <Input.Password
                                                 placeholder="Повторите пароль"
+                                                style={{marginTop: '22px'}}
                                                 iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
                                                 onChange={(e) => dispatch(setInputPasswordValue(e.target.value))}
                                             />
@@ -120,7 +124,7 @@ export const AuthPage: React.FC = () => {
                                             <Button type="primary"
                                                     block
                                                     htmlType={"submit"}
-                                                    style={{marginTop: '46px'}}
+                                                    style={{marginTop: '32px'}}
                                                     onClick={() => dispatch(fetchToken({email:inputLoginValue, password:inputPasswordValue, rememberUser: inputRememberUser}))}>Войти</Button>
                                             <Button block htmlType={"submit"} style={{marginTop: '16px'}} icon={<GooglePlusOutlined />} onClick={()=>history.push('/result/error')}>Войти через Google</Button>
                                         </Form.Item>
