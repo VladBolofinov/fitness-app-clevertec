@@ -1,7 +1,7 @@
 import './MiddleContent.scss';
 import { IMainPageComponentsProps } from "@pages/main/components/types/IMainPageComponentsProps";
 import React from "react";
-export const MiddleContent:React.FC<IMainPageComponentsProps> = ({collapsed}:IMainPageComponentsProps) => {
+export const MiddleContent:React.FC<IMainPageComponentsProps> = ({collapsed}) => {
     return (
         <>
             <div className={(collapsed) ? 'app-usage collapsed' : 'app-usage'}>
