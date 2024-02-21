@@ -1,12 +1,16 @@
 .header-wrapper {
     display: flex;
     justify-content: space-between;
+    .ant-btn {
+        height: 32px;
+    }
 }
 .ant-typography .main-header-text {
     font-weight: 700;
     line-height: 130%;
     margin-top: 0;
 }
+
 @media screen and (max-width: 1024px) {
     .ant-typography .main-header-text {
         font-size: 24px;

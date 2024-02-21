@@ -1,31 +1,36 @@
 import React from 'react';
 import './AuthPage.scss';
-import {useAppDispatch, useAppSelector} from "@hooks/typed-react-redux-hooks";
-import {apiRequestSlice, fetchToken} from "@redux/reducers/apiRequestSlice";
+import {useAppDispatch} from "@hooks/typed-react-redux-hooks";
+import { fetchToken} from "@redux/reducers/apiRequestSlice";
 import {history} from "@redux/configure-store";
-import {MainLogoIconXl} from "@pages/main/components/customSvgIcons/customSvgIcons";
-import {Tabs, Input, Checkbox, Button, Form} from "antd";
+import {MainLogoIconXl, MainLogoIconMd} from "@pages/main/components/customSvgIcons/customSvgIcons";
+import {Tabs, Input, Checkbox, Button, Form, Grid} from "antd";
 import {
     EyeInvisibleOutlined,
     EyeTwoTone,
-    GooglePlusOutlined,
+    GooglePlusOutlined
 } from "@ant-design/icons";
-
+const { useBreakpoint } = Grid;
 export const AuthPage: React.FC = () => {
-    const [form] = Form.useForm();
-
+    const [authForm] = Form.useForm();
+    const [registrationForm] = Form.useForm();
+    const screens = useBreakpoint();
     const dispatch = useAppDispatch();
-    const { setInputPasswordValue, setInputLoginValue, setInputRememberUser, setPasswordDuplicateValue} = apiRequestSlice.actions;
-    const {inputLoginValue, inputPasswordValue, inputRememberUser} = useAppSelector(state => state.apiRequestSlice);
     const sendAuthData = () => {
-        const value = form.getFieldsValue();
+        const value = authForm.getFieldsValue();
         const {login, password, remember} = value;
         dispatch(fetchToken({email:login, password:password, rememberUser: remember}));
+    }
+    const sendRegistrationData = () => {
+        const value = registrationForm.getFieldsValue();
+        const {login, password, 'password-compare': passwordCompare} = value;
+        //const {login, password, remember} = value;
+        //dispatch(fetchToken({email:login, password:password, rememberUser: remember}));
     }
     return (
         <div className='auth-wrapper'>
             <div className="wrapper-entry-form">
-                <MainLogoIconXl/>
+                {(screens.xs) ? <MainLogoIconMd/> : <MainLogoIconXl/>}
                 <div className="entry-form">
                     <Tabs
                         defaultActiveKey="1"
@@ -35,7 +40,7 @@ export const AuthPage: React.FC = () => {
                                 key: '1',
                                 children: <>
                                     <Form
-                                        form={form}
+                                        form={authForm}
                                         name="enter-account"
                                         initialValues={{ remember: true }}
                                     >
@@ -45,8 +50,7 @@ export const AuthPage: React.FC = () => {
                                         >
                                             <Input
                                                 addonBefore="e-mail:"
-                                                style={{marginBottom: '8px'}}
-                                                onChange={(e) => dispatch(setInputLoginValue(e.target.value))}/>
+                                                style={{marginBottom: '8px'}}/>
                                         </Form.Item>
                                         <Form.Item
                                             name="password"
@@ -55,30 +59,26 @@ export const AuthPage: React.FC = () => {
                                             <Input.Password
                                                 placeholder="Пароль"
                                                 iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
-                                                onChange={(e) => dispatch(setInputPasswordValue(e.target.value))}
                                             />
                                         </Form.Item>
                                         <Form.Item>
                                             <div className='checkbox-wrapper'>
                                             <Form.Item name="remember" valuePropName="checked" noStyle>
-                                                <Checkbox onChange={() => dispatch(setInputRememberUser())}>Запомнить меня</Checkbox>
+                                                <Checkbox>Запомнить меня</Checkbox>
                                             </Form.Item>
                                             <Button type="link">Забыли пароль?</Button>
                                             </div>
                                         </Form.Item>
-                                        <Form.Item shouldUpdate>
-                                            {() => (<>
+                                        <Form.Item>
+                                            <>
                                                 <Button type="primary"
                                                         block
                                                         htmlType={"submit"}
-                                                        disabled={Boolean(form.getFieldsError().filter(({ errors }) => errors.length).length)
-                                                            || !(form.isFieldTouched('login') && form.isFieldTouched('password'))}
                                                         style={{marginTop: '0px'}}
                                                         onClick={sendAuthData}>Войти</Button>
-                                                <Button block htmlType={"submit"} style={{marginTop: '16px'}} icon={<GooglePlusOutlined />}
+                                                <Button block htmlType={"submit"} style={{marginTop: '16px'}} icon={(screens.xs) ? null : <GooglePlusOutlined />}
                                                 onClick={()=>history.push('/result/error')}>Войти через Google</Button>
                                                 </>
-                                            )}
                                         </Form.Item>
                                     </Form>
                                 </>
@@ -88,6 +88,7 @@ export const AuthPage: React.FC = () => {
                                 key: '2',
                                 children: <>
                                     <Form
+                                        form={registrationForm}
                                         name="registration"
                                         initialValues={{ remember: true }}
                                     >
@@ -97,8 +98,7 @@ export const AuthPage: React.FC = () => {
                                         >
                                             <Input
                                                 addonBefore="e-mail:"
-                                                style={{marginTop: '10px'}}
-                                                onChange={(e) => dispatch(setInputLoginValue(e.target.value))}/>
+                                                style={{marginTop: '10px'}}/>
                                         </Form.Item>
                                         <Form.Item
                                             name="password"
@@ -110,7 +110,6 @@ export const AuthPage: React.FC = () => {
                                                 placeholder="Пароль"
                                                 style={{marginTop: '7px'}}
                                                 iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
-                                                onChange={(e) => dispatch(setInputPasswordValue(e.target.value))}
                                             />
                                         </Form.Item>
                                         <Form.Item
@@ -131,23 +130,24 @@ export const AuthPage: React.FC = () => {
                                                 placeholder="Повторите пароль"
                                                 style={{marginTop: '16px'}}
                                                 iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
-                                                onChange={(e) => dispatch(setPasswordDuplicateValue(e.target.value))}
                                             />
                                         </Form.Item>
-                                        <Form.Item>
+                                        <Form.Item shouldUpdate>
+                                            {() => (<>
                                                 <Button
                                                     type="primary"
                                                     block
                                                     htmlType="submit"
                                                     style={{marginTop: '32px'}}
-                                                    onClick={() => dispatch(fetchToken({email:inputLoginValue, password:inputPasswordValue, rememberUser: inputRememberUser}))}
-                                                    disabled={
-                                                        true
-                                                    }
+                                                    onClick={sendRegistrationData}
+                                                    disabled={Boolean(registrationForm.getFieldsError().filter(({ errors }) => errors.length).length)
+                                                        || !(registrationForm.isFieldTouched('login') && registrationForm.isFieldTouched('password') && registrationForm.isFieldTouched('password-compare'))}
                                                 >
                                                     Войти
                                                 </Button>
-                                            <Button block htmlType={"submit"} style={{marginTop: '16px'}} icon={<GooglePlusOutlined />} onClick={()=>history.push('/result/error')}>Войти через Google</Button>
+                                            <Button block htmlType={"submit"} style={{marginTop: '16px'}} icon={(screens.xs) ? null : <GooglePlusOutlined />}
+                                                    onClick={sendRegistrationData}>Войти через Google</Button>
+                                            </>)}
                                         </Form.Item>
                                     </Form>
                                 </>

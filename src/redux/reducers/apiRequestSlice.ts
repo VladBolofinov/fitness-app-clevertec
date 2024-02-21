@@ -5,11 +5,7 @@ import {useHttp} from "@hooks/http.hook";
 const initialState: IApiRequest = {
     jwt: '',
     error: '',
-    isLoadingToken: false,
-    inputLoginValue: '',
-    inputPasswordValue: '',
-    inputPassDuplicate: '',
-    inputRememberUser: true
+    isLoadingToken: false
 }
 
 export const fetchToken = createAsyncThunk(
@@ -23,20 +19,7 @@ export const fetchToken = createAsyncThunk(
 export const apiRequestSlice = createSlice({
     name: 'apiRequestSlice',
     initialState,
-    reducers: {
-        setInputLoginValue(state, action: PayloadAction<string>) {
-            state.inputLoginValue = action.payload;
-        },
-        setInputPasswordValue(state, action: PayloadAction<string>) {
-            state.inputPasswordValue = action.payload;
-        },
-        setInputRememberUser(state) {
-            state.inputRememberUser = !state.inputRememberUser;
-        },
-        setPasswordDuplicateValue(state, action: PayloadAction<string>) {
-            state.inputPassDuplicate = action.payload;
-        }
-    },
+    reducers: {},
     extraReducers:
         (builder) => {
             builder.addCase(fetchToken.pending, (state) => {state.isLoadingToken = true;})

@@ -1,5 +1,5 @@
 .auth-wrapper {
-    width: 1440px;
+    max-width: 1440px;
     height: 1024px;
     background-image: url('../../assets/background-img/Auth-page-light-blur.png');
     margin: 0 auto;
@@ -34,7 +34,7 @@
     justify-content: center;
 }
 .ant-tabs-nav-list {
-    width: 386px;
+    width: 368px;
 }
 .ant-form-item-explain-error {
     font-size: 12px;
@@ -61,4 +61,48 @@
 }
 .ant-form-item-explain {
     font-size: 12px;
+}
+@media screen and (max-width: 834px) {
+    .auth-wrapper {
+        max-width: 833px;
+        height: 1194px;
+        background-position: center;
+        background-size: cover;
+        align-items: normal;
+    }
+    .wrapper-entry-form {
+        margin-top: 200px;
+    }
+}
+@media screen and (max-width: 360px) {
+    .auth-wrapper {
+        width: 360px;
+        height: 800px;
+    }
+    .wrapper-entry-form {
+        margin-top: 90px;
+    }
+    .wrapper-entry-form {
+        width: 328px;
+        height: 612px;
+        padding-top: 32px;
+    }
+    .entry-form {
+        width: 296px;
+        height: 374px;
+        margin-top: 32px;
+        align-items: normal;
+    }
+    .ant-tabs-nav-list {
+        width: 296px;
+    }
+    .ant-tabs-tab, .ant-tabs-tab-active {
+        width: 148px;
+    }
+    .ant-tabs-nav {
+        width: 296px;
+    }
+    .ant-form-item-control-input {
+        width: 296px;
+    }
 }
