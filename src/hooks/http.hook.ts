@@ -13,11 +13,14 @@ export const useHttp = () => {
             })
             console.log(response);
             if (response.status === 200) {
-                history.push('/main');
+                history.push('/');
             }
             return {token: response.data.accessToken, inputCheck: rememberUser};
         } catch (e) {
-            console.log(e.response.data);
+            console.log(e.response);
+            //if (e.response.status !== 200) {
+                history.push('/result/error-login');
+            //}
             return e.response.status;
         }
     }

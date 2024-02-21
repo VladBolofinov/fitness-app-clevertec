@@ -11,11 +11,15 @@ export const FormComponent: React.FC<IFormComponentProps> = ({type}) => {
     const [registrationForm] = Form.useForm();
     const screens = useBreakpoint();
     const dispatch = useAppDispatch();
-    const sendAuthData = () => {
-        const value = authForm.getFieldsValue();
-        const {login, password, remember} = value;
-        dispatch(fetchToken({email:login, password:password, rememberUser: remember}));
-    }
+    const sendAuthData = async () => {
+            await authForm.validateFields(); // Обновляем состояние формы перед проверкой
+            const isValidated = Boolean(authForm.getFieldsError().filter(({ errors }) => errors.length).length);
+            if (!isValidated) {
+                const value = authForm.getFieldsValue();
+                const { login, password, remember } = value;
+                dispatch(fetchToken({ email: login, password: password, rememberUser: remember }));
+            }
+    };
     const sendRegistrationData = () => {
         //const value = registrationForm.getFieldsValue();
         //const {login, password, 'password-compare': passwordCompare} = value;
@@ -36,6 +40,7 @@ export const FormComponent: React.FC<IFormComponentProps> = ({type}) => {
                     <Input
                         addonBefore="e-mail:"
                         style={{ marginBottom: type === 'auth' ? '8px' : '10px', marginTop: type === 'auth' ? '0px' : '10px' }}
+                        data-test-id='login-email'
                     />
                 </Form.Item>
                 <Form.Item
@@ -46,6 +51,7 @@ export const FormComponent: React.FC<IFormComponentProps> = ({type}) => {
                         placeholder="Пароль"
                         style={{ marginBottom: type === 'auth' ? '16px' : '7px', marginTop: type === 'auth' ? '0px' : '7px' }}
                         iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
+                        data-test-id='login-password'
                     />
                 </Form.Item>
                 {type !== 'auth' && (
@@ -74,9 +80,9 @@ export const FormComponent: React.FC<IFormComponentProps> = ({type}) => {
                 ? <Form.Item>
                     <div className='checkbox-wrapper'>
                         <Form.Item name="remember" valuePropName="checked" noStyle>
-                            <Checkbox>Запомнить меня</Checkbox>
+                            <Checkbox data-test-id='login-remember'>Запомнить меня</Checkbox>
                         </Form.Item>
-                        <Button type="link">Забыли пароль?</Button>
+                        <Button type="link" data-test-id='login-forgot-button'>Забыли пароль?</Button>
                     </div>
                 </Form.Item>
                 : null}
@@ -88,6 +94,7 @@ export const FormComponent: React.FC<IFormComponentProps> = ({type}) => {
                                 block
                                 htmlType="submit"
                                 style={{ marginTop: type === 'auth' ? '0px' : '32px' }}
+                                data-test-id='login-submit-button'
                                 onClick={type === 'auth' ? sendAuthData : sendRegistrationData}
                                 disabled={type === 'auth' ? false :
                                     Boolean(registrationForm.getFieldsError().filter(({ errors }) => errors.length).length)
