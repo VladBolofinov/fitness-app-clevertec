@@ -5,6 +5,7 @@ import {ResultPage} from "@pages/result/ResultPage";
 import {useEffect} from "react";
 import {RequireAuth} from "./hoc/RequireAuth";
 import {history} from "@redux/configure-store";
+import {MyLoader} from "@pages/auth/Loader/MyLoader";
 
 export const RoutesComponent = () => {
     //сделай потом типизацию через enum
@@ -17,6 +18,7 @@ export const RoutesComponent = () => {
 return (
     <Routes>
         <Route path={'/'} element={<RequireAuth><MainPage /></RequireAuth>}/>
+        <Route path={'/main'} element={<RequireAuth><MainPage /></RequireAuth>}/>
         <Route path={'/auth'} element={<RequireAuth><AuthPage/></RequireAuth>}/>
         <Route path={'/auth/registration'} element={<RequireAuth><AuthPage/></RequireAuth>}/>
         <Route path={'/result/success'} element={(location.pathname.startsWith('/result') ? <Navigate to="/auth" /> :<ResultPage />)}/>
@@ -31,6 +33,7 @@ return (
         <Route path={'/result/error-change-password'} element={(location.pathname.startsWith('/result') ? <Navigate to="/auth" /> :<ResultPage />)}/>
         <Route path={'/result/success-change-password'} element={(location.pathname.startsWith('/result') ? <Navigate to="/auth" /> :<ResultPage />)}/>
         <Route path={'/result/*'} element={(location.pathname.startsWith('/result') ? <Navigate to="/auth" /> : <div>Error page</div>)}/>
+        <Route path={'/loader'} element={(location.pathname.startsWith('/result') ? <Navigate to="/auth" /> : <div><MyLoader/></div>)}/>
         {/*<Route path="*" element={<Navigate to="/" />} />*/}
     </Routes>
     )

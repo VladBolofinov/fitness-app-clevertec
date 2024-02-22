@@ -6,7 +6,7 @@ import {IInputValues} from "@pages/main/components/types/IInputValues";
 const initialState: IApiRequest = {
     jwt: '',
     error: '',
-    isLoadingToken: false
+    isLoadingRequest: false
 }
 
 export const fetchToken = createAsyncThunk(
@@ -31,10 +31,10 @@ export const apiRequestSlice = createSlice({
     reducers: {},
     extraReducers:
         (builder) => {
-            builder.addCase(fetchToken.pending, (state) => {state.isLoadingToken = true;})
+            builder.addCase(fetchToken.pending, (state) => {state.isLoadingRequest = true;})
                 .addCase(fetchToken.fulfilled, (state,action:PayloadAction<{ token:string, inputCheck: boolean }>) => {
                     //типизируй экшен нормально
-                    state.isLoadingToken = false;
+                    state.isLoadingRequest = false;
                     state.error = '';
                     console.log(action.payload);
                     const {token, inputCheck} = action.payload;
@@ -48,17 +48,17 @@ export const apiRequestSlice = createSlice({
                     }
                 })
                 .addCase(fetchToken.rejected, (state) => {
-                    state.isLoadingToken = false;
+                    state.isLoadingRequest = false;
                     state.error = 'something was wrong!';
                 })
                 .addCase(registerNewUser.pending, (state) => {state.isLoadingToken = true;})
                 .addCase(registerNewUser.fulfilled, (state) => {
                     //типизируй экшен нормально
-                    state.isLoadingToken = false;
+                    state.isLoadingRequest = false;
                     state.error = '';
                 })
                 .addCase(registerNewUser.rejected, (state) => {
-                    state.isLoadingToken = false;
+                    state.isLoadingRequest = false;
                     state.error = 'something was wrong!';
                 })
                 .addDefaultCase(() => {})

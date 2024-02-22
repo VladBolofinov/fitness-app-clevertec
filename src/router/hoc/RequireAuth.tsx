@@ -6,7 +6,7 @@ export const RequireAuth = ({ children }: { children: React.ReactNode }) => {
     const hasTokenSessionSt: string | null = sessionStorage.getItem('jwtToken');
     const location = useLocation();
 
-    if (location.pathname === '/' && !(hasTokenLocalSt || hasTokenSessionSt)) {
+    if ((location.pathname === '/' || location.pathname === '/main') && !(hasTokenLocalSt || hasTokenSessionSt)) {
         return <Navigate to='/auth' />
     }
 
