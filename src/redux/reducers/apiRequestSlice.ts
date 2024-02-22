@@ -51,7 +51,7 @@ export const apiRequestSlice = createSlice({
                     state.isLoadingRequest = false;
                     state.error = 'something was wrong!';
                 })
-                .addCase(registerNewUser.pending, (state) => {state.isLoadingToken = true;})
+                .addCase(registerNewUser.pending, (state) => {state.isLoadingRequest = true;})
                 .addCase(registerNewUser.fulfilled, (state) => {
                     //типизируй экшен нормально
                     state.isLoadingRequest = false;

@@ -4,8 +4,9 @@ import {AuthPage} from "@pages/auth/AuthPage";
 import {ResultPage} from "@pages/result/ResultPage";
 import {useEffect} from "react";
 import {RequireAuth} from "./hoc/RequireAuth";
-import {history} from "@redux/configure-store";
 import {MyLoader} from "@pages/auth/Loader/MyLoader";
+import {FormWrapper} from "@pages/auth/FormWrapper/FormWrapper";
+import {ResultMessage} from "@pages/auth/ResultMessage/ResultMessage";
 
 export const RoutesComponent = () => {
     //сделай потом типизацию через enum
@@ -17,17 +18,15 @@ export const RoutesComponent = () => {
     }, []);
 return (
     <Routes>
+        {/*сделай потом для Auth общую обертку, в секции Result общий background*/}
         <Route path={'/'} element={<RequireAuth><MainPage /></RequireAuth>}/>
         <Route path={'/main'} element={<RequireAuth><MainPage /></RequireAuth>}/>
-        <Route path={'/auth'} element={<RequireAuth><AuthPage/></RequireAuth>}/>
-        <Route path={'/auth/registration'} element={<RequireAuth><AuthPage/></RequireAuth>}/>
+        <Route path={'/auth'} element={<RequireAuth><AuthPage><FormWrapper/></AuthPage></RequireAuth>}/>
+        <Route path={'/auth/registration'} element={<RequireAuth><AuthPage><FormWrapper/></AuthPage> </RequireAuth>}/>
+        <Route path={'/result/error-login'} element={(location.pathname.startsWith('/result') ? <Navigate to="/auth" /> : <AuthPage><ResultMessage/></AuthPage>)} />
+        <Route path={'/result/error'} element={(location.pathname.startsWith('/result') ? <Navigate to="/auth" /> : <AuthPage><ResultMessage/></AuthPage>)}/>
         <Route path={'/result/success'} element={(location.pathname.startsWith('/result') ? <Navigate to="/auth" /> :<ResultPage />)}/>
-        <Route path={'/result/error'} element={(location.pathname.startsWith('/result') ? <Navigate to="/auth" /> :<ResultPage />)}/>
         <Route path={'/result/error-user-exist'} element={(location.pathname.startsWith('/result') ? <Navigate to="/auth" /> : <div> Пользователь уже существует</div>)}/>
-        <Route path={'/result/error-login'} element={(location.pathname.startsWith('/result') ? <Navigate to="/auth" /> :<>
-            <div>Вход не выполнен!!! Что-то пошло не так</div>
-            <button onClick={() => history.push('/auth')}>Повторить</button>
-        </>)} />
         <Route path={'/result/error-check-email-no-exist'} element={(location.pathname.startsWith('/result') ? <Navigate to="/auth" /> :<ResultPage />)}/>
         <Route path={'/result/error-check-email'} element={(location.pathname.startsWith('/result') ? <Navigate to="/auth" /> :<ResultPage />)}/>
         <Route path={'/result/error-change-password'} element={(location.pathname.startsWith('/result') ? <Navigate to="/auth" /> :<ResultPage />)}/>
