@@ -11,20 +11,21 @@ export const useHttp = () => {
                     "password": password
                 }
             })
-            console.log(response);
+            //console.log(response);
             if (response.status === 200) {
                 history.push('/main');
             }
             return {token: response.data.accessToken, inputCheck: rememberUser};
         } catch (e) {
-            console.log(e.response);
-            //if (e.response.status !== 200) {
+            //console.log('сработал блок catch')
+            //console.log(e);
+            //console.log(e.response.data.statusCode);
+            if (e.response.status !== 200) {
                 history.push('/result/error-login');
-            //}
+            }
             return e.response.status;
         }
     }
-
 
     const registerNewUser = async (username : string, password: string) => {
         try {
@@ -33,16 +34,23 @@ export const useHttp = () => {
                 url: 'https://marathon-api.clevertec.ru/auth/registration',
                 data: {
                   'email' : username,
-                    'password': password
+                  'password': password
                 }
             })
             console.log(response);
-            history.push('/result/success');
+            if (response.status === 201) {
+                history.push('/result/success');
+            }
+
             return response.status;
         } catch (e) {
+            console.log('срaботал блок кэтч')
             if (e.response.status === 409) {
                 history.push('/result/error-user-exist');
+            } else {
+                history.push('/result/error');
             }
+            return e.response.status;
         }
     }
 
