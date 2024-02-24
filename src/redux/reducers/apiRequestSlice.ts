@@ -8,7 +8,9 @@ const initialState: IApiRequest = {
     error: '',
     isLoadingRequest: false,
     isErrorStatus: false,
-    isRegistrationSuccess: false
+    isRegistrationSuccess: false,
+    login: '',
+    password: ''
 }
 type FetchTokenFulfilledPayload = {
     token: string;
@@ -40,6 +42,10 @@ export const apiRequestSlice = createSlice({
         },
         deleteRegistrationStatus(state) {
             state.isRegistrationSuccess = false;
+        },
+        saveRegDataBeforeError(state, action: PayloadAction<IInputValues>) {
+            state.login = action.payload.login;
+            state.password = action.payload.password;
         }
     },
     extraReducers:
@@ -81,7 +87,6 @@ export const apiRequestSlice = createSlice({
                     } else if (typeof action.payload === 'number' && action.payload !== 201) {
                         state.isErrorStatus = true;
                     }
-                    //console.log(action.payload);
                 })
                 .addCase(registerNewUser.rejected, (state) => {
                     state.isLoadingRequest = false;

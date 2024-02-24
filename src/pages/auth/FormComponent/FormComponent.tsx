@@ -1,24 +1,33 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './FormComponent.scss';
 import {Button, Checkbox, Grid, Input, Form} from "antd";
 import {EyeInvisibleOutlined, EyeTwoTone, GooglePlusOutlined} from "@ant-design/icons";
-import {useAppDispatch} from "@hooks/typed-react-redux-hooks";
-import {fetchToken, registerNewUser} from "@redux/reducers/apiRequestSlice";
+import {useAppDispatch, useAppSelector} from "@hooks/typed-react-redux-hooks";
+import {apiRequestSlice, fetchToken, registerNewUser} from "@redux/reducers/apiRequestSlice";
 import {IFormComponentProps} from "@pages/auth/types/IFormComponentProps";
 import {IInputValues} from "@pages/main/components/types/IInputValues";
 const { useBreakpoint } = Grid;
+
 export const FormComponent: React.FC<IFormComponentProps> = ({type}) => {
     const [authForm] = Form.useForm();
     const [registrationForm] = Form.useForm();
     const screens = useBreakpoint();
     const dispatch = useAppDispatch();
+    const {previousLocation} = useAppSelector(state => state.router);
+    const {login, password} = useAppSelector(state => state.apiRequestSlice);
+    const {saveRegDataBeforeError} = apiRequestSlice.actions;
+    useEffect(() => {
+        if (previousLocation[1]?.location === '/result/error') {
+            dispatch(registerNewUser({login, password}));
+        }
+    })
     const sendAuthData = (inputValues: IInputValues) => {
-        console.log('Received values of form:', inputValues);
         const { login, password, remember } = inputValues;
         dispatch(fetchToken({ login, password, remember }));
     };
     const sendRegistrationData = (values: any) => {
         const { login, password } = values;
+        dispatch(saveRegDataBeforeError({login, password}));
         dispatch(registerNewUser({login, password}));
     }
     return (

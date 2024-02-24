@@ -4,4 +4,6 @@ export interface IApiRequest {
     isLoadingRequest: boolean;
     isErrorStatus: boolean;
     isRegistrationSuccess: boolean;
+    login: string;
+    password: string;
 }
