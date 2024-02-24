@@ -26,9 +26,10 @@ return (
         <Route path={'/result/success'} element={(isRegistrationSuccess) ? <AuthPage><ResultMessage type={'success'}/></AuthPage> : <Navigate to="/auth" />}/>
         <Route path={'/result/error-user-exist'} element={(isErrorStatus) ? <AuthPage><ResultMessage type={'error-user-exist'}/></AuthPage> : <Navigate to="/auth" />}/>
         <Route path={'/result/error'} element={(isErrorStatus) ? <AuthPage><ResultMessage type={'error'}/></AuthPage> : <Navigate to="/auth" />}/>
-
-        <Route path={'/result/error-check-email-no-exist'} element={(isErrorStatus) ? <ResultPage /> : <Navigate to="/auth" />}/>
-        <Route path={'/result/error-check-email'} element={(isErrorStatus) ? <ResultPage /> :<Navigate to="/auth" />}/>
+        <Route path={'/result/error-check-email-no-exist'} element={(isErrorStatus) ? <AuthPage><ResultMessage type={'error-check-email-no-exist'}/></AuthPage> : <Navigate to="/auth" />}/>
+        <Route path={'/result/error-check-email'} element={(isErrorStatus) ? <AuthPage><ResultMessage type={'error-check-email'}/></AuthPage> :<Navigate to="/auth" />}/>
+        <Route path={'/auth/confirm-email'} element={(isRegistrationSuccess) ? <AuthPage><ResultMessage type={'confirm-email'}/></AuthPage> :<Navigate to="/auth" />}/>
+        {/*поменяй логику isregistrsuccess в компоненте confirm-email либо переименуй на универсальное название*/}
         <Route path={'/result/error-change-password'} element={(isErrorStatus) ? <ResultPage /> :<Navigate to="/auth" />}/>
         <Route path={'/result/success-change-password'} element={(isErrorStatus) ? <ResultPage /> :<Navigate to="/auth" />}/>
 

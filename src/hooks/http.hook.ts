@@ -54,8 +54,39 @@ export const useHttp = () => {
         }
     }
 
+    const checkEmail = async (email : string) => {
+        try {
+            const response = await axios({
+                method: 'post',
+                url: 'https://marathon-api.clevertec.ru/auth/check-email',
+                data: {
+                    'email' : email,
+                }
+            })
+            console.log(response);
+            if (response.status === 200) {
+                history.push('/auth/confirm-email');
+            }
+
+            return response.status;
+        } catch (e) {
+            console.log('срaботал блок кэтч')
+            console.log(e.response);
+            if (e.response.status === 404 && e.response.data.message === 'Email не найден') {
+                history.push(' /result/error-check-email-no-exist');
+            }
+            else if (e.response.status === 404 && e.response.data.message !== 'Email не найден') {
+                history.push('/result/error-check-email');
+            } else {
+                history.push('/result/error-check-email');
+            }
+            return e.response.status;
+        }
+    }
+
     return {
         getToken,
-        registerNewUser
+        registerNewUser,
+        checkEmail
     }
 }

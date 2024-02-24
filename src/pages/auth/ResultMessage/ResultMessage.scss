@@ -10,6 +10,18 @@
         padding: 0;
     }
 }
+.error-message-modal.big {
+    font-family: var(--font-family);
+    border-radius: 2px;
+    width: 539px;
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
+    background: var(--character-light-primary-inverse);
+    padding: 64px 32px;
+    height: 550px;
+    .ant-result {
+        padding: 0;
+    }
+}
 .error-message-modal.warning {
     padding: 64px 85px;
     height: 345px;
@@ -34,12 +46,17 @@
         margin-top: 424px;
         height: 345px;
     }
+    .error-message-modal.big {
+        width: 440px;
+        height: 568px;
+        margin-top: 115px;
+    }
 }
 @media screen and (max-width: 360px) {
     .error-message-modal {
         margin-top: 259px;
         width: 328px;
-        height: 281px;
+        height: 375px;
     }
     .error-message-modal.warning {
         padding: 32px 16px;
@@ -48,5 +65,9 @@
             padding: 0;
         }
     }
-
+    .error-message-modal.big {
+        width: 328px;
+        height: 568px;
+        margin-top: 115px;
+    }
 }

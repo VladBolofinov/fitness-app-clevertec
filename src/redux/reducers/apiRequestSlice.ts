@@ -33,6 +33,14 @@ export const registerNewUser = createAsyncThunk(
     }
 )
 
+export const checkEmail = createAsyncThunk(
+    'apiRequest/checkEmail',
+    (email:string) => {
+        const {checkEmail} = useHttp();
+        return checkEmail(email);
+    }
+)
+
 export const apiRequestSlice = createSlice({
     name: 'apiRequestSlice',
     initialState,
@@ -42,6 +50,9 @@ export const apiRequestSlice = createSlice({
         },
         deleteRegistrationStatus(state) {
             state.isRegistrationSuccess = false;
+        },
+        saveEmailBeforeRequest(state, action: PayloadAction<string>) {
+            state.login = action.payload;
         },
         saveRegDataBeforeError(state, action: PayloadAction<IInputValues>) {
             state.login = action.payload.login;
@@ -89,6 +100,23 @@ export const apiRequestSlice = createSlice({
                     }
                 })
                 .addCase(registerNewUser.rejected, (state) => {
+                    state.isLoadingRequest = false;
+                    state.error = 'something was wrong!';
+                    state.isErrorStatus = true;
+                })
+                .addCase(checkEmail.pending, (state) => {state.isLoadingRequest = true;})
+                .addCase(checkEmail.fulfilled, (state, action:PayloadAction<any>) => {
+                    //типизируй экшен нормально
+                    state.isLoadingRequest = false;
+                    state.error = '';
+                    state.isRegistrationSuccess = true;
+                    if (typeof action.payload === 'number' && action.payload === 404) {
+                        state.isErrorStatus = true;
+                    } else if (typeof action.payload === 'number' && action.payload !== 200) {
+                        state.isErrorStatus = true;
+                    }
+                })
+                .addCase(checkEmail.rejected, (state) => {
                     state.isLoadingRequest = false;
                     state.error = 'something was wrong!';
                     state.isErrorStatus = true;

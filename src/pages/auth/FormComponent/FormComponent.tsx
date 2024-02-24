@@ -3,7 +3,12 @@ import './FormComponent.scss';
 import {Button, Checkbox, Grid, Input, Form} from "antd";
 import {EyeInvisibleOutlined, EyeTwoTone, GooglePlusOutlined} from "@ant-design/icons";
 import {useAppDispatch, useAppSelector} from "@hooks/typed-react-redux-hooks";
-import {apiRequestSlice, fetchToken, registerNewUser} from "@redux/reducers/apiRequestSlice";
+import {
+    apiRequestSlice,
+    checkEmail,
+    fetchToken,
+    registerNewUser
+} from "@redux/reducers/apiRequestSlice";
 import {IFormComponentProps} from "@pages/auth/types/IFormComponentProps";
 import {IInputValues} from "@pages/main/components/types/IInputValues";
 const { useBreakpoint } = Grid;
@@ -15,10 +20,12 @@ export const FormComponent: React.FC<IFormComponentProps> = ({type}) => {
     const dispatch = useAppDispatch();
     const {previousLocation} = useAppSelector(state => state.router);
     const {login, password} = useAppSelector(state => state.apiRequestSlice);
-    const {saveRegDataBeforeError} = apiRequestSlice.actions;
+    const {saveRegDataBeforeError, saveEmailBeforeRequest} = apiRequestSlice.actions;
     useEffect(() => {
         if (previousLocation[1]?.location === '/result/error') {
             dispatch(registerNewUser({login, password}));
+        } else if (previousLocation[1]?.location === '/result/error-check-email') {
+            dispatch(checkEmail(login));
         }
     })
     const sendAuthData = (inputValues: IInputValues) => {
@@ -88,7 +95,13 @@ export const FormComponent: React.FC<IFormComponentProps> = ({type}) => {
                         <Form.Item name="remember" valuePropName="checked" noStyle>
                             <Checkbox data-test-id='login-remember'>Запомнить меня</Checkbox>
                         </Form.Item>
-                        <Button type="link" data-test-id='login-forgot-button'>Забыли пароль?</Button>
+                        <Button type="link" onClick={() => {
+                            if (Boolean(authForm.getFieldError('login').length) === false && authForm.isFieldTouched('login')) {
+                                console.log('можно отправлять запрос!');
+                                dispatch(saveEmailBeforeRequest(authForm.getFieldValue('login')));
+                                dispatch(checkEmail(authForm.getFieldValue('login')));
+                            }
+                        }} data-test-id='login-forgot-button'>Забыли пароль?</Button>
                     </div>
                 </Form.Item>
                 : null}
