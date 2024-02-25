@@ -2,9 +2,12 @@
     --primary-light-1: #f0f5ff;
     --primary-light-9: #061178;
     --primary-light-6: #2f54eb;
+    --primary-light-5: #597ef7;
     --character-light-primary-inverse: #ffffff;
     --character-light-secondary-45: #8c8c8c;
     --character-light-dividers: #f0f0f0;
     --character-light-title-85: #262626;
+    --character-light-border: #d9d9d9;
+    --character-light-error: #ff4d4f;
     --font-family: "Inter", sans-serif;
 }

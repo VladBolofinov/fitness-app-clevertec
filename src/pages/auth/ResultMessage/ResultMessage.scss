@@ -6,9 +6,6 @@
     background: var(--character-light-primary-inverse);
     height: 345px;
     padding: 64px 32px;
-    .ant-result {
-        padding: 0;
-    }
 }
 .error-message-modal.big {
     font-family: var(--font-family);
@@ -18,16 +15,16 @@
     background: var(--character-light-primary-inverse);
     padding: 64px 32px;
     height: 550px;
-    .ant-result {
-        padding: 0;
-    }
 }
 .error-message-modal.warning {
     padding: 64px 85px;
     height: 345px;
-    .ant-result {
-        padding: 0;
-    }
+}
+.ant-result {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
 }
 .ant-result-title {
     font-weight: 500;
@@ -37,6 +34,34 @@
 }
 .ant-btn-primary {
     background: var(--primary-light-6);
+}
+.input-wrapper {
+    margin-top: 24px;
+    margin-bottom: 10px;
+    gap:12px;
+}
+.input-character {
+    border-radius: 2px;
+    height: 40px;
+    line-height: 40px;
+    background: var(--character-light-primary-inverse);
+    border: 1px solid var(--character-light-border);
+    font-size: 14px;
+}
+.input-character-inactive {
+    border: 1px solid var(--character-light-border);
+}
+.input-character-inactive-error {
+    border: 1px solid var(--character-light-error);
+}
+.input-character-selected {
+    border: 1px solid var(--primary-light-5);
+}
+.input-character-filled {
+    border: 1px solid var(--character-light-border);
+}
+.extra-subTitle {
+    color: var(--character-light-secondary-45);
 }
 @media screen and (max-width: 834px) {
     .error-message-modal {

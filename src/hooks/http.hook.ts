@@ -72,21 +72,65 @@ export const useHttp = () => {
         } catch (e) {
             console.log('срaботал блок кэтч')
             console.log(e.response);
-            if (e.response.status === 404 && e.response.data.message === 'Email не найден') {
-                history.push(' /result/error-check-email-no-exist');
-            }
-            else if (e.response.status === 404 && e.response.data.message !== 'Email не найден') {
-                history.push('/result/error-check-email');
+            if (e.response.status === 404) {
+                if (e.response.data.message === 'Email не найден') {
+                    console.log(e.response.message);
+                    history.push('/result/error-check-email-no-exist');
+                }
             } else {
                 history.push('/result/error-check-email');
             }
+
             return e.response.status;
         }
     }
 
+    const confirmEmail = async (email : string, code: string) => {
+        try {
+            const response = await axios({
+                method: 'post',
+                url: 'https://marathon-api.clevertec.ru/auth/confirm-email',
+                withCredentials: true,
+                data: {
+                    'email' : email,
+                    'code': code
+                }
+            })
+            console.log(response);
+            history.push('/auth/change-password');
+            return response.status;
+        } catch (e) {
+            console.log('срaботал блок кэтч')
+            console.log(e.response);
+            return e.response.status;
+        }
+    }
+    const changePassword = async (password : string, confirmPassword: string) => {
+        try {
+            const response = await axios({
+                method: 'post',
+                url: 'https://marathon-api.clevertec.ru/auth/change-password',
+                withCredentials: true,
+                data: {
+                    'password' : password,
+                    'confirmPassword': confirmPassword,
+                }
+            })
+            console.log(response);
+            history.push('/result/success-change-password');
+            return response.status;
+        } catch (e) {
+            console.log('срaботал блок кэтч')
+            console.log(e.response);
+            history.push('/result/error-change-password')
+            return e.response.status;
+        }
+    }
     return {
         getToken,
         registerNewUser,
-        checkEmail
+        checkEmail,
+        confirmEmail,
+        changePassword
     }
 }

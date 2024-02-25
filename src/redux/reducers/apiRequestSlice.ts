@@ -9,8 +9,11 @@ const initialState: IApiRequest = {
     isLoadingRequest: false,
     isErrorStatus: false,
     isSuccessRequest: false,
+    checkCodeInputValue: '',
     login: '',
-    password: ''
+    password: '',
+    firstConfirmPassword: '',
+    secondConfirmPassword: ''
 }
 type FetchTokenFulfilledPayload = {
     token: string;
@@ -40,6 +43,20 @@ export const checkEmail = createAsyncThunk(
         return checkEmail(email);
     }
 )
+export const confirmEmail = createAsyncThunk(
+    'apiRequest/confirmEmail',
+    ({login, code}: { login: string, code: string }) => {
+        const {confirmEmail} = useHttp();
+        return confirmEmail(login, code);
+    }
+)
+export const changePassword = createAsyncThunk(
+    'apiRequest/changePassword',
+    ({password, confirmPassword}: { password: string, confirmPassword: string }) => {
+        const {changePassword} = useHttp();
+        return changePassword(password, confirmPassword);
+    }
+)
 
 export const apiRequestSlice = createSlice({
     name: 'apiRequestSlice',
@@ -54,6 +71,13 @@ export const apiRequestSlice = createSlice({
         saveRegDataBeforeError(state, action: PayloadAction<IInputValues>) {
             state.login = action.payload.login;
             state.password = action.payload.password;
+        },
+        setCheckCodeInput(state, action: PayloadAction<string>) {
+            state.checkCodeInputValue = action.payload;
+        },
+        saveConfirmPasswords(state, action: PayloadAction<any>) {
+            state.firstConfirmPassword = action.payload.password;
+            state.secondConfirmPassword = action.payload.confirmPassword;
         }
     },
     extraReducers:
@@ -117,6 +141,35 @@ export const apiRequestSlice = createSlice({
                     state.isLoadingRequest = false;
                     state.error = 'something was wrong!';
                     state.isErrorStatus = true;
+                })
+                .addCase(confirmEmail.pending, (state) => {state.isLoadingRequest = true;})
+                .addCase(confirmEmail.fulfilled, (state, action:PayloadAction<any>) => {
+                    //типизируй экшен нормально
+                    state.isLoadingRequest = false;
+                    state.error = '';
+                    state.isSuccessRequest = true;
+                    if (typeof action.payload === 'number' && action.payload !== 200) {
+                        state.isErrorStatus = true;
+                        state.checkCodeInputValue = '';
+                    }
+                })
+                .addCase(confirmEmail.rejected, (state) => {
+                    state.isLoadingRequest = false;
+                    state.error = 'something was wrong!';
+                })
+                .addCase(changePassword.pending, (state) => {state.isLoadingRequest = true;})
+                .addCase(changePassword.fulfilled, (state, action:PayloadAction<any>) => {
+                    //типизируй экшен нормально
+                    state.isLoadingRequest = false;
+                    state.error = '';
+                    state.isSuccessRequest = true;
+                    if (typeof action.payload === 'number' && action.payload !== 200) {
+                        state.isErrorStatus = true;
+                    }
+                })
+                .addCase(changePassword.rejected, (state) => {
+                    state.isLoadingRequest = false;
+                    state.error = 'something was wrong!';
                 })
                 .addDefaultCase(() => {})
         }

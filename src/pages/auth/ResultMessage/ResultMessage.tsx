@@ -1,9 +1,10 @@
 import React from 'react';
 import './ResultMessage.scss';
 import {Button, Result} from "antd";
+import VerificationInput from "react-verification-input";
 import {useAppDispatch, useAppSelector} from "@hooks/typed-react-redux-hooks";
 import {push} from "redux-first-history";
-import {apiRequestSlice} from "@redux/reducers/apiRequestSlice";
+import {apiRequestSlice, confirmEmail} from "@redux/reducers/apiRequestSlice";
 interface IResultMessage {
     type: string;
 }
@@ -21,8 +22,8 @@ interface IDataMessage {
     };
 }
 export const ResultMessage:React.FC<IResultMessage> = ({type}) => {
-    const {deleteErrorStatus, deleteSuccessStatus} = apiRequestSlice.actions;
-    const {login} = useAppSelector(state => state.apiRequestSlice);
+    const {deleteErrorStatus, deleteSuccessStatus, setCheckCodeInput} = apiRequestSlice.actions;
+    const {login, isErrorStatus, checkCodeInputValue} = useAppSelector(state => state.apiRequestSlice);
     const dispatch = useAppDispatch();
     const dataMessage:IDataMessage = {
         'error-login': {
@@ -104,17 +105,40 @@ export const ResultMessage:React.FC<IResultMessage> = ({type}) => {
             dataTestId: 'check-back-button'
         },
         'confirm-email': {
-            headerMessage: 'Введите код для восстановления аккаунта',
+            headerMessage: (isErrorStatus) ? 'Неверный код. Введите код для восстановления аккаунта' : 'Введите код для восстановления аккаунта',
             descrMessage: `Мы отправили вам на e-mail ${login} шестизначный код. Введите его в поле ниже.`,
             btnText: 'Назад',
-            status: undefined,
+            status: (isErrorStatus) ? 'error' : undefined,
             classname: 'error-message-modal big',
             btnWidth: '85px',
+            btnClickEvent: () => {}, //отрефактори потом
+            dataTestId: 'verification-input'
+        },
+        'error-change-password': {
+            headerMessage: 'Данные не сохранились',
+            descrMessage: 'Что-то пошло не так. Попробуйте еще раз',
+            btnText: 'Повторить',
+            status: 'error',
+            classname: 'error-message-modal warning',
+            btnWidth: '100%',
+            btnClickEvent: () => {
+                dispatch(push('/auth'));
+                dispatch(deleteErrorStatus());
+            },
+            dataTestId: 'change-retry-button'
+        },
+        'success-change-password': {
+            headerMessage: 'Пароль успешно изменен',
+            descrMessage: 'Теперь можно войти в аккаунт, используя свой логин и новый пароль',
+            btnText: 'Вход',
+            status: 'success',
+            classname: 'error-message-modal warning',
+            btnWidth: '100%',
             btnClickEvent: () => {
                 dispatch(push('/auth'));
                 dispatch(deleteSuccessStatus());
             },
-            dataTestId: ''
+            dataTestId: 'change-entry-button'
         }
     }
     return (
@@ -124,12 +148,35 @@ export const ResultMessage:React.FC<IResultMessage> = ({type}) => {
                 title={dataMessage[type].headerMessage}
                 subTitle={dataMessage[type].descrMessage}
                 extra={
-                    <Button type="primary"
-                            style={{width: dataMessage[type].btnWidth}}
-                            data-test-id={dataMessage[type].dataTestId}
-                            block onClick={dataMessage[type].btnClickEvent}>
-                        {dataMessage[type].btnText}
-                    </Button>
+                <>
+                    {(type === 'confirm-email')
+                        ? null
+                        :
+                        <Button type="primary"
+                                style={{width: dataMessage[type].btnWidth}}
+                                data-test-id={dataMessage[type].dataTestId}
+                                block onClick={dataMessage[type].btnClickEvent}>
+                            {dataMessage[type].btnText}
+                        </Button> }
+                    {(type === 'confirm-email')
+                        ? <>
+                            <VerificationInput
+                                value={checkCodeInputValue}
+                                inputProps={{'data-test-id' : dataMessage[type].dataTestId}}
+                                placeholder={''}
+                                onChange={(value) => {dispatch(setCheckCodeInput(value))}}
+                                onComplete={(value) => {dispatch(confirmEmail({login: login, code: value}))}}
+                                classNames={{
+                                    container: "input-wrapper",
+                                    character: "input-character",
+                                    characterInactive: (isErrorStatus && checkCodeInputValue === '') ? "input-character-inactive-error" : "input-character-inactive",
+                                    characterSelected: "input-character-selected",
+                                    characterFilled: "input-character-filled",
+                                }}
+                            />
+                            <span className='extra-subTitle'>Не пришло письмо? Проверьте папку Спам.</span>
+                        </> : null}
+                </>
                 }
             />
         </div>

@@ -4,7 +4,7 @@ import {Button, Checkbox, Grid, Input, Form} from "antd";
 import {EyeInvisibleOutlined, EyeTwoTone, GooglePlusOutlined} from "@ant-design/icons";
 import {useAppDispatch, useAppSelector} from "@hooks/typed-react-redux-hooks";
 import {
-    apiRequestSlice,
+    apiRequestSlice, changePassword,
     checkEmail,
     fetchToken,
     registerNewUser
@@ -19,13 +19,16 @@ export const FormComponent: React.FC<IFormComponentProps> = ({type}) => {
     const screens = useBreakpoint();
     const dispatch = useAppDispatch();
     const {previousLocation} = useAppSelector(state => state.router);
-    const {login, password} = useAppSelector(state => state.apiRequestSlice);
+    const {login, password, firstConfirmPassword, secondConfirmPassword} = useAppSelector(state => state.apiRequestSlice);
+
     const {saveRegDataBeforeError} = apiRequestSlice.actions;
     useEffect(() => {
         if (previousLocation[1]?.location === '/result/error') {
             dispatch(registerNewUser({login, password}));
         } else if (previousLocation[1]?.location === '/result/error-check-email') {
             dispatch(checkEmail(login));
+        } else if (previousLocation[1]?.location === '/result/error-change-password') {
+            dispatch(changePassword({password: firstConfirmPassword, confirmPassword: secondConfirmPassword}));
         }
     })
     const sendAuthData = (inputValues: IInputValues) => {
@@ -56,8 +59,9 @@ export const FormComponent: React.FC<IFormComponentProps> = ({type}) => {
                     />
                 </Form.Item>
                 <Form.Item
+                    help={'Пароль не менее 8 символов, с заглавной буквой и цифрой'}
                     name="password"
-                    rules={[{ required: true, message: '' }, { pattern: /^(?=.*[A-Z])(?=.*\d).{8,}$/, message: '' }]}
+                    rules={[{ required: true, message: '' }, { pattern: /^(?=.*[A-Z])(?=.*\d).{8,}$/, message: 'Пароль не менее 8 символов, с заглавной буквой и цифрой' }]}
                 >
                     {/*исправь регулярку чтобы проверяла спец символы*/}
                     <Input.Password
