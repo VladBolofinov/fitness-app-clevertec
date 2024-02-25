@@ -13,7 +13,7 @@ interface IDataMessage {
         headerMessage: string;
         descrMessage: string;
         btnText: string;
-        status: 'success' | 'error' | 'info' | 'warning' | '404' | '403' | '500',
+        status: 'success' | 'error' | 'info' | 'warning' | '404' | '403' | '500' | undefined,
         classname: 'error-message-modal warning' | 'error-message-modal' | 'error-message-modal 500',
         btnWidth: string;
         btnClickEvent: () => {}; //типизируй нормально
@@ -107,7 +107,7 @@ export const ResultMessage:React.FC<IResultMessage> = ({type}) => {
             headerMessage: 'Введите код для восстановления аккаунта',
             descrMessage: `Мы отправили вам на e-mail ${login} шестизначный код. Введите его в поле ниже.`,
             btnText: 'Назад',
-            status: '500',
+            status: undefined,
             classname: 'error-message-modal big',
             btnWidth: '85px',
             btnClickEvent: () => {
