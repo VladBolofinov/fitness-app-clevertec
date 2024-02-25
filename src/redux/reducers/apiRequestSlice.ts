@@ -8,7 +8,7 @@ const initialState: IApiRequest = {
     error: '',
     isLoadingRequest: false,
     isErrorStatus: false,
-    isRegistrationSuccess: false,
+    isSuccessRequest: false,
     login: '',
     password: ''
 }
@@ -48,11 +48,8 @@ export const apiRequestSlice = createSlice({
         deleteErrorStatus(state) {
             state.isErrorStatus = false;
         },
-        deleteRegistrationStatus(state) {
-            state.isRegistrationSuccess = false;
-        },
-        saveEmailBeforeRequest(state, action: PayloadAction<string>) {
-            state.login = action.payload;
+        deleteSuccessStatus(state) {
+            state.isSuccessRequest = false;
         },
         saveRegDataBeforeError(state, action: PayloadAction<IInputValues>) {
             state.login = action.payload.login;
@@ -92,7 +89,7 @@ export const apiRequestSlice = createSlice({
                     //типизируй экшен нормально
                     state.isLoadingRequest = false;
                     state.error = '';
-                    state.isRegistrationSuccess = true;
+                    state.isSuccessRequest = true;
                     if (typeof action.payload === 'number' && action.payload === 409) {
                         state.isErrorStatus = true;
                     } else if (typeof action.payload === 'number' && action.payload !== 201) {
@@ -109,7 +106,7 @@ export const apiRequestSlice = createSlice({
                     //типизируй экшен нормально
                     state.isLoadingRequest = false;
                     state.error = '';
-                    state.isRegistrationSuccess = true;
+                    state.isSuccessRequest = true;
                     if (typeof action.payload === 'number' && action.payload === 404) {
                         state.isErrorStatus = true;
                     } else if (typeof action.payload === 'number' && action.payload !== 200) {

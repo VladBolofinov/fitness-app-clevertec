@@ -3,7 +3,7 @@ export interface IApiRequest {
     error: string;
     isLoadingRequest: boolean;
     isErrorStatus: boolean;
-    isRegistrationSuccess: boolean;
+    isSuccessRequest: boolean;
     login: string;
     password: string;
 }

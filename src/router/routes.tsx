@@ -10,7 +10,7 @@ import {useAppSelector} from "@hooks/typed-react-redux-hooks";
 
 export const RoutesComponent = () => {
     //сделай потом типизацию через enum
-    const {isErrorStatus, isRegistrationSuccess} = useAppSelector(state => state.apiRequestSlice);
+    const {isErrorStatus, isSuccessRequest} = useAppSelector(state => state.apiRequestSlice);
     useEffect(() => {
         return () => {
             sessionStorage.clear();
@@ -23,12 +23,12 @@ return (
         <Route path={'/auth'} element={<RequireAuth><AuthPage><FormWrapper/></AuthPage></RequireAuth>}/>
         <Route path={'/auth/registration'} element={<RequireAuth><AuthPage><FormWrapper/></AuthPage> </RequireAuth>}/>
         <Route path={'/result/error-login'} element={(isErrorStatus) ? <AuthPage><ResultMessage type={'error-login'}/></AuthPage> : <Navigate to="/auth" />} />
-        <Route path={'/result/success'} element={(isRegistrationSuccess) ? <AuthPage><ResultMessage type={'success'}/></AuthPage> : <Navigate to="/auth" />}/>
+        <Route path={'/result/success'} element={(isSuccessRequest) ? <AuthPage><ResultMessage type={'success'}/></AuthPage> : <Navigate to="/auth" />}/>
         <Route path={'/result/error-user-exist'} element={(isErrorStatus) ? <AuthPage><ResultMessage type={'error-user-exist'}/></AuthPage> : <Navigate to="/auth" />}/>
         <Route path={'/result/error'} element={(isErrorStatus) ? <AuthPage><ResultMessage type={'error'}/></AuthPage> : <Navigate to="/auth" />}/>
         <Route path={'/result/error-check-email-no-exist'} element={(isErrorStatus) ? <AuthPage><ResultMessage type={'error-check-email-no-exist'}/></AuthPage> : <Navigate to="/auth" />}/>
         <Route path={'/result/error-check-email'} element={(isErrorStatus) ? <AuthPage><ResultMessage type={'error-check-email'}/></AuthPage> :<Navigate to="/auth" />}/>
-        <Route path={'/auth/confirm-email'} element={(isRegistrationSuccess) ? <AuthPage><ResultMessage type={'confirm-email'}/></AuthPage> :<Navigate to="/auth" />}/>
+        <Route path={'/auth/confirm-email'} element={(isSuccessRequest) ? <AuthPage><ResultMessage type={'confirm-email'}/></AuthPage> :<Navigate to="/auth" />}/>
         {/*поменяй логику isregistrsuccess в компоненте confirm-email либо переименуй на универсальное название*/}
         <Route path={'/result/error-change-password'} element={(isErrorStatus) ? <ResultPage /> :<Navigate to="/auth" />}/>
         <Route path={'/result/success-change-password'} element={(isErrorStatus) ? <ResultPage /> :<Navigate to="/auth" />}/>

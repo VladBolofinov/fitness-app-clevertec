@@ -21,7 +21,7 @@ interface IDataMessage {
     };
 }
 export const ResultMessage:React.FC<IResultMessage> = ({type}) => {
-    const {deleteErrorStatus, deleteRegistrationStatus} = apiRequestSlice.actions;
+    const {deleteErrorStatus, deleteSuccessStatus} = apiRequestSlice.actions;
     const {login} = useAppSelector(state => state.apiRequestSlice);
     const dispatch = useAppDispatch();
     const dataMessage:IDataMessage = {
@@ -47,7 +47,7 @@ export const ResultMessage:React.FC<IResultMessage> = ({type}) => {
             btnWidth: '100%',
             btnClickEvent: () => {
                 dispatch(push('/auth'));
-                dispatch(deleteRegistrationStatus());
+                dispatch(deleteSuccessStatus());
             },
             dataTestId: 'registration-enter-button'
         },
@@ -112,7 +112,7 @@ export const ResultMessage:React.FC<IResultMessage> = ({type}) => {
             btnWidth: '85px',
             btnClickEvent: () => {
                 dispatch(push('/auth'));
-                dispatch(deleteErrorStatus());
+                dispatch(deleteSuccessStatus());
             },
             dataTestId: ''
         }

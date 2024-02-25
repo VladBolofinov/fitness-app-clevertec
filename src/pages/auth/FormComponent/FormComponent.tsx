@@ -20,7 +20,7 @@ export const FormComponent: React.FC<IFormComponentProps> = ({type}) => {
     const dispatch = useAppDispatch();
     const {previousLocation} = useAppSelector(state => state.router);
     const {login, password} = useAppSelector(state => state.apiRequestSlice);
-    const {saveRegDataBeforeError, saveEmailBeforeRequest} = apiRequestSlice.actions;
+    const {saveRegDataBeforeError} = apiRequestSlice.actions;
     useEffect(() => {
         if (previousLocation[1]?.location === '/result/error') {
             dispatch(registerNewUser({login, password}));
@@ -59,6 +59,7 @@ export const FormComponent: React.FC<IFormComponentProps> = ({type}) => {
                     name="password"
                     rules={[{ required: true, message: '' }, { pattern: /^(?=.*[A-Z])(?=.*\d).{8,}$/, message: '' }]}
                 >
+                    {/*исправь регулярку чтобы проверяла спец символы*/}
                     <Input.Password
                         placeholder="Пароль"
                         style={{ marginBottom: type === 'auth' ? '16px' : '7px', marginTop: type === 'auth' ? '0px' : '7px' }}
@@ -97,8 +98,7 @@ export const FormComponent: React.FC<IFormComponentProps> = ({type}) => {
                         </Form.Item>
                         <Button type="link" onClick={() => {
                             if (Boolean(authForm.getFieldError('login').length) === false && authForm.isFieldTouched('login')) {
-                                console.log('можно отправлять запрос!');
-                                dispatch(saveEmailBeforeRequest(authForm.getFieldValue('login')));
+                                dispatch(saveRegDataBeforeError({login: authForm.getFieldValue('login'), password: ''}));
                                 dispatch(checkEmail(authForm.getFieldValue('login')));
                             }
                         }} data-test-id='login-forgot-button'>Забыли пароль?</Button>
