@@ -27,7 +27,7 @@ return (
             <Route path={'/result/success'} element={(isSuccessRequest) ? <AuthPageAsync><ResultMessage type={'success'}/></AuthPageAsync> : <Navigate to="/auth" />}/>
             <Route path={'/result/error-user-exist'} element={(isErrorStatus) ? <AuthPageAsync><ResultMessage type={'error-user-exist'}/></AuthPageAsync> : <Navigate to="/auth" />}/>
             <Route path={'/result/error'} element={(isErrorStatus) ? <AuthPageAsync><ResultMessage type={'error'}/></AuthPageAsync> : <Navigate to="/auth" />}/>
-            <Route path={'/result/error-check-email-no-exist'} element={(isErrorStatus) ? <AuthPageAsync><ResultMessage type={'error-check-email-no-exist'}/></AuthPageAsync> : <Navigate to="/auth" />}/>
+            <Route path={'/result/error-check-email-no-exist'} element={<AuthPageAsync><ResultMessage type={'error-check-email-no-exist'}/></AuthPageAsync>}/>
             <Route path={'/result/error-check-email'} element={(isErrorStatus) ? <AuthPageAsync><ResultMessage type={'error-check-email'}/></AuthPageAsync> :<Navigate to="/auth" />}/>
             <Route path={'/auth/confirm-email'} element={(isSuccessRequest) ? <AuthPageAsync><ResultMessage type={'confirm-email'}/></AuthPageAsync> :<Navigate to="/auth" />}/>
             <Route path={'/auth/change-password'} element={(isSuccessRequest) ? <AuthPageAsync><ChangePassword/></AuthPageAsync> : <Navigate to="/auth" />}/>
