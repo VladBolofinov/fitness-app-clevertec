@@ -16,7 +16,6 @@ const initialState: IApiRequest = {
     firstConfirmPassword: '',
     secondConfirmPassword: ''
 }
-
 export const fetchToken = createAsyncThunk(
     'apiRequest/fetchToken',
     ({login, password, remember}:IInputValues) => {
