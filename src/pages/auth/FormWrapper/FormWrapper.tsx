@@ -1,11 +1,12 @@
 import React from 'react';
-import {MainLogoIconMd, MainLogoIconXl} from "@pages/main/components/customSvgIcons/customSvgIcons";
+import './FormWrapper.scss';
 import {Grid, Tabs} from "antd";
+import {MainLogoIconMd, MainLogoIconXl} from "@pages/main/components/customSvgIcons/customSvgIcons";
 import {FormComponent} from "@pages/auth/FormComponent/FormComponent";
 import {history} from "@redux/configure-store";
 import {useLocation} from "react-router-dom";
 const { useBreakpoint } = Grid;
-import './FormWrapper.scss';
+
 export const FormWrapper:React.FC = () => {
     const screens = useBreakpoint();
     const location = useLocation();

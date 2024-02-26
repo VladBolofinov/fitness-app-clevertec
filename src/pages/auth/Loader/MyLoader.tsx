@@ -1,7 +1,8 @@
 import React from 'react';
+import './MyLoader.scss';
 import Lottie from "lottie-react";
 import loaderAnimation from './loader-animation.json';
-import './MyLoader.scss';
+
 export const MyLoader:React.FC = () => {
     return (
         <div className='loader-wrapper'>

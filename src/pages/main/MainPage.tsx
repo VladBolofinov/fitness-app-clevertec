@@ -16,7 +16,7 @@ import {history} from "@redux/configure-store";
 const { useBreakpoint } = Grid;
 const { Header, Content } = Layout;
 
-export const MainPage: React.FC = () => {
+const MainPage: React.FC = () => {
     const [collapsed, setCollapsed] = useState(false);
     const screens = useBreakpoint();
 
@@ -54,3 +54,4 @@ export const MainPage: React.FC = () => {
         </Layout>
     );
 };
+export default MainPage;
