@@ -11,22 +11,19 @@ export const useHttp = () => {
                     "password": password
                 }
             })
-            //console.log(response);
             if (response.status === 200) {
                 history.push('/main');
             }
             return {token: response.data.accessToken, inputCheck: rememberUser};
         } catch (e) {
-            //console.log('сработал блок catch')
-            //console.log(e);
-            //console.log(e.response.data.statusCode);
-            if (e.response.status !== 200) {
-                history.push('/result/error-login');
+            if (axios.isAxiosError(e)) {
+                if (e.response?.status !== 200) {
+                    history.push('/result/error-login');
+                }
+                return e.response?.status;
             }
-            return e.response.status;
         }
     }
-
     const registerNewUser = async (username : string, password: string) => {
         try {
             const response = await axios({
@@ -37,23 +34,17 @@ export const useHttp = () => {
                   'password': password
                 }
             })
-            console.log(response);
             if (response.status === 201) {
                 history.push('/result/success');
             }
-
             return response.status;
         } catch (e) {
-            console.log('срaботал блок кэтч')
-            if (e.response.status === 409) {
-                history.push('/result/error-user-exist');
-            } else {
-                history.push('/result/error');
+            if (axios.isAxiosError(e)) {
+                (e.response?.status === 409) ? history.push('/result/error-user-exist') : history.push('/result/error');
+                return e.response?.status;
             }
-            return e.response.status;
         }
     }
-
     const checkEmail = async (email : string) => {
         try {
             const response = await axios({
@@ -63,28 +54,23 @@ export const useHttp = () => {
                     'email' : email,
                 }
             })
-            console.log(response);
             if (response.status === 200) {
                 history.push('/auth/confirm-email');
             }
-
             return response.status;
         } catch (e) {
-            console.log('срaботал блок кэтч')
-            console.log(e.response);
-            if (e.response.status === 404) {
-                if (e.response.data.message === 'Email не найден') {
-                    console.log(e.response.message);
-                    history.push('/result/error-check-email-no-exist');
+            if (axios.isAxiosError(e)) {
+                if (e.response?.status === 404) {
+                    if (e.response.data.message === 'Email не найден') {
+                        history.push('/result/error-check-email-no-exist');
+                    }
+                } else {
+                    history.push('/result/error-check-email');
                 }
-            } else {
-                history.push('/result/error-check-email');
+                return e.response?.status;
             }
-
-            return e.response.status;
         }
     }
-
     const confirmEmail = async (email : string, code: string) => {
         try {
             const response = await axios({
@@ -96,13 +82,12 @@ export const useHttp = () => {
                     'code': code
                 }
             })
-            console.log(response);
             history.push('/auth/change-password');
             return response.status;
         } catch (e) {
-            console.log('срaботал блок кэтч')
-            console.log(e.response);
-            return e.response.status;
+            if (axios.isAxiosError(e)) {
+                return e.response?.status;
+            }
         }
     }
     const changePassword = async (password : string, confirmPassword: string) => {
@@ -116,14 +101,13 @@ export const useHttp = () => {
                     'confirmPassword': confirmPassword,
                 }
             })
-            console.log(response);
             history.push('/result/success-change-password');
             return response.status;
         } catch (e) {
-            console.log('срaботал блок кэтч')
-            console.log(e.response);
-            history.push('/result/error-change-password')
-            return e.response.status;
+            if (axios.isAxiosError(e)) {
+                history.push('/result/error-change-password')
+                return e.response?.status;
+            }
         }
     }
     return {

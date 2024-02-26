@@ -1,11 +1,12 @@
 import {createSlice, createAsyncThunk, PayloadAction} from "@reduxjs/toolkit";
-import {IApiRequest} from "@redux/stateTypes/IApiRequestSlice";
+import {IApiRequest} from "@redux/types/IApiRequestSlice";
 import {useHttp} from "@hooks/http.hook";
 import {IInputValues} from "@pages/main/components/types/IInputValues";
+import {ConfirmPasswordArguments} from "@redux/types/ConfirmPasswordArguments";
+import {FetchTokenFulfilledPayload} from "@redux/types/FetchTokenPayload";
 
 const initialState: IApiRequest = {
     jwt: '',
-    error: '',
     isLoadingRequest: false,
     isErrorStatus: false,
     isSuccessRequest: false,
@@ -15,10 +16,6 @@ const initialState: IApiRequest = {
     firstConfirmPassword: '',
     secondConfirmPassword: ''
 }
-type FetchTokenFulfilledPayload = {
-    token: string;
-    inputCheck: boolean;
-};
 
 export const fetchToken = createAsyncThunk(
     'apiRequest/fetchToken',
@@ -52,7 +49,7 @@ export const confirmEmail = createAsyncThunk(
 )
 export const changePassword = createAsyncThunk(
     'apiRequest/changePassword',
-    ({password, confirmPassword}: { password: string, confirmPassword: string }) => {
+    ({password, confirmPassword}: ConfirmPasswordArguments) => {
         const {changePassword} = useHttp();
         return changePassword(password, confirmPassword);
     }
@@ -75,7 +72,7 @@ export const apiRequestSlice = createSlice({
         setCheckCodeInput(state, action: PayloadAction<string>) {
             state.checkCodeInputValue = action.payload;
         },
-        saveConfirmPasswords(state, action: PayloadAction<any>) {
+        saveConfirmPasswords(state, action: PayloadAction<ConfirmPasswordArguments>) {
             state.firstConfirmPassword = action.payload.password;
             state.secondConfirmPassword = action.payload.confirmPassword;
         }
@@ -85,7 +82,6 @@ export const apiRequestSlice = createSlice({
             builder.addCase(fetchToken.pending, (state) => {state.isLoadingRequest = true;})
                 .addCase(fetchToken.fulfilled, (state, action: PayloadAction<FetchTokenFulfilledPayload | number>) => {
                     state.isLoadingRequest = false;
-                    state.error = '';
                     if (typeof action.payload === 'number' && action.payload === 401) {
                         state.isErrorStatus = true;
                     } else if (typeof action.payload === 'number' && action.payload === 404) {
@@ -95,83 +91,65 @@ export const apiRequestSlice = createSlice({
                         const { token, inputCheck } = action.payload;
                         if (token) {
                             state.jwt = token;
-                            if (inputCheck) {
-                                localStorage.setItem('jwtToken', token);
-                            } else {
-                                sessionStorage.setItem('jwtToken', token);
-                            }
+                            (inputCheck) ? localStorage.setItem('jwtToken', token) : sessionStorage.setItem('jwtToken', token);
                         }
                     }
                 })
                 .addCase(fetchToken.rejected, (state) => {
                     state.isLoadingRequest = false;
-                    state.error = 'something was wrong!';
                     state.isErrorStatus = true;
                 })
                 .addCase(registerNewUser.pending, (state) => {state.isLoadingRequest = true;})
-                .addCase(registerNewUser.fulfilled, (state, action:PayloadAction<any>) => {
-                    //типизируй экшен нормально
+                .addCase(registerNewUser.fulfilled, (state, action:PayloadAction<number>) => {
                     state.isLoadingRequest = false;
-                    state.error = '';
                     state.isSuccessRequest = true;
-                    if (typeof action.payload === 'number' && action.payload === 409) {
+                    if (action.payload === 409) {
                         state.isErrorStatus = true;
-                    } else if (typeof action.payload === 'number' && action.payload !== 201) {
+                    } else if (action.payload !== 201) {
                         state.isErrorStatus = true;
                     }
                 })
                 .addCase(registerNewUser.rejected, (state) => {
                     state.isLoadingRequest = false;
-                    state.error = 'something was wrong!';
                     state.isErrorStatus = true;
                 })
                 .addCase(checkEmail.pending, (state) => {state.isLoadingRequest = true;})
-                .addCase(checkEmail.fulfilled, (state, action:PayloadAction<any>) => {
-                    //типизируй экшен нормально
+                .addCase(checkEmail.fulfilled, (state, action:PayloadAction<number>) => {
                     state.isLoadingRequest = false;
-                    state.error = '';
                     state.isSuccessRequest = true;
-                    if (typeof action.payload === 'number' && action.payload === 404) {
+                    if (action.payload === 404) {
                         state.isErrorStatus = true;
-                    } else if (typeof action.payload === 'number' && action.payload !== 200) {
+                    } else if (action.payload !== 200) {
                         state.isErrorStatus = true;
                     }
                 })
                 .addCase(checkEmail.rejected, (state) => {
                     state.isLoadingRequest = false;
-                    state.error = 'something was wrong!';
                     state.isErrorStatus = true;
                 })
                 .addCase(confirmEmail.pending, (state) => {state.isLoadingRequest = true;})
-                .addCase(confirmEmail.fulfilled, (state, action:PayloadAction<any>) => {
-                    //типизируй экшен нормально
+                .addCase(confirmEmail.fulfilled, (state, action:PayloadAction<number>) => {
                     state.isLoadingRequest = false;
-                    state.error = '';
                     state.isSuccessRequest = true;
-                    if (typeof action.payload === 'number' && action.payload !== 200) {
+                    if (action.payload !== 200) {
                         state.isErrorStatus = true;
                         state.checkCodeInputValue = '';
                     }
                 })
                 .addCase(confirmEmail.rejected, (state) => {
                     state.isLoadingRequest = false;
-                    state.error = 'something was wrong!';
                 })
                 .addCase(changePassword.pending, (state) => {state.isLoadingRequest = true;})
-                .addCase(changePassword.fulfilled, (state, action:PayloadAction<any>) => {
-                    //типизируй экшен нормально
+                .addCase(changePassword.fulfilled, (state, action:PayloadAction<number>) => {
                     state.isLoadingRequest = false;
-                    state.error = '';
                     state.isSuccessRequest = true;
-                    if (typeof action.payload === 'number' && action.payload !== 200) {
+                    if (action.payload !== 200) {
                         state.isErrorStatus = true;
                     }
                 })
                 .addCase(changePassword.rejected, (state) => {
                     state.isLoadingRequest = false;
-                    state.error = 'something was wrong!';
                 })
-                .addDefaultCase(() => {})
         }
 })
 

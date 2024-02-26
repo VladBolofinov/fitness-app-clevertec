@@ -20,7 +20,6 @@ export const FormComponent: React.FC<IFormComponentProps> = ({type}) => {
     const dispatch = useAppDispatch();
     const {previousLocation} = useAppSelector(state => state.router);
     const {login, password, firstConfirmPassword, secondConfirmPassword} = useAppSelector(state => state.apiRequestSlice);
-
     const {saveRegDataBeforeError} = apiRequestSlice.actions;
     useEffect(() => {
         if (previousLocation[1]?.location === '/result/error') {

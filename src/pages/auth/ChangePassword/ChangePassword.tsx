@@ -4,12 +4,12 @@ import {Input, Form, Button} from "antd";
 import {EyeInvisibleOutlined, EyeTwoTone} from "@ant-design/icons";
 import {apiRequestSlice, changePassword} from "@redux/reducers/apiRequestSlice";
 import {useAppDispatch} from "@hooks/typed-react-redux-hooks";
+import {ForgetPasswordFields} from "@pages/main/components/types/IInputValues";
 export const ChangePassword:React.FC = () => {
     const [changePasswordForm] = Form.useForm();
     const dispatch = useAppDispatch();
     const {saveConfirmPasswords} = apiRequestSlice.actions;
-    const sendConfirmData = (values: any) => {
-        console.log(values['password-compare']);
+    const sendConfirmData = (values: ForgetPasswordFields) => {
         dispatch(saveConfirmPasswords({password: values.password, confirmPassword: values['password-compare']}));
         dispatch(changePassword({password: values.password, confirmPassword: values['password-compare']}));
     }
@@ -17,7 +17,6 @@ export const ChangePassword:React.FC = () => {
         <div className="wrapper-change-password-form">
             <div className="change-password-form">
                 <span className='modal-header'>Восстановление аккаунта</span>
-
                 <Form
                 onFinish={sendConfirmData}
                 form={changePasswordForm}
@@ -79,6 +78,3 @@ export const ChangePassword:React.FC = () => {
         </div>
     );
 };
-
-
-
