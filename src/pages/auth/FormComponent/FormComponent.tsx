@@ -35,10 +35,16 @@ export const FormComponent: React.FC<IFormComponentProps> = ({type}) => {
         const { login, password, remember } = inputValues;
         dispatch(fetchToken({ login, password, remember }));
     };
-    const sendRegistrationData = (values: any) => {
+    const sendRegistrationData = (values: IInputValues) => {
         const { login, password } = values;
         dispatch(saveRegDataBeforeError({login, password}));
         dispatch(registerNewUser({login, password}));
+    }
+    const sendForgetPassword = () => {
+        if (!authForm.getFieldError('login').length && authForm.isFieldTouched('login')) {
+            dispatch(saveRegDataBeforeError({login: authForm.getFieldValue('login'), password: ''}));
+            dispatch(checkEmail(authForm.getFieldValue('login')));
+        }
     }
     return (
         <>
@@ -59,14 +65,12 @@ export const FormComponent: React.FC<IFormComponentProps> = ({type}) => {
                     />
                 </Form.Item>
                 <Form.Item
-                    help={'Пароль не менее 8 символов, с заглавной буквой и цифрой'}
+                    help={type === 'auth' ? '' : 'Пароль не менее 8 символов, с заглавной буквой и цифрой'}
                     name="password"
-                    rules={[{ required: true, message: '' }, { pattern: /^(?=.*[A-Z])(?=.*\d).{8,}$/, message: 'Пароль не менее 8 символов, с заглавной буквой и цифрой' }]}
+                    rules={[{ required: true, message: '' }, { pattern: /^(?=.*[A-Z])(?=.*\d)(?!.*[^\w\d\s]).{8,}$/, message: 'Пароль не менее 8 символов, с заглавной буквой и цифрой' }]}
                 >
-                    {/*исправь регулярку чтобы проверяла спец символы*/}
                     <Input.Password
                         placeholder="Пароль"
-                        style={{ marginBottom: type === 'auth' ? '16px' : '7px', marginTop: type === 'auth' ? '0px' : '7px' }}
                         iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
                         data-test-id={type === 'auth' ? 'login-password' : 'registration-password'}
                     />
@@ -94,18 +98,14 @@ export const FormComponent: React.FC<IFormComponentProps> = ({type}) => {
                             data-test-id='registration-confirm-password'
                         />
                     </Form.Item>
-                )}{type === 'auth'
+                )}
+                {type === 'auth'
                 ? <Form.Item>
                     <div className='checkbox-wrapper'>
                         <Form.Item name="remember" valuePropName="checked" noStyle>
                             <Checkbox data-test-id='login-remember'>Запомнить меня</Checkbox>
                         </Form.Item>
-                        <Button type="link" onClick={() => {
-                            if (Boolean(authForm.getFieldError('login').length) === false && authForm.isFieldTouched('login')) {
-                                dispatch(saveRegDataBeforeError({login: authForm.getFieldValue('login'), password: ''}));
-                                dispatch(checkEmail(authForm.getFieldValue('login')));
-                            }
-                        }} data-test-id='login-forgot-button'>Забыли пароль?</Button>
+                        <Button type="link" onClick={sendForgetPassword} data-test-id='login-forgot-button'>Забыли пароль?</Button>
                     </div>
                 </Form.Item>
                 : null}
@@ -116,7 +116,7 @@ export const FormComponent: React.FC<IFormComponentProps> = ({type}) => {
                                 type="primary"
                                 block
                                 htmlType="submit"
-                                style={{ marginTop: type === 'auth' ? '0px' : '32px' }}
+                                style={{ marginTop: type === 'auth' ? '0px' : '32px', height: '40px' }}
                                 data-test-id={type === 'auth' ?'login-submit-button' : 'registration-submit-button'}
                                 disabled={type === 'auth' ? false :
                                     Boolean(registrationForm.getFieldsError().filter(({ errors }) => errors.length).length)

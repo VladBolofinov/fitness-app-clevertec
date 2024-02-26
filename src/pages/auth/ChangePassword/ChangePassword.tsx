@@ -27,9 +27,8 @@ export const ChangePassword:React.FC = () => {
                 <Form.Item
                     help={'Пароль не менее 8 символов, с заглавной буквой и цифрой'}
                     name="password"
-                    rules={[{ required: true, message: '' }, { pattern: /^(?=.*[A-Z])(?=.*\d).{8,}$/, message: 'Пароль не менее 8 символов, с заглавной буквой и цифрой' }]}
+                    rules={[{ required: true, message: '' }, { pattern: /^(?=.*[A-Z])(?=.*\d)(?!.*[^\w\d\s]).{8,}$/, message: 'Пароль не менее 8 символов, с заглавной буквой и цифрой' }]}
                 >
-                    {/*//исправь регулярку чтобы проверяла спец символы*/}
                     <Input.Password
                         placeholder="Новый пароль"
                         style={{ marginTop: '32px' }}
