@@ -95,7 +95,7 @@ export const ResultMessage:React.FC<IResultMessage> = ({type}) => {
             },
             'confirm-email': {
                 headerMessage: (isErrorStatus) ? 'Неверный код. Введите код для восстановления аккаунта' : 'Введите код для восстановления аккаунта',
-                descrMessage: `Мы отправили вам на e-mail ${login} шестизначный код. Введите его в поле ниже.`,
+                descrMessage: <span>Мы отправили вам на e-mail <span className='descr-message-email'>{login}</span> шестизначный код.Введите его в поле ниже.</span>,
                 btnText: 'Назад',
                 status: (isErrorStatus) ? 'error' : undefined,
                 classname: 'error-message-modal big',
@@ -129,7 +129,7 @@ export const ResultMessage:React.FC<IResultMessage> = ({type}) => {
                 dataTestId: 'change-entry-button'
             }
         }
-    }, [])
+    }, [login])
     return (
         <div className={dataMessage[type].classname}>
             <Result

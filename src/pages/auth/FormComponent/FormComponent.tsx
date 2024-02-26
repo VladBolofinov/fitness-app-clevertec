@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import './FormComponent.scss';
-import {Button, Checkbox, Grid, Input, Form} from "antd";
+import {Button, Checkbox, Input, Form} from "antd";
 import {EyeInvisibleOutlined, EyeTwoTone, GooglePlusOutlined} from "@ant-design/icons";
 import {useAppDispatch, useAppSelector} from "@hooks/typed-react-redux-hooks";
 import {
@@ -11,12 +11,10 @@ import {
 } from "@redux/reducers/apiRequestSlice";
 import {IFormComponentProps} from "@pages/auth/types/IFormComponentProps";
 import {IInputValues} from "@pages/main/components/types/IInputValues";
-const { useBreakpoint } = Grid;
 
 export const FormComponent: React.FC<IFormComponentProps> = ({type}) => {
     const [authForm] = Form.useForm();
     const [registrationForm] = Form.useForm();
-    const screens = useBreakpoint();
     const dispatch = useAppDispatch();
     const {previousLocation} = useAppSelector(state => state.router);
     const {login, password, firstConfirmPassword, secondConfirmPassword} = useAppSelector(state => state.apiRequestSlice);
@@ -127,7 +125,7 @@ export const FormComponent: React.FC<IFormComponentProps> = ({type}) => {
                             <Button
                                 block
                                 style={{ marginTop: '16px' }}
-                                icon={(screens.xs) ? null : <GooglePlusOutlined />}>
+                                icon={<span className='google-icon'><GooglePlusOutlined /></span>}>
                                 Войти через Google
                             </Button>
                         </>

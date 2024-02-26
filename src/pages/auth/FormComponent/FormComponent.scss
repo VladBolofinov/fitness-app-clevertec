@@ -32,6 +32,9 @@
 .ant-form-item-explain {
     font-size: 12px;
 }
+span.google-icon {
+    margin-right: 8px;
+}
 @media screen and (max-width: 360px) {
     .ant-tabs-nav-list {
         width: 296px;
@@ -44,5 +47,8 @@
     }
     .ant-form-item-control-input {
         width: 296px;
+    }
+    span.google-icon {
+        display: none;
     }
 }

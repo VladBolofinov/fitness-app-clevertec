@@ -18,6 +18,9 @@
     flex-direction: column;
     margin-top: 48px;
 }
+.logo-md {
+    display: none;
+}
 @media screen and (max-width: 834px) {
     .wrapper-entry-form {
         margin-top: 200px;
@@ -35,5 +38,11 @@
         height: 374px;
         margin-top: 32px;
         align-items: normal;
+    }
+    .logo-md {
+        display: block;
+    }
+    .logo-xl {
+        display: none;
     }
 }

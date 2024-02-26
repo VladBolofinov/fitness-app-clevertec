@@ -28,15 +28,17 @@
 }
 .ant-result-title {
     font-weight: 500;
+    line-height: 130%;
+    width: 350px;
 }
 .ant-result-subtitle {
     color: var(--character-light-secondary-45);
+    width: 350px;
 }
 .ant-btn-primary {
     background: var(--primary-light-6);
 }
 .input-wrapper {
-    margin-top: 24px;
     margin-bottom: 10px;
     gap:12px;
 }
@@ -61,6 +63,13 @@
     border: 1px solid var(--character-light-border);
 }
 .extra-subTitle {
+    color: var(--character-light-secondary-45);
+}
+.ant-result-info .ant-result-icon > .anticon {
+    color: var(--primary-light-6);
+}
+.descr-message-email {
+    font-weight: 700;
     color: var(--character-light-secondary-45);
 }
 @media screen and (max-width: 834px) {
@@ -94,5 +103,11 @@
         width: 328px;
         height: 568px;
         margin-top: 0;
+    }
+    .ant-result-subtitle {
+        width: 264px;
+    }
+    .ant-result-title {
+        width: 264px;
     }
 }
