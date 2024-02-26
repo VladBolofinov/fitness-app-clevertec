@@ -10,7 +10,6 @@ import {MainPageAsync} from "@pages/main/MainPage.async";
 import {AuthPageAsync} from "@pages/auth/AuthPage.async";
 
 export const App = () => {
-    //сделай потом типизацию через enum
     const {isErrorStatus, isSuccessRequest} = useAppSelector(state => state.apiRequestSlice);
     useEffect(() => {
         return () => {
