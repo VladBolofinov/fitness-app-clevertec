@@ -6,37 +6,25 @@ export const useHttp = () => {
             const response = await axios({
                 method: 'post',
                 url: 'https://marathon-api.clevertec.ru/auth/login',
-                data: {
-                    "email": email,
-                    "password": password
-                }
+                data: {email, password}
             })
-            if (response.status === 200) {
-                history.push('/main');
-            }
+            history.push('/main');
             return {token: response.data.accessToken, inputCheck: rememberUser};
         } catch (e) {
             if (axios.isAxiosError(e)) {
-                if (e.response?.status !== 200) {
-                    history.push('/result/error-login');
-                }
+                history.push('/result/error-login');
                 return e.response?.status;
             }
         }
     }
-    const registerNewUser = async (username : string, password: string) => {
+    const registerNewUser = async (email : string, password: string) => {
         try {
             const response = await axios({
                 method: 'post',
                 url: 'https://marathon-api.clevertec.ru/auth/registration',
-                data: {
-                  'email' : username,
-                  'password': password
-                }
+                data: {email, password}
             })
-            if (response.status === 201) {
-                history.push('/result/success');
-            }
+            history.push('/result/success');
             return response.status;
         } catch (e) {
             if (axios.isAxiosError(e)) {
@@ -50,23 +38,15 @@ export const useHttp = () => {
             const response = await axios({
                 method: 'post',
                 url: 'https://marathon-api.clevertec.ru/auth/check-email',
-                data: {
-                    'email' : email,
-                }
+                data: {email}
             })
-            if (response.status === 200) {
-                history.push('/auth/confirm-email');
-            }
+            history.push('/auth/confirm-email');
             return response.status;
         } catch (e) {
             if (axios.isAxiosError(e)) {
-                if (e.response?.status === 404) {
-                    if (e.response.data.message === 'Email не найден') {
-                        history.push('/result/error-check-email-no-exist');
-                    }
-                } else {
-                    history.push('/result/error-check-email');
-                }
+                    (e.response?.data.message === 'Email не найден')
+                        ? history.push('/result/error-check-email-no-exist')
+                        : history.push('/result/error-check-email');
                 return e.response?.status;
             }
         }
@@ -77,10 +57,7 @@ export const useHttp = () => {
                 method: 'post',
                 url: 'https://marathon-api.clevertec.ru/auth/confirm-email',
                 withCredentials: true,
-                data: {
-                    'email' : email,
-                    'code': code
-                }
+                data: {email, code}
             })
             history.push('/auth/change-password');
             return response.status;
@@ -96,10 +73,7 @@ export const useHttp = () => {
                 method: 'post',
                 url: 'https://marathon-api.clevertec.ru/auth/change-password',
                 withCredentials: true,
-                data: {
-                    'password' : password,
-                    'confirmPassword': confirmPassword,
-                }
+                data: {password, confirmPassword,}
             })
             history.push('/result/success-change-password');
             return response.status;

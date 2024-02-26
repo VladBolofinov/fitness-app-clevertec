@@ -9,7 +9,7 @@ import {
 } from "@ant-design/icons";
 import { IMainPageComponentsProps } from "@pages/main/components/types/IMainPageComponentsProps";
 import React from "react";
-export const FooterContent:React.FC<IMainPageComponentsProps> = ({collapsed}:IMainPageComponentsProps) => {
+export const FooterContent:React.FC<IMainPageComponentsProps> = ({collapsed}) => {
     return (
         <>
             <div className={(collapsed) ? 'app-usage-item-wrapper collapsed' : 'app-usage-item-wrapper'}>

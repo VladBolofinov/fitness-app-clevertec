@@ -3,7 +3,6 @@ import './AuthPage.scss';
 import {MyLoader} from "@pages/auth/Loader/MyLoader";
 import {useAppSelector} from "@hooks/typed-react-redux-hooks";
 import {IAuthPageProps} from "@pages/auth/types/IAuthPageProps";
-
 const AuthPage: React.FC<IAuthPageProps> = ({children}) => {
     const {isLoadingRequest} = useAppSelector(state => state.apiRequestSlice);
     return (
