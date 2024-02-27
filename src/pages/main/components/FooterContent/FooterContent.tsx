@@ -9,30 +9,25 @@ import {
 } from "@ant-design/icons";
 import { IMainPageComponentsProps } from "@pages/main/components/types/IMainPageComponentsProps";
 import React from "react";
-export const FooterContent:React.FC<IMainPageComponentsProps> = ({collapsed}) => {
+export const FooterContent: React.FC<IMainPageComponentsProps> = ({ collapsed }) => {
+    const items = [
+        { title: 'Расписать тренировки', icon: <HeartFilled />, buttonText: 'Настройки' },
+        { title: 'Назначить календарь', icon: <CalendarOutlined />, buttonText: 'Календарь' },
+        { title: 'Заполнить профиль', icon: <IdcardOutlined />, buttonText: 'Профиль' }
+    ];
     return (
         <>
-            <div className={(collapsed) ? 'app-usage-item-wrapper collapsed' : 'app-usage-item-wrapper'}>
-                <div className={(collapsed) ? 'app-usage-item collapsed' : 'app-usage-item'}>
-                    <div className='item-title'>Расписать тренировки</div>
-                    <div className="item-btn-wrapper">
-                        <Button icon={<HeartFilled />} type={"link"}>Настройки</Button>
+            <div className={`app-usage-item-wrapper ${collapsed ? 'collapsed' : ''}`}>
+                {items.map((item, index) => (
+                    <div key={index} className={`app-usage-item ${collapsed ? 'collapsed' : ''}`}>
+                        <div className='item-title'>{item.title}</div>
+                        <div className="item-btn-wrapper">
+                            <Button icon={item.icon} type={"link"}>{item.buttonText}</Button>
+                        </div>
                     </div>
-                </div>
-                <div className={(collapsed) ? 'app-usage-item collapsed' : 'app-usage-item'}>
-                    <div className='item-title'>Назначить календарь</div>
-                    <div className="item-btn-wrapper">
-                        <Button icon={<CalendarOutlined />} type={"link"}>Календарь</Button>
-                    </div>
-                </div>
-                <div className={(collapsed) ? 'app-usage-item collapsed' : 'app-usage-item'}>
-                    <div className='item-title'>Заполнить профиль</div>
-                    <div className="item-btn-wrapper">
-                        <Button icon={<IdcardOutlined />} type={"link"}>Профиль</Button>
-                    </div>
-                </div>
+                ))}
             </div>
-            <div className={(collapsed) ? 'bottom-content-wrapper collapsed' : 'bottom-content-wrapper'}>
+            <div className={`bottom-content-wrapper ${collapsed ? 'collapsed' : ''}`}>
                 <Button type={"link"}>Смотреть отзывы</Button>
                 <div className="download-section">
                     <div className="download-link-descr">

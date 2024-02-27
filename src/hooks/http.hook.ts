@@ -1,5 +1,6 @@
 import axios from "axios";
 import {history} from "@redux/configure-store";
+import {FetchTokenFulfilledPayload} from "@redux/types/FetchTokenPayload";
 export const useHttp = () => {
     const getToken = async (email:string, password:string, rememberUser:boolean|undefined) => {
         try {
@@ -9,7 +10,8 @@ export const useHttp = () => {
                 data: {email, password}
             })
             history.push('/main');
-            return {token: response.data.accessToken, inputCheck: rememberUser};
+            const resultData:FetchTokenFulfilledPayload = {token: response.data.accessToken, inputCheck: rememberUser}
+            return resultData;
         } catch (e) {
             if (axios.isAxiosError(e)) {
                 history.push('/result/error-login');

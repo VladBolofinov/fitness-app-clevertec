@@ -3,7 +3,7 @@
     height: 1024px;
     background-image: url('../../assets/background-img/MainPage_light.png');
     background-size: auto 100%;
-    margin: 0 auto;
+    margin: var(--center-margin);
 }
 .ant-menu-inline {
     border-right: none;

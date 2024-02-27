@@ -7,7 +7,7 @@
     width: 368px;
 }
 .ant-form-item-explain-error {
-    font-size: 12px;
+    font-size: var(--font-size-small);
 }
 .ant-input-group-wrapper-status-error .ant-input-group-addon {
     color: var(--character-light-title-85);
@@ -30,7 +30,7 @@
     height: 40px;
 }
 .ant-form-item-explain {
-    font-size: 12px;
+    font-size: var(--font-size-small);
 }
 span.google-icon {
     margin-right: 8px;

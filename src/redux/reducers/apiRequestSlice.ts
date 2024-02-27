@@ -4,6 +4,7 @@ import {useHttp} from "@hooks/http.hook";
 import {IInputValues} from "@pages/main/components/types/IInputValues";
 import {ConfirmPasswordArguments} from "@redux/types/ConfirmPasswordArguments";
 import {FetchTokenFulfilledPayload} from "@redux/types/FetchTokenPayload";
+import {httpStatusCodes} from "@redux/types/httpStatusCodes";
 
 const initialState: IApiRequest = {
     jwt: '',
@@ -16,7 +17,7 @@ const initialState: IApiRequest = {
     firstConfirmPassword: '',
     secondConfirmPassword: ''
 }
-export const fetchToken = createAsyncThunk(
+export const getToken = createAsyncThunk(
     'apiRequest/fetchToken',
     ({login, password, remember}:IInputValues) => {
         const {getToken} = useHttp();
@@ -78,14 +79,9 @@ export const apiRequestSlice = createSlice({
     },
     extraReducers:
         (builder) => {
-            builder.addCase(fetchToken.pending, (state) => {state.isLoadingRequest = true;})
-                .addCase(fetchToken.fulfilled, (state, action: PayloadAction<FetchTokenFulfilledPayload | number>) => {
+            builder.addCase(getToken.pending, (state) => {state.isLoadingRequest = true;})
+                .addCase(getToken.fulfilled, (state, action: PayloadAction<FetchTokenFulfilledPayload | number | undefined>) => {
                     state.isLoadingRequest = false;
-                    if (typeof action.payload === 'number' && action.payload === 401) {
-                        state.isErrorStatus = true;
-                    } else if (typeof action.payload === 'number' && action.payload === 404) {
-                        state.isErrorStatus = true;
-                    }
                     if (typeof action.payload === 'object' && 'inputCheck' in action.payload) {
                         const { token, inputCheck } = action.payload;
                         if (token) {
@@ -93,18 +89,20 @@ export const apiRequestSlice = createSlice({
                             (inputCheck) ? localStorage.setItem('jwtToken', token) : sessionStorage.setItem('jwtToken', token);
                         }
                     }
+                    (typeof action.payload === 'number' && action.payload === httpStatusCodes['401'])
+                        ? state.isErrorStatus = true : state.isErrorStatus = true;
                 })
-                .addCase(fetchToken.rejected, (state) => {
+                .addCase(getToken.rejected, (state) => {
                     state.isLoadingRequest = false;
                     state.isErrorStatus = true;
                 })
                 .addCase(registerNewUser.pending, (state) => {state.isLoadingRequest = true;})
-                .addCase(registerNewUser.fulfilled, (state, action:PayloadAction<number>) => {
+                .addCase(registerNewUser.fulfilled, (state, action:PayloadAction<number | undefined>) => {
                     state.isLoadingRequest = false;
                     state.isSuccessRequest = true;
-                    if (action.payload === 409) {
+                    if (action.payload === httpStatusCodes['409']) {
                         state.isErrorStatus = true;
-                    } else if (action.payload !== 201) {
+                    } else if (action.payload !== httpStatusCodes['201']) {
                         state.isErrorStatus = true;
                     }
                 })
@@ -113,12 +111,12 @@ export const apiRequestSlice = createSlice({
                     state.isErrorStatus = true;
                 })
                 .addCase(checkEmail.pending, (state) => {state.isLoadingRequest = true;})
-                .addCase(checkEmail.fulfilled, (state, action:PayloadAction<number>) => {
+                .addCase(checkEmail.fulfilled, (state, action:PayloadAction<number | undefined>) => {
                     state.isLoadingRequest = false;
                     state.isSuccessRequest = true;
-                    if (action.payload === 404) {
+                    if (action.payload === httpStatusCodes['404']) {
                         state.isErrorStatus = true;
-                    } else if (action.payload !== 200) {
+                    } else if (action.payload !== httpStatusCodes['200']) {
                         state.isErrorStatus = true;
                     }
                 })
@@ -127,10 +125,10 @@ export const apiRequestSlice = createSlice({
                     state.isErrorStatus = true;
                 })
                 .addCase(confirmEmail.pending, (state) => {state.isLoadingRequest = true;})
-                .addCase(confirmEmail.fulfilled, (state, action:PayloadAction<number>) => {
+                .addCase(confirmEmail.fulfilled, (state, action:PayloadAction<number | undefined>) => {
                     state.isLoadingRequest = false;
                     state.isSuccessRequest = true;
-                    if (action.payload !== 200) {
+                    if (action.payload !== httpStatusCodes['200']) {
                         state.isErrorStatus = true;
                         state.checkCodeInputValue = '';
                     }
@@ -139,10 +137,10 @@ export const apiRequestSlice = createSlice({
                     state.isLoadingRequest = false;
                 })
                 .addCase(changePassword.pending, (state) => {state.isLoadingRequest = true;})
-                .addCase(changePassword.fulfilled, (state, action:PayloadAction<number>) => {
+                .addCase(changePassword.fulfilled, (state, action:PayloadAction<number | undefined>) => {
                     state.isLoadingRequest = false;
                     state.isSuccessRequest = true;
-                    if (action.payload !== 200) {
+                    if (action.payload !== httpStatusCodes['200']) {
                         state.isErrorStatus = true;
                     }
                 })
@@ -154,3 +152,6 @@ export const apiRequestSlice = createSlice({
 
 const {reducer} = apiRequestSlice;
 export default reducer;
+export const isLoadingRequestSelector = (state: IApiRequest) => state.isLoadingRequest;
+export const loginSelector = (state: IApiRequest) => state.login;
+export const isErrorStatusSelector = (state: IApiRequest) => state.isErrorStatus;

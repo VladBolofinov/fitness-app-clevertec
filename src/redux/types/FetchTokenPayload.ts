@@ -1,4 +1,4 @@
 export type FetchTokenFulfilledPayload = {
     token: string;
-    inputCheck: boolean;
+    inputCheck: boolean | undefined;
 };

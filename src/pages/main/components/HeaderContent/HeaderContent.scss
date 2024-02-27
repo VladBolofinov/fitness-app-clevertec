@@ -6,24 +6,24 @@
     }
 }
 .ant-typography .main-header-text {
-    font-weight: 700;
+    font-weight: var(--font-weight-lg);
     line-height: 130%;
-    margin-top: 0;
+    margin: var(--center-margin);
 }
 
 @media screen and (max-width: 1024px) {
     .ant-typography .main-header-text {
-        font-size: 24px;
+        font-size: var(--font-size-xl);
     }
 }
 @media screen and (min-width: 834px) and (max-width: 1024px) {
     .ant-typography .main-header-text {
-        font-weight: 500;
-        font-size: 24px;
+        font-weight: var(--font-weight-md);
+        font-size: var(--font-size-xl);
     }
 }
 @media screen and (min-width: 300px) and (max-width: 834px) {
     .ant-typography .main-header-text {
-        font-size: 20px;
+        font-size: var(--font-size-lg);
     }
 }

@@ -1,21 +1,34 @@
-import React, {useMemo} from 'react';
+import React, {useEffect, useMemo} from 'react';
 import './ResultMessage.scss';
 import {Button, Result} from "antd";
 import VerificationInput from "react-verification-input";
 import {useAppDispatch, useAppSelector} from "@hooks/typed-react-redux-hooks";
 import {push} from "redux-first-history";
-import {apiRequestSlice, confirmEmail} from "@redux/reducers/apiRequestSlice";
+import {
+    apiRequestSlice,
+    confirmEmail,
+    isErrorStatusSelector,
+    loginSelector
+} from "@redux/reducers/apiRequestSlice";
 import {IResultMessageData} from "@pages/auth/types/IResultMessageData";
+import {useSelector} from "react-redux";
+import {history} from "@redux/configure-store";
+import {
+    MessageTypeError,
+    MessageTypeSuccess
+} from "@pages/auth/ResultMessage/messageTypes";
 interface IResultMessage {
     type: string;
 }
 export const ResultMessage:React.FC<IResultMessage> = ({type}) => {
     const {deleteErrorStatus, deleteSuccessStatus, setCheckCodeInput} = apiRequestSlice.actions;
-    const {login, isErrorStatus, checkCodeInputValue} = useAppSelector(state => state.apiRequestSlice);
+    const {checkCodeInputValue, isSuccessRequest} = useAppSelector(state => state.apiRequestSlice);
+    const login = useSelector(loginSelector);
+    const isErrorStatus = useSelector(isErrorStatusSelector);
     const dispatch = useAppDispatch();
     const dataMessage:IResultMessageData = useMemo(() => {
         return {
-            'error-login': {
+            [MessageTypeError.ERROR_LOGIN]: {
                 headerMessage: 'Вход не выполнен',
                 descrMessage: 'Что-то пошло не так. Попробуйте еще раз',
                 btnText: 'Повторить',
@@ -28,7 +41,7 @@ export const ResultMessage:React.FC<IResultMessage> = ({type}) => {
                 },
                 dataTestId: 'login-retry-button'
             },
-            'success': {
+            [MessageTypeSuccess.SUCCESS]: {
                 headerMessage: 'Регистрация успешна',
                 descrMessage: 'Регистрация прошла успешно. Зайдите в приложение, используя свои e-mail и пароль.',
                 btnText: 'Войти',
@@ -41,7 +54,7 @@ export const ResultMessage:React.FC<IResultMessage> = ({type}) => {
                 },
                 dataTestId: 'registration-enter-button'
             },
-            'error-user-exist': {
+            [MessageTypeError.ERROR_USER_EXIST]: {
                 headerMessage: 'Данные не сохранились',
                 descrMessage: 'Такой e-mail уже записан в системе. Попробуйте зарегистрироваться по другому e-mail.',
                 btnText: 'Назад к регистрации',
@@ -54,7 +67,7 @@ export const ResultMessage:React.FC<IResultMessage> = ({type}) => {
                 },
                 dataTestId: 'registration-back-button'
             },
-            'error': {
+            [MessageTypeError.ERROR]: {
                 headerMessage: 'Данные не сохранились',
                 descrMessage: 'Что-то пошло не так и ваша регистрация не завершилась. Попробуйте еще раз.',
                 btnText: 'Повторить',
@@ -67,7 +80,7 @@ export const ResultMessage:React.FC<IResultMessage> = ({type}) => {
                 },
                 dataTestId: 'registration-retry-button'
             },
-            'error-check-email-no-exist' : {
+            [MessageTypeError.ERROR_CHECK_EMAIL_NO_EXIST] : {
                 headerMessage: 'Такой e-mail не зарегистрирован',
                 descrMessage: 'Мы не нашли в базе вашего e-mail. Попробуйте войти с другим e-mail.',
                 btnText: 'Попробовать снова',
@@ -80,7 +93,7 @@ export const ResultMessage:React.FC<IResultMessage> = ({type}) => {
                 },
                 dataTestId: 'check-retry-button'
             },
-            'error-check-email': {
+            [MessageTypeError.ERROR_CHECK_EMAIL]: {
                 headerMessage: 'Что-то пошло не так',
                 descrMessage: 'Произошла ошибка, попробуйте отправить форму еще раз.',
                 btnText: 'Назад',
@@ -93,7 +106,7 @@ export const ResultMessage:React.FC<IResultMessage> = ({type}) => {
                 },
                 dataTestId: 'check-back-button'
             },
-            'confirm-email': {
+            [MessageTypeSuccess.CONFIRM_EMAIL]: {
                 headerMessage: (isErrorStatus) ? 'Неверный код. Введите код для восстановления аккаунта' : 'Введите код для восстановления аккаунта',
                 descrMessage: <span>Мы отправили вам на e-mail <span className='descr-message-email'>{login}</span> шестизначный код.Введите его в поле ниже.</span>,
                 btnText: 'Назад',
@@ -102,7 +115,7 @@ export const ResultMessage:React.FC<IResultMessage> = ({type}) => {
                 btnWidth: '85px',
                 dataTestId: 'verification-input'
             },
-            'error-change-password': {
+            [MessageTypeError.ERROR_CHANGE_PASSWORD]: {
                 headerMessage: 'Данные не сохранились',
                 descrMessage: 'Что-то пошло не так. Попробуйте еще раз',
                 btnText: 'Повторить',
@@ -115,7 +128,7 @@ export const ResultMessage:React.FC<IResultMessage> = ({type}) => {
                 },
                 dataTestId: 'change-retry-button'
             },
-            'success-change-password': {
+            [MessageTypeError.SUCCESS_CHANGE_PASSWORD]: {
                 headerMessage: 'Пароль успешно изменен',
                 descrMessage: 'Теперь можно войти в аккаунт, используя свой логин и новый пароль',
                 btnText: 'Вход',
@@ -130,6 +143,15 @@ export const ResultMessage:React.FC<IResultMessage> = ({type}) => {
             }
         }
     }, [login])
+
+    useEffect(() => {
+        if (isErrorStatus && Object.values(MessageTypeError).includes(type as MessageTypeError)) {
+            history.push('/auth');
+        }
+        if (!isSuccessRequest && Object.values(MessageTypeSuccess).includes(type as MessageTypeSuccess)) {
+            history.push('/auth');
+        }
+        },[])
     return (
         <div className={dataMessage[type].classname}>
             <Result

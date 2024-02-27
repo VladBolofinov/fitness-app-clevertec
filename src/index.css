@@ -3,7 +3,7 @@
 
 html, body {
     width: 1440px;
-    margin: 0 auto;
+    margin: var(--center-margin);
     font-family: var(--font-family);
 }
 @media screen and (max-width: 834px) {

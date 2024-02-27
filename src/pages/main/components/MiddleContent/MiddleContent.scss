@@ -5,7 +5,7 @@
     box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.04);
     background: var(--character-light-primary-inverse);
     border-radius: 2px;
-    font-size: 16px;
+    font-size: var(--font-size-md);
     line-height: 130%;
     color: var(--primary-light-9);
     margin: 24px 0 0 24px;
@@ -18,8 +18,8 @@
     height: 126px;
     box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.04);
     background: var(--character-light-primary-inverse);
-    font-weight: 500;
-    font-size: 20px;
+    font-weight: var(--font-weight-md);
+    font-size: var(--font-size-lg);
     line-height: 130%;
     color: var(--character-light-title-85);
 }
