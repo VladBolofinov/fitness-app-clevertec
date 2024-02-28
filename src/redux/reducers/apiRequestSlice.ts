@@ -72,6 +72,9 @@ export const apiRequestSlice = createSlice({
         setCheckCodeInput(state, action: PayloadAction<string>) {
             state.checkCodeInputValue = action.payload;
         },
+        setCheckCodeInput(state, action: PayloadAction<string>) {
+            state.checkCodeInputValue = action.payload;
+        },
         saveConfirmPasswords(state, action: PayloadAction<ConfirmPasswordArguments>) {
             state.firstConfirmPassword = action.payload.password;
             state.secondConfirmPassword = action.payload.confirmPassword;
@@ -152,6 +155,3 @@ export const apiRequestSlice = createSlice({
 
 const {reducer} = apiRequestSlice;
 export default reducer;
-export const isLoadingRequestSelector = (state: IApiRequest) => state.isLoadingRequest;
-export const loginSelector = (state: IApiRequest) => state.login;
-export const isErrorStatusSelector = (state: IApiRequest) => state.isErrorStatus;

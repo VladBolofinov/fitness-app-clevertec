@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo} from 'react';
+import React, {useMemo} from 'react';
 import './ResultMessage.scss';
 import {Button, Result} from "antd";
 import VerificationInput from "react-verification-input";
@@ -6,13 +6,9 @@ import {useAppDispatch, useAppSelector} from "@hooks/typed-react-redux-hooks";
 import {push} from "redux-first-history";
 import {
     apiRequestSlice,
-    confirmEmail,
-    isErrorStatusSelector,
-    loginSelector
+    confirmEmail
 } from "@redux/reducers/apiRequestSlice";
 import {IResultMessageData} from "@pages/auth/types/IResultMessageData";
-import {useSelector} from "react-redux";
-import {history} from "@redux/configure-store";
 import {
     MessageTypeError,
     MessageTypeSuccess
@@ -22,9 +18,7 @@ interface IResultMessage {
 }
 export const ResultMessage:React.FC<IResultMessage> = ({type}) => {
     const {deleteErrorStatus, deleteSuccessStatus, setCheckCodeInput} = apiRequestSlice.actions;
-    const {checkCodeInputValue, isSuccessRequest} = useAppSelector(state => state.apiRequestSlice);
-    const login = useSelector(loginSelector);
-    const isErrorStatus = useSelector(isErrorStatusSelector);
+    const {login, isErrorStatus, checkCodeInputValue} = useAppSelector(state => state.apiRequestSlice);
     const dispatch = useAppDispatch();
     const dataMessage:IResultMessageData = useMemo(() => {
         return {
@@ -143,15 +137,6 @@ export const ResultMessage:React.FC<IResultMessage> = ({type}) => {
             }
         }
     }, [login])
-
-    useEffect(() => {
-        if (isErrorStatus && Object.values(MessageTypeError).includes(type as MessageTypeError)) {
-            history.push('/auth');
-        }
-        if (!isSuccessRequest && Object.values(MessageTypeSuccess).includes(type as MessageTypeSuccess)) {
-            history.push('/auth');
-        }
-        },[])
     return (
         <div className={dataMessage[type].classname}>
             <Result

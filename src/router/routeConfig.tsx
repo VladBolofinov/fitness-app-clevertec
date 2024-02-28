@@ -47,58 +47,72 @@ export const RoutePath: Record<AppRoutes, string> = {
 export const routeConfig: Record<AppRoutes, RouteProps> = {
     [AppRoutes.ROOT]: {
         path: RoutePath[AppRoutes.ROOT],
-        element: <RequireAuth><MainPageAsync/></RequireAuth>
+        element: <RequireAuth><MainPageAsync/></RequireAuth>,
+        id: 'none'
     },
     [AppRoutes.MAIN]: {
         path: RoutePath[AppRoutes.MAIN],
-        element: <RequireAuth><MainPageAsync/></RequireAuth>
+        element: <RequireAuth><MainPageAsync/></RequireAuth>,
+        id: 'none'
     },
     [AppRoutes.AUTH]: {
         path: RoutePath[AppRoutes.AUTH],
-        element: <RequireAuth><AuthPageAsync><FormWrapper/></AuthPageAsync></RequireAuth>
+        element: <RequireAuth><AuthPageAsync><FormWrapper/></AuthPageAsync></RequireAuth>,
+        id: 'none'
     },
     [AppRoutes.REGISTRATION]: {
         path: RoutePath[AppRoutes.REGISTRATION],
-        element: <RequireAuth><AuthPageAsync><FormWrapper/></AuthPageAsync></RequireAuth>
+        element: <RequireAuth><AuthPageAsync><FormWrapper/></AuthPageAsync></RequireAuth>,
+        id: 'none'
     },
     [AppRoutes.ERROR_LOGIN]: {
         path: RoutePath[AppRoutes.ERROR_LOGIN],
-        element: <AuthPageAsync><ResultMessage type={MessageTypeError.ERROR_LOGIN}/></AuthPageAsync>
+        element: <AuthPageAsync><ResultMessage type={MessageTypeError.ERROR_LOGIN}/></AuthPageAsync>,
+        id: 'error'
     },
     [AppRoutes.SUCCESS]: {
         path: RoutePath[AppRoutes.SUCCESS],
-        element: <AuthPageAsync><ResultMessage type={MessageTypeSuccess.SUCCESS}/></AuthPageAsync>
+        element: <AuthPageAsync><ResultMessage type={MessageTypeSuccess.SUCCESS}/></AuthPageAsync>,
+        id: 'success'
     },
     [AppRoutes.ERROR_USER_EXIST]: {
         path: RoutePath[AppRoutes.ERROR_USER_EXIST],
-        element: <AuthPageAsync><ResultMessage type={MessageTypeError.ERROR_USER_EXIST}/></AuthPageAsync>
+        element: <AuthPageAsync><ResultMessage type={MessageTypeError.ERROR_USER_EXIST}/></AuthPageAsync>,
+        id: 'error'
     },
     [AppRoutes.ERROR]: {
         path: RoutePath[AppRoutes.ERROR],
-        element: <AuthPageAsync><ResultMessage type={MessageTypeError.ERROR}/></AuthPageAsync>
+        element: <AuthPageAsync><ResultMessage type={MessageTypeError.ERROR}/></AuthPageAsync>,
+        id: 'error'
     },
     [AppRoutes.ERROR_CHECK_EMAIL_NO_EXIST]: {
         path: RoutePath[AppRoutes.ERROR_CHECK_EMAIL_NO_EXIST],
-        element: <AuthPageAsync><ResultMessage type={MessageTypeError.ERROR_CHECK_EMAIL_NO_EXIST}/></AuthPageAsync>
+        element: <AuthPageAsync><ResultMessage type={MessageTypeError.ERROR_CHECK_EMAIL_NO_EXIST}/></AuthPageAsync>,
+        id: 'error'
     },
     [AppRoutes.ERROR_CHECK_EMAIL]: {
         path: RoutePath[AppRoutes.ERROR_CHECK_EMAIL],
-        element: <AuthPageAsync><ResultMessage type={MessageTypeError.ERROR_CHECK_EMAIL}/></AuthPageAsync>
+        element: <AuthPageAsync><ResultMessage type={MessageTypeError.ERROR_CHECK_EMAIL}/></AuthPageAsync>,
+        id: 'error'
     },
     [AppRoutes.CONFIRM_EMAIL]: {
         path: RoutePath[AppRoutes.CONFIRM_EMAIL],
-        element: <AuthPageAsync><ResultMessage type={MessageTypeSuccess.CONFIRM_EMAIL}/></AuthPageAsync>
+        element: <AuthPageAsync><ResultMessage type={MessageTypeSuccess.CONFIRM_EMAIL}/></AuthPageAsync>,
+        id: 'success'
     },
     [AppRoutes.CHANGE_PASSWORD]: {
         path: RoutePath[AppRoutes.CHANGE_PASSWORD],
-        element: <AuthPageAsync><ChangePassword/></AuthPageAsync>
+        element: <AuthPageAsync><ChangePassword/></AuthPageAsync>,
+        id: 'error'
     },
     [AppRoutes.ERROR_CHANGE_PASSWORD]: {
         path: RoutePath[AppRoutes.ERROR_CHANGE_PASSWORD],
-        element: <AuthPageAsync><ResultMessage type={MessageTypeError.ERROR_CHANGE_PASSWORD}/></AuthPageAsync>
+        element: <AuthPageAsync><ResultMessage type={MessageTypeError.ERROR_CHANGE_PASSWORD}/></AuthPageAsync>,
+        id: 'error'
     },
     [AppRoutes.SUCCESS_CHANGE_PASSWORD]: {
         path: RoutePath[AppRoutes.SUCCESS_CHANGE_PASSWORD],
-        element: <AuthPageAsync><ResultMessage type={MessageTypeError.SUCCESS_CHANGE_PASSWORD}/></AuthPageAsync>
+        element: <AuthPageAsync><ResultMessage type={MessageTypeError.SUCCESS_CHANGE_PASSWORD}/></AuthPageAsync>,
+        id: 'error'
     },
 };

@@ -2,11 +2,10 @@ import React from 'react';
 import './AuthPage.scss';
 import {MyLoader} from "@pages/auth/Loader/MyLoader";
 import {IAuthPageProps} from "@pages/auth/types/IAuthPageProps";
-import {isLoadingRequestSelector} from "@redux/reducers/apiRequestSlice";
-import {useSelector} from "react-redux";
+import {useAppSelector} from "@hooks/typed-react-redux-hooks";
 
 const AuthPage: React.FC<IAuthPageProps> = ({children}) => {
-    const isLoadingRequest = useSelector(isLoadingRequestSelector);
+    const {isLoadingRequest} = useAppSelector(state => state.apiRequestSlice);
     return (
         <div className='auth-wrapper'>
             {(isLoadingRequest) ? <MyLoader/> : null}

@@ -6,20 +6,18 @@ import {useAppDispatch, useAppSelector} from "@hooks/typed-react-redux-hooks";
 import {
     apiRequestSlice, changePassword,
     checkEmail,
-    getToken, loginSelector,
+    getToken,
     registerNewUser
 } from "@redux/reducers/apiRequestSlice";
 import {IFormComponentProps} from "@pages/auth/types/IFormComponentProps";
 import {IInputValues} from "@pages/main/components/types/IInputValues";
-import {useSelector} from "react-redux";
 
 export const FormComponent: React.FC<IFormComponentProps> = ({type}) => {
     const [authForm] = Form.useForm();
     const [registrationForm] = Form.useForm();
     const dispatch = useAppDispatch();
     const {previousLocation} = useAppSelector(state => state.router);
-    const login = useSelector(loginSelector);
-    const {password, firstConfirmPassword, secondConfirmPassword} = useAppSelector(state => state.apiRequestSlice);
+    const {password, firstConfirmPassword, secondConfirmPassword, login} = useAppSelector(state => state.apiRequestSlice);
     const {saveRegDataBeforeError} = apiRequestSlice.actions;
     useEffect(() => {
         if (previousLocation[1]?.location === '/result/error') {
