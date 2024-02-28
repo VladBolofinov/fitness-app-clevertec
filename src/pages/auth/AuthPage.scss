@@ -1,0 +1,25 @@
+.auth-wrapper {
+    max-width: 1440px;
+    height: 1024px;
+    background-image: url('../../assets/background-img/Auth-page-light-blur.png');
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+@media screen and (max-width: 834px) {
+    .auth-wrapper {
+        max-width: 833px;
+        height: 1194px;
+        background-position: center;
+        background-size: cover;
+        align-items: normal;
+    }
+}
+@media screen and (max-width: 360px) {
+    .auth-wrapper {
+        width: 360px;
+        height: 800px;
+        align-items: center;
+    }
+}

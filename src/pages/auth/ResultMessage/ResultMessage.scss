@@ -1,0 +1,108 @@
+.error-message-modal {
+    font-family: var(--font-family);
+    border-radius: 2px;
+    width: 539px;
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
+    background: var(--character-light-primary-inverse);
+    height: 345px;
+    padding: 64px 32px;
+    .ant-btn {
+        height: 40px;
+    }
+}
+.error-message-modal.big {
+    font-family: var(--font-family);
+    border-radius: 2px;
+    width: 539px;
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
+    background: var(--character-light-primary-inverse);
+    padding: 64px 32px;
+    height: 550px;
+}
+.error-message-modal.warning {
+    padding: 64px 85px;
+    height: 345px;
+}
+.ant-result {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+}
+.ant-result-subtitle {
+    color: var(--character-light-secondary-45);
+    width: 350px;
+}
+.ant-btn-primary {
+    background: var(--primary-light-6);
+}
+.input-wrapper {
+    margin-bottom: 10px;
+    gap:12px;
+}
+.input-character {
+    border-radius: 2px;
+    height: 40px;
+    line-height: 40px;
+    background: var(--character-light-primary-inverse);
+    border: 1px solid var(--character-light-border);
+    font-size: 14px;
+}
+.input-character-inactive {
+    border: 1px solid var(--character-light-border);
+}
+.input-character-inactive-error {
+    border: 1px solid var(--character-light-error);
+}
+.input-character-selected {
+    border: 1px solid var(--primary-light-5);
+}
+.input-character-filled {
+    border: 1px solid var(--character-light-border);
+}
+.extra-subTitle {
+    color: var(--character-light-secondary-45);
+}
+.descr-message-email {
+    font-weight: 700;
+    color: var(--character-light-secondary-45);
+}
+@media screen and (max-width: 834px) {
+    .error-message-modal {
+        margin-top: 424px;
+    }
+    .error-message-modal.warning {
+        margin-top: 424px;
+        height: 345px;
+    }
+    .error-message-modal.big {
+        width: 440px;
+        height: 568px;
+        margin-top: 115px;
+    }
+}
+@media screen and (max-width: 360px) {
+    .error-message-modal {
+        width: 328px;
+        height: 375px;
+        margin-top: 0;
+    }
+    .error-message-modal.warning {
+        padding: 32px 16px;
+        margin-top: 0;
+        .ant-result {
+            padding: 0;
+        }
+    }
+    .error-message-modal.big {
+        width: 328px;
+        height: 568px;
+        margin-top: 0;
+    }
+    .ant-result-subtitle {
+        width: 264px;
+    }
+    .ant-result-title {
+        width: 264px;
+    }
+}
