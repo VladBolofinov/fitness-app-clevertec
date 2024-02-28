@@ -6,6 +6,9 @@
     background: var(--character-light-primary-inverse);
     height: 345px;
     padding: 64px 32px;
+    .ant-btn {
+        height: 40px;
+    }
 }
 .error-message-modal.big {
     font-family: var(--font-family);
@@ -25,11 +28,6 @@
     flex-direction: column;
     align-items: center;
     padding: 0;
-}
-.ant-result-title {
-    font-weight: 500;
-    line-height: 130%;
-    width: 395px;
 }
 .ant-result-subtitle {
     color: var(--character-light-secondary-45);
@@ -64,9 +62,6 @@
 }
 .extra-subTitle {
     color: var(--character-light-secondary-45);
-}
-.ant-result-info .ant-result-icon > .anticon {
-    color: var(--primary-light-6);
 }
 .descr-message-email {
     font-weight: 700;

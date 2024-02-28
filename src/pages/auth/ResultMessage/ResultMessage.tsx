@@ -2,7 +2,7 @@ import React, {useMemo} from 'react';
 import './ResultMessage.scss';
 import {Button, Result} from "antd";
 import VerificationInput from "react-verification-input";
-import {useAppDispatch, useAppSelector} from "@hooks/typed-react-redux-hooks";
+import {useAppDispatch} from "@hooks/typed-react-redux-hooks";
 import {push} from "redux-first-history";
 import {
     apiRequestSlice,
@@ -13,13 +13,19 @@ import {
     MessageTypeError,
     MessageTypeSuccess
 } from "@pages/auth/ResultMessage/messageTypes";
+import {useSelector} from "react-redux";
+import {getCheckCodeInputValue} from "@redux/selectors/getApiRequestState/getCheckCodeInputValue/getCheckCodeInputValue";
+import {getIsErrorStatus} from "@redux/selectors/getApiRequestState/getIsErrorStatus/getIsErrorStatus";
+import {getLogin} from "@redux/selectors/getApiRequestState/getLogin/getLogin";
 interface IResultMessage {
     type: string;
 }
 export const ResultMessage:React.FC<IResultMessage> = ({type}) => {
     const {deleteErrorStatus, deleteSuccessStatus, setCheckCodeInput} = apiRequestSlice.actions;
-    const {login, isErrorStatus, checkCodeInputValue} = useAppSelector(state => state.apiRequestSlice);
     const dispatch = useAppDispatch();
+    const isErrorStatus = useSelector(getIsErrorStatus);
+    const login = useSelector(getLogin);
+    const checkCodeInputValue = useSelector(getCheckCodeInputValue);
     const dataMessage:IResultMessageData = useMemo(() => {
         return {
             [MessageTypeError.ERROR_LOGIN]: {
@@ -136,7 +142,7 @@ export const ResultMessage:React.FC<IResultMessage> = ({type}) => {
                 dataTestId: 'change-entry-button'
             }
         }
-    }, [login])
+    }, [isErrorStatus, login])
     return (
         <div className={dataMessage[type].classname}>
             <Result
@@ -161,7 +167,10 @@ export const ResultMessage:React.FC<IResultMessage> = ({type}) => {
                                 inputProps={{'data-test-id' : dataMessage[type].dataTestId}}
                                 placeholder={''}
                                 onChange={(value) => {dispatch(setCheckCodeInput(value))}}
-                                onComplete={(value) => {dispatch(confirmEmail({login: login, code: value}))}}
+                                onComplete={(value) => {
+                                    dispatch(confirmEmail({login: login, code: value}));
+                                    dispatch(setCheckCodeInput(''));
+                                }}
                                 classNames={{
                                     container: "input-wrapper",
                                     character: "input-character",

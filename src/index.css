@@ -6,6 +6,16 @@ html, body {
     margin: var(--center-margin);
     font-family: var(--font-family);
 }
+.ant-result {
+    padding: 0;
+}
+.ant-result-title {
+    font-weight: var(--font-weight-md);
+    line-height: 130%;
+}
+.ant-result-info .ant-result-icon > .anticon {
+    color: var(--primary-light-6);
+}
 @media screen and (max-width: 834px) {
     html, body {
         width: 834px;

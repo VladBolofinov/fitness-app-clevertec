@@ -4,7 +4,7 @@ import {useHttp} from "@hooks/http.hook";
 import {IInputValues} from "@pages/main/components/types/IInputValues";
 import {ConfirmPasswordArguments} from "@redux/types/ConfirmPasswordArguments";
 import {FetchTokenFulfilledPayload} from "@redux/types/FetchTokenPayload";
-import {httpStatusCodes} from "@redux/types/httpStatusCodes";
+import {httpStatusVars} from "@redux/types/httpStatusVars";
 
 const initialState: IApiRequest = {
     jwt: '',
@@ -72,9 +72,6 @@ export const apiRequestSlice = createSlice({
         setCheckCodeInput(state, action: PayloadAction<string>) {
             state.checkCodeInputValue = action.payload;
         },
-        setCheckCodeInput(state, action: PayloadAction<string>) {
-            state.checkCodeInputValue = action.payload;
-        },
         saveConfirmPasswords(state, action: PayloadAction<ConfirmPasswordArguments>) {
             state.firstConfirmPassword = action.payload.password;
             state.secondConfirmPassword = action.payload.confirmPassword;
@@ -92,7 +89,7 @@ export const apiRequestSlice = createSlice({
                             (inputCheck) ? localStorage.setItem('jwtToken', token) : sessionStorage.setItem('jwtToken', token);
                         }
                     }
-                    (typeof action.payload === 'number' && action.payload === httpStatusCodes['401'])
+                    (typeof action.payload === 'number' && action.payload === httpStatusVars['_401'])
                         ? state.isErrorStatus = true : state.isErrorStatus = true;
                 })
                 .addCase(getToken.rejected, (state) => {
@@ -103,9 +100,9 @@ export const apiRequestSlice = createSlice({
                 .addCase(registerNewUser.fulfilled, (state, action:PayloadAction<number | undefined>) => {
                     state.isLoadingRequest = false;
                     state.isSuccessRequest = true;
-                    if (action.payload === httpStatusCodes['409']) {
+                    if (action.payload === httpStatusVars['_409']) {
                         state.isErrorStatus = true;
-                    } else if (action.payload !== httpStatusCodes['201']) {
+                    } else if (action.payload !== httpStatusVars['_201']) {
                         state.isErrorStatus = true;
                     }
                 })
@@ -117,9 +114,9 @@ export const apiRequestSlice = createSlice({
                 .addCase(checkEmail.fulfilled, (state, action:PayloadAction<number | undefined>) => {
                     state.isLoadingRequest = false;
                     state.isSuccessRequest = true;
-                    if (action.payload === httpStatusCodes['404']) {
+                    if (action.payload === httpStatusVars['_404']) {
                         state.isErrorStatus = true;
-                    } else if (action.payload !== httpStatusCodes['200']) {
+                    } else if (action.payload !== httpStatusVars['_200']) {
                         state.isErrorStatus = true;
                     }
                 })
@@ -131,7 +128,7 @@ export const apiRequestSlice = createSlice({
                 .addCase(confirmEmail.fulfilled, (state, action:PayloadAction<number | undefined>) => {
                     state.isLoadingRequest = false;
                     state.isSuccessRequest = true;
-                    if (action.payload !== httpStatusCodes['200']) {
+                    if (action.payload !== httpStatusVars['_200']) {
                         state.isErrorStatus = true;
                         state.checkCodeInputValue = '';
                     }
@@ -143,7 +140,7 @@ export const apiRequestSlice = createSlice({
                 .addCase(changePassword.fulfilled, (state, action:PayloadAction<number | undefined>) => {
                     state.isLoadingRequest = false;
                     state.isSuccessRequest = true;
-                    if (action.payload !== httpStatusCodes['200']) {
+                    if (action.payload !== httpStatusVars['_200']) {
                         state.isErrorStatus = true;
                     }
                 })
@@ -152,6 +149,4 @@ export const apiRequestSlice = createSlice({
                 })
         }
 })
-
-const {reducer} = apiRequestSlice;
-export default reducer;
+export const { reducer: apiRequestReducer } = apiRequestSlice;

@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import './FormComponent.scss';
 import {Button, Checkbox, Input, Form} from "antd";
 import {EyeInvisibleOutlined, EyeTwoTone, GooglePlusOutlined} from "@ant-design/icons";
-import {useAppDispatch, useAppSelector} from "@hooks/typed-react-redux-hooks";
+import {useAppDispatch} from "@hooks/typed-react-redux-hooks";
 import {
     apiRequestSlice, changePassword,
     checkEmail,
@@ -11,13 +11,26 @@ import {
 } from "@redux/reducers/apiRequestSlice";
 import {IFormComponentProps} from "@pages/auth/types/IFormComponentProps";
 import {IInputValues} from "@pages/main/components/types/IInputValues";
+import {useSelector} from "react-redux";
+import {getPassword} from "@redux/selectors/getApiRequestState/getPassword/getPassword";
+import {
+    getFirstConfirmPassword
+} from "@redux/selectors/getApiRequestState/getFirstConfirmPassword/getFirstConfirmPassword";
+import {
+    getSecondConfirmPassword
+} from "@redux/selectors/getApiRequestState/getSecondConfirmPassword/getSecondConfirmPassword";
+import {getLogin} from "@redux/selectors/getApiRequestState/getLogin/getLogin";
+import {getPreviousLocation} from "@redux/selectors/getRouterState/getPreviousLocation/getPreviousLocation";
 
 export const FormComponent: React.FC<IFormComponentProps> = ({type}) => {
     const [authForm] = Form.useForm();
     const [registrationForm] = Form.useForm();
     const dispatch = useAppDispatch();
-    const {previousLocation} = useAppSelector(state => state.router);
-    const {password, firstConfirmPassword, secondConfirmPassword, login} = useAppSelector(state => state.apiRequestSlice);
+    const previousLocation = useSelector(getPreviousLocation);
+    const password = useSelector(getPassword);
+    const firstConfirmPassword = useSelector(getFirstConfirmPassword);
+    const secondConfirmPassword = useSelector(getSecondConfirmPassword);
+    const login = useSelector(getLogin);
     const {saveRegDataBeforeError} = apiRequestSlice.actions;
     useEffect(() => {
         if (previousLocation[1]?.location === '/result/error') {
@@ -44,7 +57,6 @@ export const FormComponent: React.FC<IFormComponentProps> = ({type}) => {
         }
     }
     return (
-        <>
             <Form
                 onFinish={(type === 'auth') ? sendAuthData : sendRegistrationData}
                 form={type === 'auth' ? authForm : registrationForm}
@@ -124,7 +136,7 @@ export const FormComponent: React.FC<IFormComponentProps> = ({type}) => {
                             </Button>
                             <Button
                                 block
-                                style={{ marginTop: '16px' }}
+                                style={{ marginTop: '16px', height: '40px' }}
                                 icon={<span className='google-icon'><GooglePlusOutlined /></span>}>
                                 Войти через Google
                             </Button>
@@ -132,6 +144,5 @@ export const FormComponent: React.FC<IFormComponentProps> = ({type}) => {
                     )}
                 </Form.Item>
             </Form>
-        </>
     );
 };

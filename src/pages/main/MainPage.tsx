@@ -12,6 +12,7 @@ import {MiddleContent} from "@pages/main/components/MiddleContent/MiddleContent"
 import {FooterContent} from "@pages/main/components/FooterContent/FooterContent";
 import {SiderContent} from "@pages/main/components/SiderContent/SiderContent";
 import {history} from "@redux/configure-store";
+import {RoutePath} from "../../router/routeConfig";
 
 const { useBreakpoint } = Grid;
 const { Header, Content } = Layout;
@@ -24,7 +25,7 @@ const MainPage: React.FC = () => {
         const hasTokenLocalSt: string | null = localStorage.getItem('jwtToken');
         const hasTokenSessionSt: string | null = sessionStorage.getItem('jwtToken');
         if (!hasTokenSessionSt && !hasTokenLocalSt) {
-            history.push('/auth');
+            history.push(RoutePath["/auth"]);
         }
     }, []);
 
