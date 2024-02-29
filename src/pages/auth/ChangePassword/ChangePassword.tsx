@@ -8,6 +8,8 @@ import {ForgetPasswordFields} from "@pages/main/components/types/IInputValues";
 import {history} from "@redux/configure-store";
 import {useSelector} from "react-redux";
 import {getIsSuccessRequest} from "@redux/selectors/getApiRequestState/getIsSuccessRequest/getIsSuccessRequest";
+import {checkPasswordRegex, FormValues} from "@pages/auth/types/formTypes";
+
 export const ChangePassword:React.FC = () => {
     const [changePasswordForm] = Form.useForm();
     const dispatch = useAppDispatch();
@@ -33,9 +35,9 @@ export const ChangePassword:React.FC = () => {
                 initialValues={{ remember: true }}
             >
                 <Form.Item
-                    help={'Пароль не менее 8 символов, с заглавной буквой и цифрой'}
+                    help={FormValues.MESSAGE_CHECK_PASSWORD}
                     name="password"
-                    rules={[{ required: true, message: '' }, { pattern: /^(?=.*[A-Z])(?=.*\d)(?!.*[^\w\d\s]).{8,}$/, message: 'Пароль не менее 8 символов, с заглавной буквой и цифрой' }]}
+                    rules={[{ required: true, message: '' }, { pattern: checkPasswordRegex, message: FormValues.MESSAGE_CHECK_PASSWORD }]}
                 >
                     <Input.Password
                         placeholder="Новый пароль"
@@ -44,7 +46,6 @@ export const ChangePassword:React.FC = () => {
                         data-test-id={'change-password'}
                     />
                 </Form.Item>
-
                 <Form.Item
                     name="password-compare"
                     dependencies={['password']}

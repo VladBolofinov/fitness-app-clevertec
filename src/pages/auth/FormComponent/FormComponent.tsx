@@ -21,6 +21,7 @@ import {
 } from "@redux/selectors/getApiRequestState/getSecondConfirmPassword/getSecondConfirmPassword";
 import {getLogin} from "@redux/selectors/getApiRequestState/getLogin/getLogin";
 import {getPreviousLocation} from "@redux/selectors/getRouterState/getPreviousLocation/getPreviousLocation";
+import {checkPasswordRegex, FormValues} from "@pages/auth/types/formTypes";
 
 export const FormComponent: React.FC<IFormComponentProps> = ({type}) => {
     const [authForm] = Form.useForm();
@@ -74,9 +75,9 @@ export const FormComponent: React.FC<IFormComponentProps> = ({type}) => {
                     />
                 </Form.Item>
                 <Form.Item
-                    help={type === 'auth' ? '' : 'Пароль не менее 8 символов, с заглавной буквой и цифрой'}
+                    help={type === 'auth' ? '' : FormValues.MESSAGE_CHECK_PASSWORD}
                     name="password"
-                    rules={[{ required: true, message: '' }, { pattern: /^(?=.*[A-Z])(?=.*\d)(?!.*[^\w\d\s]).{8,}$/, message: 'Пароль не менее 8 символов, с заглавной буквой и цифрой' }]}
+                    rules={[{ required: true, message: '' }, { pattern: checkPasswordRegex, message: FormValues.MESSAGE_CHECK_PASSWORD }]}
                 >
                     <Input.Password
                         placeholder="Пароль"

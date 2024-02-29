@@ -8,7 +8,7 @@ import {ChangePassword} from "@pages/auth/ChangePassword/ChangePassword";
 import {
     MessageTypeError,
     MessageTypeSuccess
-} from "@pages/auth/ResultMessage/messageTypes";
+} from "@pages/auth/types/messageTypes";
 
 export enum AppRoutes {
     ROOT = '/',

@@ -12,7 +12,7 @@ import {IResultMessageData} from "@pages/auth/types/IResultMessageData";
 import {
     MessageTypeError,
     MessageTypeSuccess
-} from "@pages/auth/ResultMessage/messageTypes";
+} from "@pages/auth/types/messageTypes";
 import {useSelector} from "react-redux";
 import {getCheckCodeInputValue} from "@redux/selectors/getApiRequestState/getCheckCodeInputValue/getCheckCodeInputValue";
 import {getIsErrorStatus} from "@redux/selectors/getApiRequestState/getIsErrorStatus/getIsErrorStatus";
