@@ -7,7 +7,7 @@ import {httpMethods} from "@redux/types/httpStatusVars";
 import {urls} from "@redux/types/httpStatusVars";
 import {endpoints} from "@redux/types/httpStatusVars";
 export const useHttp = () => {
-    const getToken = async (email:string, password:string, rememberUser:boolean|undefined) => {
+    const authenticateUser = async (email:string, password:string, rememberUser:boolean|undefined) => {
         try {
             const response = await axios({
                 method: httpMethods.POST,
@@ -15,8 +15,22 @@ export const useHttp = () => {
                 data: {email, password}
             })
             history.push(AppRoutes.MAIN);
-            const resultData:FetchTokenFulfilledPayload = {token: response.data.accessToken, inputCheck: rememberUser}
+            const resultData:FetchTokenFulfilledPayload = {token: response.data.accessToken, rememberUser}
             return resultData;
+        } catch (e) {
+            if (axios.isAxiosError(e)) {
+                history.push(AppRoutes.ERROR_LOGIN);
+                return e.response?.status;
+            }
+        }
+    }
+    const googleAuthenticateUser = async () => {
+        try {
+            const response = await axios({
+                method: httpMethods.GET,
+                url: `${urls.MAIN_URL}${endpoints.GOOGLE}`,
+            })
+            return response.status;
         } catch (e) {
             if (axios.isAxiosError(e)) {
                 history.push(AppRoutes.ERROR_LOGIN);
@@ -92,7 +106,8 @@ export const useHttp = () => {
         }
     }
     return {
-        getToken,
+        authenticateUser,
+        googleAuthenticateUser,
         registerNewUser,
         checkEmail,
         confirmEmail,

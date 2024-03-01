@@ -7,6 +7,7 @@ import {getIsLoadingRequest} from "@redux/selectors/getApiRequestState/getIsLoad
 
 const AuthPage: React.FC<IAuthPageProps> = ({children}) => {
     const isLoadingRequest = useSelector(getIsLoadingRequest);
+
     return (
         <div className='auth-wrapper'>
             {(isLoadingRequest) ? <MyLoader/> : null}

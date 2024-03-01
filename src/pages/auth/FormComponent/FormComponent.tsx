@@ -6,8 +6,8 @@ import {useAppDispatch} from "@hooks/typed-react-redux-hooks";
 import {
     apiRequestSlice, changePassword,
     checkEmail,
-    getToken,
-    registerNewUser
+    authenticateUser,
+    registerNewUser, googleAuthenticateUser
 } from "@redux/reducers/apiRequestSlice";
 import {IFormComponentProps} from "@pages/auth/types/IFormComponentProps";
 import {IInputValues} from "@pages/main/components/types/IInputValues";
@@ -22,6 +22,7 @@ import {
 import {getLogin} from "@redux/selectors/getApiRequestState/getLogin/getLogin";
 import {getPreviousLocation} from "@redux/selectors/getRouterState/getPreviousLocation/getPreviousLocation";
 import {checkPasswordRegex, FormValues} from "@pages/auth/types/formTypes";
+import {endpoints, urls} from "@redux/types/httpStatusVars";
 
 export const FormComponent: React.FC<IFormComponentProps> = ({type}) => {
     const [authForm] = Form.useForm();
@@ -33,6 +34,7 @@ export const FormComponent: React.FC<IFormComponentProps> = ({type}) => {
     const secondConfirmPassword = useSelector(getSecondConfirmPassword);
     const login = useSelector(getLogin);
     const {saveRegDataBeforeError} = apiRequestSlice.actions;
+
     useEffect(() => {
         if (previousLocation[1]?.location === '/result/error') {
             dispatch(registerNewUser({login, password}));
@@ -44,7 +46,7 @@ export const FormComponent: React.FC<IFormComponentProps> = ({type}) => {
     })
     const sendAuthData = (inputValues: IInputValues) => {
         const { login, password, remember } = inputValues;
-        dispatch(getToken({ login, password, remember }));
+        dispatch(authenticateUser({ login, password, remember }));
     };
     const sendRegistrationData = (values: IInputValues) => {
         const { login, password } = values;
@@ -113,7 +115,7 @@ export const FormComponent: React.FC<IFormComponentProps> = ({type}) => {
                 ? <Form.Item>
                     <div className='checkbox-wrapper'>
                         <Form.Item name="remember" valuePropName="checked" noStyle>
-                            <Checkbox data-test-id='login-remember'>Запомнить меня</Checkbox>
+                            <Checkbox data-test-id='login-remember' onClick={() => dispatch(handleRememberCheckbox())}>Запомнить меня</Checkbox>
                         </Form.Item>
                         <Button type="link" onClick={sendForgetPassword} data-test-id='login-forgot-button'>Забыли пароль?</Button>
                     </div>
@@ -136,7 +138,9 @@ export const FormComponent: React.FC<IFormComponentProps> = ({type}) => {
                             >Войти
                             </Button>
                             <Button
+                                href={`${urls.MAIN_URL}${endpoints.GOOGLE}`}
                                 block
+                                onClick={()=>dispatch(googleAuthenticateUser())}
                                 style={{ marginTop: '16px', height: '40px' }}
                                 icon={<span className='google-icon'><GooglePlusOutlined /></span>}>
                                 Войти через Google

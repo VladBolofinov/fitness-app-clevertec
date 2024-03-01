@@ -17,14 +17,20 @@ const initialState: IApiRequest = {
     firstConfirmPassword: '',
     secondConfirmPassword: ''
 }
-export const getToken = createAsyncThunk(
-    'apiRequest/fetchToken',
+export const authenticateUser = createAsyncThunk(
+    'apiRequest/authenticateUser',
     ({login, password, remember}:IInputValues) => {
-        const {getToken} = useHttp();
-        return getToken(login, password, remember);
+        const {authenticateUser} = useHttp();
+        return authenticateUser(login, password, remember);
     }
 )
-
+export const googleAuthenticateUser = createAsyncThunk(
+    'apiRequest/googleAuthenticateUser',
+    () => {
+        const {googleAuthenticateUser} = useHttp();
+        return googleAuthenticateUser();
+    }
+)
 export const registerNewUser = createAsyncThunk(
     'apiRequest/registerNewUser',
     ({login, password}:IInputValues) => {
@@ -32,7 +38,6 @@ export const registerNewUser = createAsyncThunk(
         return registerNewUser(login, password);
     }
 )
-
 export const checkEmail = createAsyncThunk(
     'apiRequest/checkEmail',
     (email:string) => {
@@ -79,20 +84,29 @@ export const apiRequestSlice = createSlice({
     },
     extraReducers:
         (builder) => {
-            builder.addCase(getToken.pending, (state) => {state.isLoadingRequest = true;})
-                .addCase(getToken.fulfilled, (state, action: PayloadAction<FetchTokenFulfilledPayload | number | undefined>) => {
+            builder.addCase(authenticateUser.pending, (state) => {state.isLoadingRequest = true;})
+                .addCase(authenticateUser.fulfilled, (state, action: PayloadAction<FetchTokenFulfilledPayload | number | undefined>) => {
                     state.isLoadingRequest = false;
-                    if (typeof action.payload === 'object' && 'inputCheck' in action.payload) {
-                        const { token, inputCheck } = action.payload;
+                    if (typeof action.payload === 'object' && 'rememberUser' in action.payload) {
+                        const { token, rememberUser } = action.payload;
                         if (token) {
                             state.jwt = token;
-                            (inputCheck) ? localStorage.setItem('jwtToken', token) : sessionStorage.setItem('jwtToken', token);
+                            (rememberUser) ? localStorage.setItem('jwtToken', token) : sessionStorage.setItem('jwtToken', token);
                         }
                     }
+                    //отрефактори нижнюю строчку
                     (typeof action.payload === 'number' && action.payload === httpStatusVars['_401'])
                         ? state.isErrorStatus = true : state.isErrorStatus = true;
                 })
-                .addCase(getToken.rejected, (state) => {
+                .addCase(authenticateUser.rejected, (state) => {
+                    state.isLoadingRequest = false;
+                    state.isErrorStatus = true;
+                })
+                .addCase(googleAuthenticateUser.pending, (state) => {state.isLoadingRequest = true;})
+                .addCase(googleAuthenticateUser.fulfilled, (state) => {
+                    state.isLoadingRequest = false;
+                })
+                .addCase(googleAuthenticateUser.rejected, (state) => {
                     state.isLoadingRequest = false;
                     state.isErrorStatus = true;
                 })

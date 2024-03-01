@@ -8,10 +8,12 @@ export enum httpStatusVars {
 
 export enum httpMethods {
     'POST'='post',
+    'GET' = 'get'
 }
 
 export enum endpoints {
     'LOGIN'= '/login',
+    'GOOGLE' = '/google',
     'REGISTRATION'= '/registration',
     'CHECK_EMAIL'= '/check-email',
     'CONFIRM_EMAIL'= '/confirm-email',
