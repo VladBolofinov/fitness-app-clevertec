@@ -115,7 +115,7 @@ export const FormComponent: React.FC<IFormComponentProps> = ({type}) => {
                 ? <Form.Item>
                     <div className='checkbox-wrapper'>
                         <Form.Item name="remember" valuePropName="checked" noStyle>
-                            <Checkbox data-test-id='login-remember' onClick={() => dispatch(handleRememberCheckbox())}>Запомнить меня</Checkbox>
+                            <Checkbox data-test-id='login-remember'>Запомнить меня</Checkbox>
                         </Form.Item>
                         <Button type="link" onClick={sendForgetPassword} data-test-id='login-forgot-button'>Забыли пароль?</Button>
                     </div>

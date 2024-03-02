@@ -2,7 +2,7 @@ import {createSelector} from "@reduxjs/toolkit";
 import {getApiRequestState} from "@redux/selectors/getApiRequestState/getApiRequestState";
 import {IApiRequest} from "@redux/types/ApiRequestType";
 
-export const getIsLoadingRequest = createSelector(
+export const getToken = createSelector(
     getApiRequestState,
-    (apiRequestSlice:IApiRequest) => apiRequestSlice.isLoadingRequest
+    (apiRequestSlice:IApiRequest) => apiRequestSlice.jwt
 )

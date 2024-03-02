@@ -1,4 +1,6 @@
-export interface IApiRequest {
+import {FeedbackDataPayload} from "@redux/types/FeedbackDataPayload";
+
+export type ApiRequestType = {
     jwt: string;
     isLoadingRequest: boolean;
     isErrorStatus: boolean;
@@ -9,4 +11,5 @@ export interface IApiRequest {
     password: string;
     firstConfirmPassword: string;
     secondConfirmPassword: string;
+    feedbackData: FeedbackDataPayload[]
 }

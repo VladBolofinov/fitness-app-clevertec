@@ -8,10 +8,8 @@ import {
 } from "@redux/selectors/getApiRequestState/getIsCollapseSider/getIsCollapseSider";
 import {CommonPage} from "@pages/commonPage/CommonPage";
 
-
 const MainPage: React.FC = () => {
     const isCollapseSider = useSelector(getIsCollapseSider);
-
     return (
         <CommonPage hasHeaderContent={true}>
             {{

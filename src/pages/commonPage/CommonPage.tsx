@@ -10,17 +10,22 @@ import {useSelector} from "react-redux";
 import {
     getIsCollapseSider
 } from "@redux/selectors/getApiRequestState/getIsCollapseSider/getIsCollapseSider";
+import {
+    getIsLoadingRequest
+} from "@redux/selectors/getApiRequestState/getIsLoadingRequest/getIsLoadingRequest";
+import {MyLoader} from "@pages/auth/Loader/MyLoader";
 
 const { Header, Content } = Layout;
 export const CommonPage = ({children, hasHeaderContent}) => {
     const isCollapseSider = useSelector(getIsCollapseSider);
-    useEffect(() => {
+    /*useEffect(() => {
         const hasTokenLocalSt: string | null = localStorage.getItem('jwtToken');
         const hasTokenSessionSt: string | null = sessionStorage.getItem('jwtToken');
         if (!hasTokenSessionSt && !hasTokenLocalSt) {
             history.push(RoutePath["/auth"]);
         }
-    }, []);
+    }, []);*/
+
     return (
         <Layout>
             <SiderContent collapsed={isCollapseSider}/>

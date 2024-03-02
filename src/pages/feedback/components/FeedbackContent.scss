@@ -1,0 +1,33 @@
+.feedback-content-wrapper {
+    padding: 4px 24px 24px 24px;
+    .feedback-content-card {
+        border-radius: 2px;
+        padding: 16px;
+        max-width: 1184px;
+        height: 128px;
+        box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
+        background: var(--character-light-primary-inverse);
+        margin-top: 20px;
+        display: flex;
+    }
+    .avatar-wrapper {
+        display: flex;
+        width: 174px;
+        height: 96px;
+        background-color: red;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        .img {
+            width: 42px;
+            height: 42px;
+            background-color: #2f54eb;
+            border-radius: 50%;
+        }
+    }
+    .feedback-card-rate {
+        .ant-rate-star-second {
+            color: var(--character-light-warning);
+        }
+    }
+}

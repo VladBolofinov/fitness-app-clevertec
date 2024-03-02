@@ -4,6 +4,7 @@ export enum httpStatusVars {
     '_401' = 401,
     '_404' = 404,
     '_409' = 409,
+    '_403' = 403,
 }
 
 export enum httpMethods {
@@ -12,13 +13,14 @@ export enum httpMethods {
 }
 
 export enum endpoints {
-    'LOGIN'= '/login',
-    'GOOGLE' = '/google',
-    'REGISTRATION'= '/registration',
-    'CHECK_EMAIL'= '/check-email',
-    'CONFIRM_EMAIL'= '/confirm-email',
-    'CHANGE_PASSWORD'= '/change-password',
+    'LOGIN'= '/auth/login',
+    'GOOGLE' = '/auth/google',
+    'REGISTRATION'= '/auth/registration',
+    'CHECK_EMAIL'= '/auth/check-email',
+    'CONFIRM_EMAIL'= '/auth/confirm-email',
+    'CHANGE_PASSWORD'= '/auth/change-password',
+    'GET_FEEDBACK' = '/feedback'
 }
 export enum urls {
-    MAIN_URL = 'https://marathon-api.clevertec.ru/auth'
+    MAIN_URL = 'https://marathon-api.clevertec.ru'
 }

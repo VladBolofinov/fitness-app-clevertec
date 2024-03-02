@@ -1,12 +1,13 @@
 import {createSlice, createAsyncThunk, PayloadAction} from "@reduxjs/toolkit";
-import {IApiRequest} from "@redux/types/IApiRequestSlice";
+import {ApiRequestType} from "@redux/types/ApiRequestType";
 import {useHttp} from "@hooks/http.hook";
 import {IInputValues} from "@pages/main/components/types/IInputValues";
 import {ConfirmPasswordArguments} from "@redux/types/ConfirmPasswordArguments";
 import {FetchTokenFulfilledPayload} from "@redux/types/FetchTokenPayload";
 import {httpStatusVars} from "@redux/types/httpStatusVars";
+import {FeedbackDataPayload} from "@redux/types/FeedbackDataPayload";
 
-const initialState: IApiRequest = {
+const initialState: ApiRequestType = {
     jwt: '',
     isLoadingRequest: false,
     isErrorStatus: false,
@@ -16,7 +17,8 @@ const initialState: IApiRequest = {
     login: '',
     password: '',
     firstConfirmPassword: '',
-    secondConfirmPassword: ''
+    secondConfirmPassword: '',
+    feedbackData: []
 }
 export const authenticateUser = createAsyncThunk(
     'apiRequest/authenticateUser',
@@ -60,6 +62,13 @@ export const changePassword = createAsyncThunk(
         return changePassword(password, confirmPassword);
     }
 )
+export const getFeedbacks = createAsyncThunk(
+    'apiRequest/getFeedbacks',
+    (token:string) => {
+        const {getFeedbacks} = useHttp();
+        return getFeedbacks(token);
+    }
+)
 
 export const apiRequestSlice = createSlice({
     name: 'apiRequestSlice',
@@ -84,6 +93,9 @@ export const apiRequestSlice = createSlice({
         },
         setIsCollapseSider(state) {
             state.isCollapseSider = !state.isCollapseSider;
+        },
+        saveTokenAtStore(state, action: PayloadAction<string>) {
+            state.jwt = action.payload;
         }
     },
     extraReducers:
@@ -163,6 +175,15 @@ export const apiRequestSlice = createSlice({
                     }
                 })
                 .addCase(changePassword.rejected, (state) => {
+                    state.isLoadingRequest = false;
+                })
+                .addCase(getFeedbacks.pending, (state) => {state.isLoadingRequest = true;})
+                .addCase(getFeedbacks.fulfilled, (state, action:PayloadAction<FeedbackDataPayload[]>) => {
+                    state.isLoadingRequest = false;
+                    state.isSuccessRequest = true;
+                    state.feedbackData = action.payload;
+                })
+                .addCase(getFeedbacks.rejected, (state) => {
                     state.isLoadingRequest = false;
                 })
         }

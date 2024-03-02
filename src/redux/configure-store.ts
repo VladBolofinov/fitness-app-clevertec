@@ -12,7 +12,7 @@ const {
 export const store = configureStore({
     reducer: combineReducers({
         router: routerSlice,
-        apiRequestSlice: apiRequestReducer
+        apiRequestSlice: apiRequestReducer,
     }),
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(routerMiddleware),
 });

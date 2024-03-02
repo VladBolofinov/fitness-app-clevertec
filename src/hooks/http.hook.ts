@@ -14,8 +14,8 @@ export const useHttp = () => {
                 url: `${urls.MAIN_URL}${endpoints.LOGIN}`,
                 data: {email, password}
             })
-            history.push(AppRoutes.MAIN);
-            const resultData:FetchTokenFulfilledPayload = {token: response.data.accessToken, rememberUser}
+            const resultData:FetchTokenFulfilledPayload = {token: response.data.accessToken, rememberUser};
+            (resultData.token) ? history.push(AppRoutes.MAIN) : history.push(AppRoutes.AUTH);
             return resultData;
         } catch (e) {
             if (axios.isAxiosError(e)) {
@@ -105,12 +105,35 @@ export const useHttp = () => {
             }
         }
     }
+    const getFeedbacks = async (token:string) => {
+        try {
+            const response = await axios({
+                method: httpMethods.GET,
+                url: `${urls.MAIN_URL}${endpoints.GET_FEEDBACK}`,
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            //history.push(AppRoutes.SUCCESS_CHANGE_PASSWORD);
+            console.log(response.data);
+            return response.data;
+        } catch (e) {
+            if (axios.isAxiosError(e)) {
+                if (e.response?.status === httpStatusVars["_403"]) {
+                    localStorage.clear();
+                    history.push(AppRoutes.AUTH);
+                }
+                //return e.response;
+            }
+        }
+    }
     return {
         authenticateUser,
         googleAuthenticateUser,
         registerNewUser,
         checkEmail,
         confirmEmail,
-        changePassword
+        changePassword,
+        getFeedbacks
     }
 }

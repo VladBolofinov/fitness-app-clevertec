@@ -7,6 +7,10 @@ html, body {
     font-family: var(--font-family);
 }
 
+.ant-layout {
+    background-image: url('assets/background-img/MainPage_light.png');
+    background-size: auto 100%;
+}
 .ant-result {
     padding: 0;
 }
