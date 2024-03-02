@@ -9,11 +9,13 @@ import {
     MessageTypeError,
     MessageTypeSuccess
 } from "@pages/auth/types/messageTypes";
+import {FeedbackPage} from "@pages/feedback/FeedbackPage";
 
 export enum AppRoutes {
     ROOT = '/',
     MAIN = '/main',
     AUTH = '/auth',
+    FEEDBACK = '/feedbacks',
     REGISTRATION = '/auth/registration',
     ERROR_LOGIN = '/result/error-login',
     SUCCESS = '/result/success',
@@ -31,6 +33,7 @@ export const RoutePath: Record<AppRoutes, string> = {
     [AppRoutes.ROOT]: '/',
     [AppRoutes.MAIN]: '/main',
     [AppRoutes.AUTH]: '/auth',
+    [AppRoutes.FEEDBACK]: '/feedbacks',
     [AppRoutes.REGISTRATION]: '/auth/registration',
     [AppRoutes.ERROR_LOGIN]: '/result/error-login',
     [AppRoutes.SUCCESS]: '/result/success',
@@ -58,6 +61,11 @@ export const routeConfig: Record<AppRoutes, RouteProps> = {
     [AppRoutes.AUTH]: {
         path: RoutePath[AppRoutes.AUTH],
         element: <RequireAuth><AuthPageAsync><FormWrapper/></AuthPageAsync></RequireAuth>,
+        id: 'none'
+    },
+    [AppRoutes.FEEDBACK]: {
+        path: RoutePath[AppRoutes.FEEDBACK],
+        element: <RequireAuth><FeedbackPage/></RequireAuth>,
         id: 'none'
     },
     [AppRoutes.REGISTRATION]: {

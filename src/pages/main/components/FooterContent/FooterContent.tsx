@@ -9,6 +9,7 @@ import {
 } from "@ant-design/icons";
 import { IMainPageComponentsProps } from "@pages/main/components/types/IMainPageComponentsProps";
 import React from "react";
+import {history} from "@redux/configure-store";
 export const FooterContent: React.FC<IMainPageComponentsProps> = ({ collapsed }) => {
     const items = [
         { title: 'Расписать тренировки', icon: <HeartFilled />, buttonText: 'Настройки' },
@@ -28,7 +29,7 @@ export const FooterContent: React.FC<IMainPageComponentsProps> = ({ collapsed })
                 ))}
             </div>
             <div className={`bottom-content-wrapper ${collapsed ? 'collapsed' : ''}`}>
-                <Button type={"link"}>Смотреть отзывы</Button>
+                <Button type={"link"} onClick={() => history.push('/feedbacks')}>Смотреть отзывы</Button>
                 <div className="download-section">
                     <div className="download-link-descr">
                         <Button type={"link"}>Скачать на телефон</Button>

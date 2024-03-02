@@ -6,6 +6,7 @@ html, body {
     margin: var(--center-margin);
     font-family: var(--font-family);
 }
+
 .ant-result {
     padding: 0;
 }
@@ -15,6 +16,11 @@ html, body {
 }
 .ant-result-info .ant-result-icon > .anticon {
     color: var(--primary-light-6);
+}
+a.ant-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 @media screen and (max-width: 834px) {
     html, body {

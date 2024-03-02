@@ -11,6 +11,7 @@ const initialState: IApiRequest = {
     isLoadingRequest: false,
     isErrorStatus: false,
     isSuccessRequest: false,
+    isCollapseSider: false,
     checkCodeInputValue: '',
     login: '',
     password: '',
@@ -80,6 +81,9 @@ export const apiRequestSlice = createSlice({
         saveConfirmPasswords(state, action: PayloadAction<ConfirmPasswordArguments>) {
             state.firstConfirmPassword = action.payload.password;
             state.secondConfirmPassword = action.payload.confirmPassword;
+        },
+        setIsCollapseSider(state) {
+            state.isCollapseSider = !state.isCollapseSider;
         }
     },
     extraReducers:

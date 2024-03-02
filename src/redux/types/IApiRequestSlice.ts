@@ -3,6 +3,7 @@ export interface IApiRequest {
     isLoadingRequest: boolean;
     isErrorStatus: boolean;
     isSuccessRequest: boolean;
+    isCollapseSider: boolean;
     checkCodeInputValue: string;
     login: string;
     password: string;

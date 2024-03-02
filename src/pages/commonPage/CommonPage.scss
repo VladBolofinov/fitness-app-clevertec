@@ -4,17 +4,17 @@
     background-image: url('../../assets/background-img/MainPage_light.png');
     background-size: auto 100%;
     margin: var(--center-margin);
+    .ant-layout-header {
+        background: var(--primary-light-1);
+        height: 168px;
+        padding: 16px 24px;
+    }
 }
 .ant-menu-inline {
     border-right: none;
 }
 .ant-menu-vertical {
     border-right: none;
-}
-.ant-layout-header {
-    background: var(--primary-light-1);
-    height: 168px;
-    padding: 16px 24px;
 }
 .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
     background-color: white;
@@ -24,13 +24,22 @@
     flex-direction: column;
     justify-content: space-between;
 }
-.btn-trigger, .btn-trigger-collapsed {
-    border:none;
-    background: none;
-    padding: 0;
-    position: absolute;
-    top: 479px;
-    cursor: pointer;
+.ant-typography .main-header-text {
+    font-weight: var(--font-weight-lg);
+    line-height: 130%;
+}
+.header-with-content {
+    height: 168px;
+}
+
+.header-without-content {
+    height: 100px;
+}
+
+@media screen and (max-width: 1024px) {
+    .ant-typography .main-header-text {
+        font-size: var(--font-size-xl);
+    }
 }
 
 @media screen and (max-width: 834px) {
@@ -44,11 +53,14 @@
     .collapsed-style-header {
         height: 132px;
     }
-    .btn-trigger, .btn-trigger-collapsed {
-        top: 565px;
-    }
 }
 
+@media screen and (min-width: 834px) and (max-width: 1024px) {
+    .ant-typography .main-header-text {
+        font-weight: var(--font-weight-md);
+        font-size: var(--font-size-xl);
+    }
+}
 @media screen and (max-width: 360px) {
     .ant-layout {
         height: 1355px;
@@ -61,12 +73,12 @@
         left: 105px;
         transition: all 0.2s;
     }
-    .btn-trigger-collapsed {
-        top: 24px;
-        left: 0;
-        transition: all 0.2s;
-    }
     .ant-layout-header {
         height: 166px;
+    }
+}
+@media screen and (min-width: 300px) and (max-width: 834px) {
+    .ant-typography .main-header-text {
+        font-size: var(--font-size-lg);
     }
 }
