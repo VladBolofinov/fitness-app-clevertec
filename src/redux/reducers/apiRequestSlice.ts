@@ -18,7 +18,8 @@ const initialState: ApiRequestType = {
     password: '',
     firstConfirmPassword: '',
     secondConfirmPassword: '',
-    feedbackData: []
+    feedbackData: [],
+    isEmptyFeedbacksDB: false
 }
 export const authenticateUser = createAsyncThunk(
     'apiRequest/authenticateUser',
@@ -181,7 +182,7 @@ export const apiRequestSlice = createSlice({
                 .addCase(getFeedbacks.fulfilled, (state, action:PayloadAction<FeedbackDataPayload[]>) => {
                     state.isLoadingRequest = false;
                     state.isSuccessRequest = true;
-                    state.feedbackData = action.payload;
+                    (action.payload.length) ? state.feedbackData = action.payload : state.isEmptyFeedbacksDB = true;
                 })
                 .addCase(getFeedbacks.rejected, (state) => {
                     state.isLoadingRequest = false;

@@ -114,7 +114,7 @@ export const useHttp = () => {
                     Authorization: `Bearer ${token}`
                 }
             })
-            //history.push(AppRoutes.SUCCESS_CHANGE_PASSWORD);
+            history.push(AppRoutes.FEEDBACK);
             console.log(response.data);
             return response.data;
         } catch (e) {

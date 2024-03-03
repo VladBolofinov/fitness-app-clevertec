@@ -9,8 +9,6 @@ import {
 } from "@ant-design/icons";
 import { IMainPageComponentsProps } from "@pages/main/components/types/IMainPageComponentsProps";
 import React from "react";
-import {NavLink} from "react-router-dom";
-import {AppRoutes} from "../../../../router/routeConfig";
 import {useAppDispatch} from "@hooks/typed-react-redux-hooks";
 import {getFeedbacks} from "@redux/reducers/apiRequestSlice";
 import {useSelector} from "react-redux";
@@ -36,9 +34,7 @@ export const FooterContent: React.FC<IMainPageComponentsProps> = ({ collapsed })
                 ))}
             </div>
             <div className={`bottom-content-wrapper ${collapsed ? 'collapsed' : ''}`}>
-                <NavLink to={AppRoutes.FEEDBACK}>
-                    <Button type={"link"} data-test-id='see-reviews' onClick={()=>dispatch(getFeedbacks(token))}>Смотреть отзывы</Button>
-                </NavLink>
+                <Button type={"link"} data-test-id='see-reviews' onClick={()=>dispatch(getFeedbacks(token))}>Смотреть отзывы</Button>
                 <div className="download-section">
                     <div className="download-link-descr">
                         <Button type={"link"}>Скачать на телефон</Button>

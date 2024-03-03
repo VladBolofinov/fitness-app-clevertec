@@ -1,11 +1,10 @@
 .not-find-feedback-wrapper {
     border-radius: 2px;
-    max-width: 1184px;
+    max-width: 1328px;
     height: 245px;
     box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.04);
     background: var(--character-light-primary-inverse);
-    margin-top: 321px;
-    margin-bottom: 20px;
+    margin: 321px 24px 20px 24px;
     padding: 56px 130px;
     display: flex;
     flex-direction: column;
@@ -30,7 +29,6 @@
     .ant-btn {
         height: 40px;
         box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.04);
-        background: var(--primary-light-6);
     }
 }
 @media screen and (max-width: 360px) {

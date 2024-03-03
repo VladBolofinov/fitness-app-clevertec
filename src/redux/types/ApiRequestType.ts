@@ -11,5 +11,6 @@ export type ApiRequestType = {
     password: string;
     firstConfirmPassword: string;
     secondConfirmPassword: string;
-    feedbackData: FeedbackDataPayload[]
+    feedbackData: FeedbackDataPayload[];
+    isEmptyFeedbacksDB: boolean;
 }

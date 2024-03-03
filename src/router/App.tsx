@@ -10,7 +10,7 @@ import {apiRequestSlice} from "@redux/reducers/apiRequestSlice";
 import {
     getIsLoadingRequest
 } from "@redux/selectors/getApiRequestState/getIsLoadingRequest/getIsLoadingRequest";
-export const App = () => {
+export const App:React.FC = () => {
     const {isErrorStatus, isSuccessRequest} = useAppSelector(state => state.apiRequestSlice);
     const location = useSelector(getLocation);
     const dispatch = useAppDispatch();

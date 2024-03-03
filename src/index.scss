@@ -26,11 +26,28 @@ p {
 .ant-result-info .ant-result-icon > .anticon {
     color: var(--primary-light-6);
 }
+.ant-input-group-wrapper-status-error .ant-input-group-addon {
+    color: var(--character-light-title-85);
+}
+.ant-btn-primary {
+    height: 40px;
+    background: var(--primary-light-6);
+}
+.ant-btn-link {
+    color: var(--primary-light-6);
+}
 a.ant-btn {
     display: flex;
     justify-content: center;
     align-items: center;
 }
+textarea.ant-input {
+    margin-top: 16px;
+}
+.ant-modal-footer {
+    padding: 10px 24px;
+}
+
 @media screen and (max-width: 834px) {
     html, body {
         width: 834px;
@@ -42,5 +59,11 @@ a.ant-btn {
     }
     .ant-layout-sider {
         position: absolute;
+    }
+    .ant-modal-footer {
+        padding: 10px 16px;
+    }
+    .ant-modal-body {
+        padding: 24px 16px;
     }
 }
