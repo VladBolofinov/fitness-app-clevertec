@@ -1,5 +1,5 @@
 import './CommonPage.scss';
-import '../../variables.css';
+import '../../variables.scss';
 import {Breadcrumb, Layout} from 'antd';
 import React, {useEffect} from 'react';
 import {SiderContent} from "@pages/main/components/SiderContent/SiderContent";

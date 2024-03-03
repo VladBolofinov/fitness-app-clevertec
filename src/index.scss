@@ -1,12 +1,17 @@
 @import 'antd/dist/antd.css';
-@import 'variables.css';
-
+@import 'src/variables.scss';
+* {
+    margin: 0;
+}
 html, body {
     width: 1440px;
     margin: var(--center-margin);
     font-family: var(--font-family);
-}
 
+}
+p {
+    margin-bottom: 0;
+}
 .ant-layout {
     background-image: url('assets/background-img/MainPage_light.png');
     background-size: auto 100%;
@@ -34,5 +39,8 @@ a.ant-btn {
 @media screen and (max-width: 360px) {
     html, body {
         width: 360px;
+    }
+    .ant-layout-sider {
+        position: absolute;
     }
 }

@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { store, history } from '@redux/configure-store';
 
 import 'normalize.css';
-import './index.css';
+import './index.scss';
 import { HistoryRouter} from "redux-first-history/rr6";
 import {App} from "./router/App";
 
