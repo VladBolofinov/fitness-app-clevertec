@@ -19,7 +19,8 @@ const initialState: ApiRequestType = {
     firstConfirmPassword: '',
     secondConfirmPassword: '',
     feedbackData: [],
-    isEmptyFeedbacksDB: false
+    isEmptyFeedbacksDB: false,
+    isCollapseFeedback: false   //раздели на новый слайс все что связано с feedback запросы тоже
 }
 export const authenticateUser = createAsyncThunk(
     'apiRequest/authenticateUser',
@@ -97,6 +98,9 @@ export const apiRequestSlice = createSlice({
         },
         saveTokenAtStore(state, action: PayloadAction<string>) {
             state.jwt = action.payload;
+        },
+        setIsCollapseFeedback(state) {
+            state.isCollapseFeedback = !state.isCollapseFeedback;
         }
     },
     extraReducers:

@@ -25,6 +25,7 @@ export const App:React.FC = () => {
                 history.push(AppRoutes.MAIN);
             }
         } else {
+            // добавь тут проверку на локацию чтобы на auth не сохраняло токен
             const jwt = localStorage.getItem('jwtToken');
             dispatch(saveTokenAtStore(jwt));
         }

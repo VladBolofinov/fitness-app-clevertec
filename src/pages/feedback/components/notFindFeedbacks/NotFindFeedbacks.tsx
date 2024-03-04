@@ -12,7 +12,7 @@ export const NotFindFeedbacks:React.FC = () => {
                 </p>
             </div>
             <div className='btn-wrapper'>
-                <Button type="primary" block>Написать отзыв</Button>
+                <Button type="primary" block data-test-id='write-review'>Написать отзыв</Button>
             </div>
         </>
     );

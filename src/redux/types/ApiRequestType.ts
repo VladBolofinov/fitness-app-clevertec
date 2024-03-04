@@ -13,4 +13,5 @@ export type ApiRequestType = {
     secondConfirmPassword: string;
     feedbackData: FeedbackDataPayload[];
     isEmptyFeedbacksDB: boolean;
+    isCollapseFeedback: boolean;
 }
