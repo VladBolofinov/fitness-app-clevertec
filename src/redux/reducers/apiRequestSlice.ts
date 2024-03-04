@@ -6,6 +6,7 @@ import {ConfirmPasswordArguments} from "@redux/types/ConfirmPasswordArguments";
 import {FetchTokenFulfilledPayload} from "@redux/types/FetchTokenPayload";
 import {httpStatusVars} from "@redux/types/httpStatusVars";
 import {FeedbackDataPayload} from "@redux/types/FeedbackDataPayload";
+import {SendFeedbackArgsType} from "@redux/types/SendFeedbackArgsType";
 
 const initialState: ApiRequestType = {
     jwt: '',
@@ -20,7 +21,10 @@ const initialState: ApiRequestType = {
     secondConfirmPassword: '',
     feedbackData: [],
     isEmptyFeedbacksDB: false,
-    isCollapseFeedback: false   //раздели на новый слайс все что связано с feedback запросы тоже
+    isCollapseFeedback: false,   //раздели на новый слайс все что связано с feedback запросы тоже
+    rateScore: 0,
+    feedbackMessage: '',
+    isOpenModal: false,
 }
 export const authenticateUser = createAsyncThunk(
     'apiRequest/authenticateUser',
@@ -71,6 +75,13 @@ export const getFeedbacks = createAsyncThunk(
         return getFeedbacks(token);
     }
 )
+export const sendFeedback = createAsyncThunk(
+    'apiRequest/sendFeedback',
+    ({token, message, rating}:SendFeedbackArgsType) => {
+        const {sendFeedback} = useHttp();
+        return sendFeedback(token, message, rating);
+    }
+)
 
 export const apiRequestSlice = createSlice({
     name: 'apiRequestSlice',
@@ -101,6 +112,15 @@ export const apiRequestSlice = createSlice({
         },
         setIsCollapseFeedback(state) {
             state.isCollapseFeedback = !state.isCollapseFeedback;
+        },
+        setRateScore(state, action: PayloadAction<number>) {
+            state.rateScore = action.payload;
+        },
+        setFeedbackMessage(state, action: PayloadAction<string>) {
+            state.feedbackMessage = action.payload;
+        },
+        setIsOpenModal(state, action: PayloadAction<boolean>) {
+            state.isOpenModal = action.payload;
         }
     },
     extraReducers:
@@ -185,10 +205,18 @@ export const apiRequestSlice = createSlice({
                 .addCase(getFeedbacks.pending, (state) => {state.isLoadingRequest = true;})
                 .addCase(getFeedbacks.fulfilled, (state, action:PayloadAction<FeedbackDataPayload[]>) => {
                     state.isLoadingRequest = false;
-                    state.isSuccessRequest = true;
-                    (action.payload.length) ? state.feedbackData = action.payload : state.isEmptyFeedbacksDB = true;
+                    state.isSuccessRequest = true; //посмотри и убери это
+                    (action.payload.length) ? state.feedbackData = action.payload.reverse() : state.isEmptyFeedbacksDB = true;
                 })
                 .addCase(getFeedbacks.rejected, (state) => {
+                    state.isLoadingRequest = false;
+                })
+                .addCase(sendFeedback.pending, (state) => {state.isLoadingRequest = true;})
+                .addCase(sendFeedback.fulfilled, (state, action:PayloadAction<number | undefined>) => {
+                    state.isLoadingRequest = false;
+                    state.isSuccessRequest = true;
+                })
+                .addCase(sendFeedback.rejected, (state) => {
                     state.isLoadingRequest = false;
                 })
         }

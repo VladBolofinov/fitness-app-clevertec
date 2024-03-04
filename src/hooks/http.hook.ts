@@ -6,6 +6,7 @@ import {httpStatusVars} from "@redux/types/httpStatusVars";
 import {httpMethods} from "@redux/types/httpStatusVars";
 import {urls} from "@redux/types/httpStatusVars";
 import {endpoints} from "@redux/types/httpStatusVars";
+import {warningModal} from "@pages/feedback/components/feedbackContent/FeedbackContent";
 export const useHttp = () => {
     const authenticateUser = async (email:string, password:string, rememberUser:boolean|undefined) => {
         try {
@@ -109,7 +110,7 @@ export const useHttp = () => {
         try {
             const response = await axios({
                 method: httpMethods.GET,
-                url: `${urls.MAIN_URL}${endpoints.GET_FEEDBACK}`,
+                url: `${urls.MAIN_URL}${endpoints.FEEDBACK}`,
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -127,6 +128,28 @@ export const useHttp = () => {
             }
         }
     }
+    const sendFeedback = async (token:string, message: string, rating: number) => {
+        try {
+            const response = await axios({
+                method: httpMethods.POST,
+                url: `${urls.MAIN_URL}${endpoints.FEEDBACK}`,
+                data: {
+                    message,
+                    rating
+                },
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            console.log(response);
+            return response.data.status;
+        } catch (e) {
+            if (axios.isAxiosError(e)) {
+                console.log(e.response?.status);
+                return e.response?.status;
+            }
+        }
+    }
     return {
         authenticateUser,
         googleAuthenticateUser,
@@ -134,6 +157,7 @@ export const useHttp = () => {
         checkEmail,
         confirmEmail,
         changePassword,
-        getFeedbacks
+        getFeedbacks,
+        sendFeedback
     }
 }

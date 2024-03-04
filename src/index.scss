@@ -33,6 +33,9 @@ p {
     height: 40px;
     background: var(--primary-light-6);
 }
+.ant-btn-default {
+    height: 40px;
+}
 .ant-btn-link {
     color: var(--primary-light-6);
 }
@@ -47,7 +50,29 @@ textarea.ant-input {
 .ant-modal-footer {
     padding: 10px 24px;
 }
-
+.ant-rate-star-second, .ant-rate-star-full {
+    color: var(--character-light-warning);
+}
+.ant-rate-star:not(:last-child) {
+    margin-right: 4px;
+}
+.feedback-card-rate {
+    .ant-rate-star {
+        font-size: 16px;
+    }
+}
+.modal-rate {
+    .ant-rate-star {
+        font-size: 20px;
+    }
+}
+.ant-modal-confirm .ant-modal-body {
+    padding: 64px 85px;
+}
+.ant-modal-confirm-btns {
+    display: flex;
+    justify-content: center;
+}
 @media screen and (max-width: 834px) {
     html, body {
         width: 834px;
@@ -65,5 +90,8 @@ textarea.ant-input {
     }
     .ant-modal-body {
         padding: 24px 16px;
+    }
+    .ant-modal-confirm .ant-modal-body {
+        padding: 32px 16px;
     }
 }

@@ -14,4 +14,7 @@ export type ApiRequestType = {
     feedbackData: FeedbackDataPayload[];
     isEmptyFeedbacksDB: boolean;
     isCollapseFeedback: boolean;
+    rateScore: number;
+    feedbackMessage: string;
+    isOpenModal: boolean;
 }
