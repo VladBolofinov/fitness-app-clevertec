@@ -46,6 +46,7 @@ export const FormComponent: React.FC<IFormComponentProps> = ({type}) => {
     })
     const sendAuthData = (inputValues: IInputValues) => {
         const { login, password, remember } = inputValues;
+        console.log(remember);
         dispatch(authenticateUser({ login, password, remember }));
     };
     const sendRegistrationData = (values: IInputValues) => {
@@ -64,7 +65,7 @@ export const FormComponent: React.FC<IFormComponentProps> = ({type}) => {
                 onFinish={(type === 'auth') ? sendAuthData : sendRegistrationData}
                 form={type === 'auth' ? authForm : registrationForm}
                 name={type === 'auth' ? "enter-account" : "registration"}
-                initialValues={{ remember: true }}
+                initialValues={{ remember: false }}
             >
                 <Form.Item
                     name="login"
