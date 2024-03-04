@@ -25,6 +25,7 @@ const initialState: ApiRequestType = {
     rateScore: 0,
     feedbackMessage: '',
     isOpenModal: false,
+    isSuccessSendFeedback: false
 }
 export const authenticateUser = createAsyncThunk(
     'apiRequest/authenticateUser',
@@ -121,6 +122,9 @@ export const apiRequestSlice = createSlice({
         },
         setIsOpenModal(state, action: PayloadAction<boolean>) {
             state.isOpenModal = action.payload;
+        },
+        deleteIsSuccessSendFeedback(state) {
+            state.isSuccessSendFeedback = false;
         }
     },
     extraReducers:
@@ -214,10 +218,11 @@ export const apiRequestSlice = createSlice({
                 .addCase(sendFeedback.pending, (state) => {state.isLoadingRequest = true;})
                 .addCase(sendFeedback.fulfilled, (state, action:PayloadAction<number | undefined>) => {
                     state.isLoadingRequest = false;
-                    state.isSuccessRequest = true;
+                    state.isSuccessSendFeedback = true;
                 })
                 .addCase(sendFeedback.rejected, (state) => {
                     state.isLoadingRequest = false;
+                    state.isSuccessSendFeedback = false;
                 })
         }
 })

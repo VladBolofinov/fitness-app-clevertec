@@ -17,4 +17,5 @@ export type ApiRequestType = {
     rateScore: number;
     feedbackMessage: string;
     isOpenModal: boolean;
+    isSuccessSendFeedback: boolean;
 }

@@ -1,7 +1,16 @@
 import React from 'react';
 import './NotFindFeedbacks.scss';
 import {Button} from "antd/es";
+import {apiRequestSlice} from "@redux/reducers/apiRequestSlice";
+import {useAppDispatch} from "@hooks/typed-react-redux-hooks";
+import {ModalFeedbackForm} from "@pages/feedback/components/modalFeedbackForm/ModalFeedbackForm";
 export const NotFindFeedbacks:React.FC = () => {
+    const {setIsOpenModal} = apiRequestSlice.actions;
+    const dispatch = useAppDispatch();
+    const showModal = () => {
+        dispatch(setIsOpenModal(true));
+    };
+
     return (
         <>
             <div className='not-find-feedback-wrapper'>
@@ -12,8 +21,9 @@ export const NotFindFeedbacks:React.FC = () => {
                 </p>
             </div>
             <div className='btn-wrapper'>
-                <Button type="primary" block data-test-id='write-review'>Написать отзыв</Button>
+                <Button type="primary" block data-test-id='write-review' onClick={showModal}>Написать отзыв</Button>
             </div>
+            <ModalFeedbackForm/>
         </>
     );
 };
