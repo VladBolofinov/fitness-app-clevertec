@@ -122,7 +122,7 @@ export const useHttp = () => {
                     localStorage.clear();
                     history.push(AppRoutes.AUTH);
                 }
-                return e.response.status;
+                return e.response?.status;
             }
         }
     }
@@ -140,7 +140,7 @@ export const useHttp = () => {
                 }
             })
             console.log(response);
-            return response.status;
+            return response.data;
         } catch (e) {
             if (axios.isAxiosError(e)) {
                 console.log(e.response?.status);

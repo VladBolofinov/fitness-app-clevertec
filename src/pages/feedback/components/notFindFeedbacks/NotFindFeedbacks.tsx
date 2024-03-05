@@ -7,10 +7,6 @@ import {ModalFeedbackForm} from "@pages/feedback/components/modalFeedbackForm/Mo
 export const NotFindFeedbacks:React.FC = () => {
     const {setIsOpenModal} = apiRequestSlice.actions;
     const dispatch = useAppDispatch();
-    const showModal = () => {
-        dispatch(setIsOpenModal(true));
-    };
-
     return (
         <>
             <div className='not-find-feedback-wrapper'>
@@ -21,7 +17,7 @@ export const NotFindFeedbacks:React.FC = () => {
                 </p>
             </div>
             <div className='btn-wrapper'>
-                <Button type="primary" block data-test-id='write-review' onClick={showModal}>Написать отзыв</Button>
+                <Button type="primary" block data-test-id='write-review' onClick={() => dispatch(setIsOpenModal(true))}>Написать отзыв</Button>
             </div>
             <ModalFeedbackForm/>
         </>

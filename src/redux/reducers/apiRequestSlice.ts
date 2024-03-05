@@ -126,6 +126,9 @@ export const apiRequestSlice = createSlice({
         },
         deleteIsSuccessSendFeedback(state) {
             state.isSuccessSendFeedback = false;
+        },
+        deleteIsErrorSendFeedback(state) {
+            state.isErrorSendFeedback = false;
         }
     },
     extraReducers:
@@ -140,7 +143,6 @@ export const apiRequestSlice = createSlice({
                             (rememberUser) ? localStorage.setItem('jwtToken', token) : sessionStorage.setItem('jwtToken', token);
                         }
                     }
-                    //отрефактори нижнюю строчку
                     (typeof action.payload === 'number' && action.payload === httpStatusVars['_401'])
                         ? state.isErrorStatus = true : state.isErrorStatus = false;
                 })
@@ -223,22 +225,19 @@ export const apiRequestSlice = createSlice({
                 })
                 .addCase(sendFeedback.pending, (state) => {
                     state.isLoadingRequest = true;
-                    state.isSuccessSendFeedback = false;
-                    state.isErrorSendFeedback = false;
                 })
-                .addCase(sendFeedback.fulfilled, (state, action:PayloadAction<number | undefined>) => {
+                .addCase(sendFeedback.fulfilled, (state, action:PayloadAction<number | undefined | string>) => {
                     state.isLoadingRequest = false;
-                    if (action.payload === httpStatusVars['_201']) {
+                    if (typeof action.payload === 'string') {
                         state.isSuccessSendFeedback = true;
-                        state.isErrorSendFeedback = false;
+                    } else if (action.payload === 500 || action.payload === 403) {
+                        state.isErrorSendFeedback = true;
                     } else {
                         state.isSuccessSendFeedback = true;
-                        state.isErrorSendFeedback = true;
                     }
                 })
                 .addCase(sendFeedback.rejected, (state) => {
                     state.isLoadingRequest = false;
-                    state.isSuccessSendFeedback = false;
                     state.isErrorSendFeedback = true;
                 })
         }
