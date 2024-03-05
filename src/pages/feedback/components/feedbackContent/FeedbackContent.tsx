@@ -12,20 +12,33 @@ import {getIsSuccessSendFeedback} from "@redux/selectors/getApiRequestState/getI
 import {ModalFeedbackForm} from "@pages/feedback/components/modalFeedbackForm/ModalFeedbackForm";
 import {NotFindFeedbacks} from "@pages/feedback/components/notFindFeedbacks/NotFindFeedbacks";
 import {getIsEmptyFeedbacksDB} from "@redux/selectors/getApiRequestState/getIsEmptyFeedbacksDB/getIsEmptyFeedbacksDB";
+import {
+    getIsErrorSendFeedback
+} from "@redux/selectors/getApiRequestState/getIsErrorSendFeedback/getIsErrorSendFeedback";
+import {
+    getIsErrorStatus
+} from "@redux/selectors/getApiRequestState/getIsErrorStatus/getIsErrorStatus";
+import {history} from "@redux/configure-store";
+import {AppRoutes} from "../../../../router/routeConfig";
 
 export const FeedbackContent:React.FC = () => {
     const feedbackData = useSelector(getFeedbackData);
     const isCollapseFeedback  = useSelector(getIsCollapseFeedback);
     const token = useSelector(getToken);
     const isSuccessSendFeedback = useSelector(getIsSuccessSendFeedback);
+    const isErrorSendFeedback = useSelector(getIsErrorSendFeedback);
     const isEmptyFeedbacksDB = useSelector(getIsEmptyFeedbacksDB);
-    const {setIsCollapseFeedback,setIsOpenModal} = apiRequestSlice.actions;
+    const isErrorStatus = useSelector(getIsErrorStatus);
+    const {setIsCollapseFeedback,setIsOpenModal, deleteErrorStatus} = apiRequestSlice.actions;
     const dispatch = useAppDispatch();
 
     const showModal = () => {
         dispatch(setIsOpenModal(true));
     };
-
+    const onClearErrorStatus = () => {
+        dispatch(deleteErrorStatus());
+        history.push(AppRoutes.MAIN);
+    }
     const renderFeedbackElems = useMemo(() => {
         const feedbackSlice = isCollapseFeedback ? feedbackData : feedbackData.slice(0, 4); //поменяй на последние 4 элемента а не первые
         return feedbackSlice.map((item) => <FeedbackCard item={item} />);
@@ -37,8 +50,8 @@ export const FeedbackContent:React.FC = () => {
             centered: true,
             title: '',
             cancelText: 'Написать отзыв',
-            //onCancel: () => showModal(),
-            cancelButtonProps: {block: true, type: "primary"},
+            onCancel: () => showModal(),
+            cancelButtonProps: {block: true, type: "primary", 'data-test-id': 'write-review-not-saved-modal'},
             okText: 'Закрыть',
             okButtonProps: {block:true, type: "default"},
             maskStyle: { backgroundColor: 'rgba(121, 156, 213, 0.5)', backdropFilter: 'blur(5px)' },
@@ -62,6 +75,7 @@ export const FeedbackContent:React.FC = () => {
             okButtonProps: {block:false},
             maskStyle: { backgroundColor: 'rgba(121, 156, 213, 0.5)', backdropFilter: 'blur(5px)' },
             width: 539,
+            onOk: onClearErrorStatus,
             bodyStyle: {padding: '64px 32px 56px 32px'},
             content: <><Result
                 status='500'
@@ -74,8 +88,12 @@ export const FeedbackContent:React.FC = () => {
         if (isSuccessSendFeedback) {
             dispatch(getFeedbacks(token));
             successModal();
+        } else if (isErrorSendFeedback) {
+            errorModal();
+        } else if (isErrorStatus) {
+            errorHTTPModal();
         }
-    },[isSuccessSendFeedback])
+    },[isSuccessSendFeedback, isErrorSendFeedback, isErrorStatus])
 
     return (
         <div className='feedback-content-wrapper'>
@@ -85,9 +103,6 @@ export const FeedbackContent:React.FC = () => {
                 <div className='feedback-cards-wrapper'>
                     {renderFeedbackElems}
                     <ModalFeedbackForm/>
-                    <Button onClick={successModal}>Warning</Button>
-                    <Button onClick={errorModal}>Error</Button>
-                    <Button onClick={errorHTTPModal}>ErrorHTTP</Button>
                 </div>
                 <div>
                 <Button type="primary" onClick={showModal}

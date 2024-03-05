@@ -10,6 +10,7 @@ import {CommonPage} from "@pages/commonPage/CommonPage";
 
 const MainPage: React.FC = () => {
     const isCollapseSider = useSelector(getIsCollapseSider);
+
     return (
         <CommonPage hasHeaderContent={true}>
             {{

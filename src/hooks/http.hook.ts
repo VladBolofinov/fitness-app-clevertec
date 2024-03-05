@@ -6,7 +6,6 @@ import {httpStatusVars} from "@redux/types/httpStatusVars";
 import {httpMethods} from "@redux/types/httpStatusVars";
 import {urls} from "@redux/types/httpStatusVars";
 import {endpoints} from "@redux/types/httpStatusVars";
-import {warningModal} from "@pages/feedback/components/feedbackContent/FeedbackContent";
 export const useHttp = () => {
     const authenticateUser = async (email:string, password:string, rememberUser:boolean|undefined) => {
         try {
@@ -115,7 +114,6 @@ export const useHttp = () => {
                     Authorization: `Bearer ${token}`
                 }
             })
-            history.push(AppRoutes.FEEDBACK);
             console.log(response.data);
             return response.data;
         } catch (e) {
@@ -124,7 +122,7 @@ export const useHttp = () => {
                     localStorage.clear();
                     history.push(AppRoutes.AUTH);
                 }
-                //return e.response;
+                return e.response.status;
             }
         }
     }
@@ -142,7 +140,7 @@ export const useHttp = () => {
                 }
             })
             console.log(response);
-            return response.data.status;
+            return response.status;
         } catch (e) {
             if (axios.isAxiosError(e)) {
                 console.log(e.response?.status);

@@ -25,7 +25,8 @@ const initialState: ApiRequestType = {
     rateScore: 0,
     feedbackMessage: '',
     isOpenModal: false,
-    isSuccessSendFeedback: false
+    isSuccessSendFeedback: false,
+    isErrorSendFeedback: false,
 }
 export const authenticateUser = createAsyncThunk(
     'apiRequest/authenticateUser',
@@ -141,7 +142,7 @@ export const apiRequestSlice = createSlice({
                     }
                     //отрефактори нижнюю строчку
                     (typeof action.payload === 'number' && action.payload === httpStatusVars['_401'])
-                        ? state.isErrorStatus = true : state.isErrorStatus = true;
+                        ? state.isErrorStatus = true : state.isErrorStatus = false;
                 })
                 .addCase(authenticateUser.rejected, (state) => {
                     state.isLoadingRequest = false;
@@ -209,20 +210,36 @@ export const apiRequestSlice = createSlice({
                 .addCase(getFeedbacks.pending, (state) => {state.isLoadingRequest = true;})
                 .addCase(getFeedbacks.fulfilled, (state, action:PayloadAction<FeedbackDataPayload[]>) => {
                     state.isLoadingRequest = false;
-                    state.isSuccessRequest = true; //посмотри и убери это
-                    (action.payload.length) ? state.feedbackData = action.payload.reverse() : state.isEmptyFeedbacksDB = true;
+                    if (Array.isArray(action.payload)) {
+                        (action.payload.length) ? state.feedbackData = action.payload.reverse() : state.isEmptyFeedbacksDB = true;
+                    } else {
+                        state.isErrorStatus = true;
+                    }
+
                 })
                 .addCase(getFeedbacks.rejected, (state) => {
                     state.isLoadingRequest = false;
+                    state.isErrorStatus = true;
                 })
-                .addCase(sendFeedback.pending, (state) => {state.isLoadingRequest = true;})
+                .addCase(sendFeedback.pending, (state) => {
+                    state.isLoadingRequest = true;
+                    state.isSuccessSendFeedback = false;
+                    state.isErrorSendFeedback = false;
+                })
                 .addCase(sendFeedback.fulfilled, (state, action:PayloadAction<number | undefined>) => {
                     state.isLoadingRequest = false;
-                    state.isSuccessSendFeedback = true;
+                    if (action.payload === httpStatusVars['_201']) {
+                        state.isSuccessSendFeedback = true;
+                        state.isErrorSendFeedback = false;
+                    } else {
+                        state.isSuccessSendFeedback = true;
+                        state.isErrorSendFeedback = true;
+                    }
                 })
                 .addCase(sendFeedback.rejected, (state) => {
                     state.isLoadingRequest = false;
                     state.isSuccessSendFeedback = false;
+                    state.isErrorSendFeedback = true;
                 })
         }
 })

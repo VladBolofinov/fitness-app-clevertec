@@ -18,4 +18,5 @@ export type ApiRequestType = {
     feedbackMessage: string;
     isOpenModal: boolean;
     isSuccessSendFeedback: boolean;
+    isErrorSendFeedback: boolean;
 }

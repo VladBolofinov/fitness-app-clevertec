@@ -13,6 +13,8 @@ import {useAppDispatch} from "@hooks/typed-react-redux-hooks";
 import {getFeedbacks} from "@redux/reducers/apiRequestSlice";
 import {useSelector} from "react-redux";
 import {getToken} from "@redux/selectors/getApiRequestState/getToken/getToken";
+import {history} from "@redux/configure-store";
+import {AppRoutes} from "../../../../router/routeConfig";
 export const FooterContent: React.FC<IMainPageComponentsProps> = ({ collapsed }) => {
     const items = [
         { title: 'Расписать тренировки', icon: <HeartFilled />, buttonText: 'Настройки' },
@@ -34,7 +36,7 @@ export const FooterContent: React.FC<IMainPageComponentsProps> = ({ collapsed })
                 ))}
             </div>
             <div className={`bottom-content-wrapper ${collapsed ? 'collapsed' : ''}`}>
-                <Button type={"link"} data-test-id='see-reviews' onClick={()=>dispatch(getFeedbacks(token))}>Смотреть отзывы</Button>
+                <Button type={"link"} data-test-id='see-reviews' onClick={()=>dispatch(getFeedbacks(token)).then(history.push(AppRoutes.FEEDBACK))}>Смотреть отзывы</Button>
                 <div className="download-section">
                     <div className="download-link-descr">
                         <Button type={"link"}>Скачать на телефон</Button>
