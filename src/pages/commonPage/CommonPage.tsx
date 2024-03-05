@@ -5,20 +5,13 @@ import React from 'react';
 import {SiderContent} from "@pages/main/components/SiderContent/SiderContent";
 import {TriggerBtn} from "@pages/main/components/triggerBtn/TriggerBtn";
 import {useSelector} from "react-redux";
-import {
-    getIsCollapseSider
-} from "@redux/selectors/getApiRequestState/getIsCollapseSider/getIsCollapseSider";
+import {getIsCollapseSider} from "@redux/selectors/getApiRequestState/getIsCollapseSider/getIsCollapseSider";
+import {useLocation} from "react-router-dom";
 
 const { Header, Content } = Layout;
 export const CommonPage = ({children, hasHeaderContent}) => {
     const isCollapseSider = useSelector(getIsCollapseSider);
-    /*useEffect(() => {
-        const hasTokenLocalSt: string | null = localStorage.getItem('jwtToken');
-        const hasTokenSessionSt: string | null = sessionStorage.getItem('jwtToken');
-        if (!hasTokenSessionSt && !hasTokenLocalSt) {
-            history.push(RoutePath["/auth"]);
-        }
-    }, []);*/
+    const location = useLocation();
     return (
         <Layout>
             <SiderContent collapsed={isCollapseSider}/>
@@ -26,6 +19,7 @@ export const CommonPage = ({children, hasHeaderContent}) => {
                 <Header className={`${isCollapseSider ? 'collapsed-style-header' : ''} ${hasHeaderContent ? 'header-with-content' : 'header-without-content'}`}>
                     <Breadcrumb>
                         <Breadcrumb.Item>Главная</Breadcrumb.Item>
+                        {(location.pathname === '/feedbacks') && <Breadcrumb.Item>Отзывы пользователей</Breadcrumb.Item>}
                     </Breadcrumb>
                     {children.header}
                 </Header>
