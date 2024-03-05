@@ -114,7 +114,6 @@ export const useHttp = () => {
                     Authorization: `Bearer ${token}`
                 }
             })
-            console.log(response.data);
             return response.data;
         } catch (e) {
             if (axios.isAxiosError(e)) {
@@ -139,11 +138,9 @@ export const useHttp = () => {
                     Authorization: `Bearer ${token}`
                 }
             })
-            console.log(response);
             return response.data;
         } catch (e) {
             if (axios.isAxiosError(e)) {
-                console.log(e.response?.status);
                 return e.response?.status;
             }
         }

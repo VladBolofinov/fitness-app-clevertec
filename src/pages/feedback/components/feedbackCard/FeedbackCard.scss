@@ -7,6 +7,10 @@
     background: var(--character-light-primary-inverse);
     margin-top: 20px;
     display: flex;
+    .item-name {
+        font-size: 16px;
+        line-height: 130%;
+    }
 }
 .avatar-wrapper {
     display: flex;
@@ -15,10 +19,9 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    .img {
+    .avatar-img {
         width: 42px;
         height: 42px;
-        background-color: #2f54eb;
         border-radius: 50%;
     }
 }
@@ -30,6 +33,7 @@
 }
 .rate-date-wrapper {
     display: flex;
+    align-items: center;
 }
 .right-elems-wrapper {
     max-width: 966px;

@@ -42,7 +42,7 @@ export const FeedbackContent:React.FC = () => {
     }
     const renderFeedbackElems = useMemo(() => {
         const feedbackSlice = isCollapseFeedback ? feedbackData : feedbackData.slice(0, 4);
-        return feedbackSlice.map((item) => <FeedbackCard item={item} />);
+        return feedbackSlice.map((item) => <FeedbackCard item={item}/>);
     }, [feedbackData, isCollapseFeedback]);
     const errorModal = () => {
         Modal.confirm({icon: null, centered: true, title: '', cancelText: 'Написать отзыв',
