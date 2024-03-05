@@ -10,3 +10,17 @@
         }
     }
 }
+@media screen and (max-width: 360px) {
+    .feedback-content-wrapper {
+        padding: 24px 16px 16px 16px;
+        .feedback-cards-wrapper {
+            margin-bottom: 48px;
+        }
+        .feedback-content-btn-wrapper {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 96px;
+        }
+    }
+}

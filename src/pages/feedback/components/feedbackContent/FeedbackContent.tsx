@@ -104,7 +104,7 @@ export const FeedbackContent:React.FC = () => {
                             {renderFeedbackElems}
                             <ModalFeedbackForm/>
                         </div>
-                    <div>
+            <div className='feedback-content-btn-wrapper'>
                 <Button type="primary" onClick={showModalFeedback}
                         data-test-id='write-review'>Написать отзыв</Button>
                 <Button type={"link"} onClick={() => dispatch(setIsCollapseFeedback())}

@@ -44,3 +44,20 @@
     line-height: 130%;
     color: var(--character-light-secondary-45);
 }
+@media screen and (max-width: 360px) {
+    .feedback-content-card {
+        display: flex;
+        flex-direction: column;
+        min-height: 280px;
+        margin-top: 16px;
+    }
+    .avatar-wrapper {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        height: 42px;
+    }
+    .right-elems-wrapper {
+        margin-left: 0;
+    }
+}

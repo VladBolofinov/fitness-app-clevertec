@@ -38,6 +38,7 @@ p {
 }
 .ant-btn-link {
     color: var(--primary-light-6);
+    height: 40px;
 }
 a.ant-btn {
     display: flex;
@@ -73,6 +74,9 @@ textarea.ant-input {
     display: flex;
     justify-content: center;
 }
+.ant-modal-close-x {
+    color:rgba(0, 0, 0, 0.85);
+}
 @media screen and (max-width: 834px) {
     html, body {
         width: 834px;
@@ -83,6 +87,7 @@ textarea.ant-input {
         width: 360px;
     }
     .ant-layout-sider {
+        z-index: 3;
         position: absolute;
     }
     .ant-modal-footer {
