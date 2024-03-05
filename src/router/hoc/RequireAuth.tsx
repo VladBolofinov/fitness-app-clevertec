@@ -1,5 +1,4 @@
 import { useLocation, Navigate } from 'react-router-dom';
-
 export const RequireAuth = ({ children }: { children: React.ReactNode }) => {
     const hasTokenLocalSt: string | null = localStorage.getItem('jwtToken');
     const hasTokenSessionSt: string | null = sessionStorage.getItem('jwtToken');
@@ -11,9 +10,6 @@ export const RequireAuth = ({ children }: { children: React.ReactNode }) => {
 
     if ((location.pathname === '/main' || location.pathname === '/' || location.pathname === '/feedbacks')
         && !(hasTokenLocalSt || hasTokenSessionSt)) {
-        if (location.pathname === '/feedbacks') {
-            localStorage.clear();
-        }
         return <Navigate to='/auth' />
     }
 

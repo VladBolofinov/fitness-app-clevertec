@@ -7,9 +7,7 @@ import {useSelector} from "react-redux";
 import {getLocation} from "@redux/selectors/getRouterState/getLocation/getLocation";
 import {history} from "@redux/configure-store";
 import {apiRequestSlice} from "@redux/reducers/apiRequestSlice";
-import {
-    getIsLoadingRequest
-} from "@redux/selectors/getApiRequestState/getIsLoadingRequest/getIsLoadingRequest";
+import {getIsLoadingRequest} from "@redux/selectors/getApiRequestState/getIsLoadingRequest/getIsLoadingRequest";
 export const App:React.FC = () => {
     const {isErrorStatus, isSuccessRequest} = useAppSelector(state => state.apiRequestSlice);
     const location = useSelector(getLocation);
@@ -25,9 +23,10 @@ export const App:React.FC = () => {
                 history.push(AppRoutes.MAIN);
             }
         } else {
-            // добавь тут проверку на локацию чтобы на auth не сохраняло токен
             const jwt = localStorage.getItem('jwtToken');
-            dispatch(saveTokenAtStore(jwt));
+            if (location.pathname === '/' || location.pathname === '/main' && jwt !== null) {
+                dispatch(saveTokenAtStore(jwt));
+            }
         }
         return () => {
             sessionStorage.clear();

@@ -16,6 +16,7 @@ import {getIsErrorSendFeedback} from "@redux/selectors/getApiRequestState/getIsE
 import {getIsErrorStatus} from "@redux/selectors/getApiRequestState/getIsErrorStatus/getIsErrorStatus";
 import {history} from "@redux/configure-store";
 import {AppRoutes} from "../../../../router/routeConfig";
+import {getPreviousLocation} from "@redux/selectors/getRouterState/getPreviousLocation/getPreviousLocation";
 
 export const FeedbackContent:React.FC = () => {
     const feedbackData = useSelector(getFeedbackData);
@@ -24,6 +25,7 @@ export const FeedbackContent:React.FC = () => {
     const isSuccessSendFeedback = useSelector(getIsSuccessSendFeedback);
     const isErrorSendFeedback = useSelector(getIsErrorSendFeedback);
     const isEmptyFeedbacksDB = useSelector(getIsEmptyFeedbacksDB);
+    const previousLocation = useSelector(getPreviousLocation);
     const isErrorStatus = useSelector(getIsErrorStatus);
     const {setIsCollapseFeedback,setIsOpenModal, deleteErrorStatus, deleteIsErrorSendFeedback} = apiRequestSlice.actions;
     const dispatch = useAppDispatch();
@@ -31,7 +33,6 @@ export const FeedbackContent:React.FC = () => {
     const showModalFeedback = () => {
         dispatch(setIsOpenModal(true));
     };
-
     const onClearErrorStatus = () => {
         dispatch(deleteErrorStatus());
         history.push(AppRoutes.MAIN);
@@ -43,7 +44,6 @@ export const FeedbackContent:React.FC = () => {
         const feedbackSlice = isCollapseFeedback ? feedbackData : feedbackData.slice(0, 4);
         return feedbackSlice.map((item) => <FeedbackCard item={item} />);
     }, [feedbackData, isCollapseFeedback]);
-
     const errorModal = () => {
         Modal.confirm({icon: null, centered: true, title: '', cancelText: 'Написать отзыв',
             onCancel: () => {showModalFeedback();onDeleteErrorStatus();},
@@ -89,28 +89,31 @@ export const FeedbackContent:React.FC = () => {
         }
     },[isSuccessSendFeedback, isErrorSendFeedback, isErrorStatus])
 
+    useEffect(() => {
+            if (!(previousLocation[1]?.location === '/' || previousLocation[1]?.location === '/main')) {
+                localStorage.clear();
+                history.push(AppRoutes.AUTH);
+            }
+    },[])
     return (
         <div className='feedback-content-wrapper'>
             {(isEmptyFeedbacksDB)
                 ? <NotFindFeedbacks/>
                 : <>
-                <div className='feedback-cards-wrapper'>
-                    {renderFeedbackElems}
-                    <ModalFeedbackForm/>
-                </div>
-                <div>
+                        <div className='feedback-cards-wrapper'>
+                            {renderFeedbackElems}
+                            <ModalFeedbackForm/>
+                        </div>
+                    <div>
                 <Button type="primary" onClick={showModalFeedback}
-                data-test-id='write-review'>
-                Написать отзыв
+                        data-test-id='write-review'>Написать отзыв</Button>
+                <Button type={"link"} onClick={() => dispatch(setIsCollapseFeedback())}
+                        data-test-id='all-reviews-button'>
+                    {isCollapseFeedback ? 'Свернуть' : 'Развернуть'} все отзывы
                 </Button>
-                <Button type={"link"}
-                onClick={() => dispatch(setIsCollapseFeedback())}
-                data-test-id='all-reviews-button'>
-            {isCollapseFeedback ? 'Свернуть' : 'Развернуть'} все отзывы
-                </Button>
-                </div>
-                </>
-            }
+            </div>
+        </>
+    }
         </div>
     );
 };

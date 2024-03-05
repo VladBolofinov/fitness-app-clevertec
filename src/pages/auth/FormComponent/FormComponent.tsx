@@ -46,7 +46,6 @@ export const FormComponent: React.FC<IFormComponentProps> = ({type}) => {
     })
     const sendAuthData = (inputValues: IInputValues) => {
         const { login, password, remember } = inputValues;
-        console.log(remember);
         dispatch(authenticateUser({ login, password, remember }));
     };
     const sendRegistrationData = (values: IInputValues) => {
@@ -142,7 +141,7 @@ export const FormComponent: React.FC<IFormComponentProps> = ({type}) => {
                                 href={`${urls.MAIN_URL}${endpoints.GOOGLE}`}
                                 block
                                 onClick={()=>dispatch(googleAuthenticateUser())}
-                                style={{ marginTop: '16px', height: '40px' }}
+                                style={{ marginTop: '16px', height: '40px', paddingBottom: '0px' }}
                                 icon={<span className='google-icon'><GooglePlusOutlined /></span>}>
                                 Войти через Google
                             </Button>
