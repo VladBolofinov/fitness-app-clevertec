@@ -1,0 +1,26 @@
+.feedback-content-wrapper {
+    padding: 24px 24px 48px 24px;
+    .feedback-cards-wrapper {
+        height: 754px;
+        overflow-y: auto;
+        scrollbar-width: none;
+        margin-bottom: 106px;
+        > :first-child {
+            margin-top: var(--zero-margin);
+        }
+    }
+}
+@media screen and (max-width: 360px) {
+    .feedback-content-wrapper {
+        padding: 24px 16px 16px 16px;
+        .feedback-cards-wrapper {
+            margin-bottom: 48px;
+        }
+        .feedback-content-btn-wrapper {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 96px;
+        }
+    }
+}

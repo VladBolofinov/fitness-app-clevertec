@@ -1,8 +1,7 @@
 import './MiddleContent.scss';
 import { IMainPageComponentsProps } from "@pages/main/components/types/IMainPageComponentsProps";
 import React from "react";
-export const MiddleContent:React.FC<IMainPageComponentsProps> = ({collapsed}) => {
-    return (
+export const MiddleContent:React.FC<IMainPageComponentsProps> = ({collapsed}) => (
         <>
             <div className={(collapsed) ? 'app-usage collapsed' : 'app-usage'}>
                 С CleverFit ты сможешь:
@@ -16,4 +15,3 @@ export const MiddleContent:React.FC<IMainPageComponentsProps> = ({collapsed}) =>
             </div>
         </>
     );
-};

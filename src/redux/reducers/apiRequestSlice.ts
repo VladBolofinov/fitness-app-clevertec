@@ -1,30 +1,47 @@
 import {createSlice, createAsyncThunk, PayloadAction} from "@reduxjs/toolkit";
-import {IApiRequest} from "@redux/types/IApiRequestSlice";
+import {ApiRequestType} from "@redux/types/ApiRequestType";
 import {useHttp} from "@hooks/http.hook";
 import {IInputValues} from "@pages/main/components/types/IInputValues";
 import {ConfirmPasswordArguments} from "@redux/types/ConfirmPasswordArguments";
 import {FetchTokenFulfilledPayload} from "@redux/types/FetchTokenPayload";
 import {httpStatusVars} from "@redux/types/httpStatusVars";
+import {FeedbackDataPayload} from "@redux/types/FeedbackDataPayload";
+import {SendFeedbackArgsType} from "@redux/types/SendFeedbackArgsType";
 
-const initialState: IApiRequest = {
+const initialState: ApiRequestType = {
     jwt: '',
     isLoadingRequest: false,
     isErrorStatus: false,
     isSuccessRequest: false,
+    isCollapseSider: false,
     checkCodeInputValue: '',
     login: '',
     password: '',
     firstConfirmPassword: '',
-    secondConfirmPassword: ''
+    secondConfirmPassword: '',
+    feedbackData: [],
+    isEmptyFeedbacksDB: false,
+    isCollapseFeedback: false,   //раздели на новый слайс все что связано с feedback запросы тоже
+    rateScore: 0,
+    feedbackMessage: '',
+    isOpenModal: false,
+    isSuccessSendFeedback: false,
+    isErrorSendFeedback: false,
 }
-export const getToken = createAsyncThunk(
-    'apiRequest/fetchToken',
+export const authenticateUser = createAsyncThunk(
+    'apiRequest/authenticateUser',
     ({login, password, remember}:IInputValues) => {
-        const {getToken} = useHttp();
-        return getToken(login, password, remember);
+        const {authenticateUser} = useHttp();
+        return authenticateUser(login, password, remember);
     }
 )
-
+export const googleAuthenticateUser = createAsyncThunk(
+    'apiRequest/googleAuthenticateUser',
+    () => {
+        const {googleAuthenticateUser} = useHttp();
+        return googleAuthenticateUser();
+    }
+)
 export const registerNewUser = createAsyncThunk(
     'apiRequest/registerNewUser',
     ({login, password}:IInputValues) => {
@@ -32,7 +49,6 @@ export const registerNewUser = createAsyncThunk(
         return registerNewUser(login, password);
     }
 )
-
 export const checkEmail = createAsyncThunk(
     'apiRequest/checkEmail',
     (email:string) => {
@@ -52,6 +68,20 @@ export const changePassword = createAsyncThunk(
     ({password, confirmPassword}: ConfirmPasswordArguments) => {
         const {changePassword} = useHttp();
         return changePassword(password, confirmPassword);
+    }
+)
+export const getFeedbacks = createAsyncThunk(
+    'apiRequest/getFeedbacks',
+    (token:string) => {
+        const {getFeedbacks} = useHttp();
+        return getFeedbacks(token);
+    }
+)
+export const sendFeedback = createAsyncThunk(
+    'apiRequest/sendFeedback',
+    ({token, message, rating}:SendFeedbackArgsType) => {
+        const {sendFeedback} = useHttp();
+        return sendFeedback(token, message, rating);
     }
 )
 
@@ -75,24 +105,56 @@ export const apiRequestSlice = createSlice({
         saveConfirmPasswords(state, action: PayloadAction<ConfirmPasswordArguments>) {
             state.firstConfirmPassword = action.payload.password;
             state.secondConfirmPassword = action.payload.confirmPassword;
+        },
+        setIsCollapseSider(state) {
+            state.isCollapseSider = !state.isCollapseSider;
+        },
+        saveTokenAtStore(state, action: PayloadAction<string>) {
+            state.jwt = action.payload;
+        },
+        setIsCollapseFeedback(state) {
+            state.isCollapseFeedback = !state.isCollapseFeedback;
+        },
+        setRateScore(state, action: PayloadAction<number>) {
+            state.rateScore = action.payload;
+        },
+        setFeedbackMessage(state, action: PayloadAction<string>) {
+            state.feedbackMessage = action.payload;
+        },
+        setIsOpenModal(state, action: PayloadAction<boolean>) {
+            state.isOpenModal = action.payload;
+        },
+        deleteIsSuccessSendFeedback(state) {
+            state.isSuccessSendFeedback = false;
+        },
+        deleteIsErrorSendFeedback(state) {
+            state.isErrorSendFeedback = false;
         }
     },
     extraReducers:
         (builder) => {
-            builder.addCase(getToken.pending, (state) => {state.isLoadingRequest = true;})
-                .addCase(getToken.fulfilled, (state, action: PayloadAction<FetchTokenFulfilledPayload | number | undefined>) => {
+            builder.addCase(authenticateUser.pending, (state) => {state.isLoadingRequest = true;})
+                .addCase(authenticateUser.fulfilled, (state, action: PayloadAction<FetchTokenFulfilledPayload | number | undefined>) => {
                     state.isLoadingRequest = false;
-                    if (typeof action.payload === 'object' && 'inputCheck' in action.payload) {
-                        const { token, inputCheck } = action.payload;
+                    if (typeof action.payload === 'object' && 'rememberUser' in action.payload) {
+                        const { token, rememberUser } = action.payload;
                         if (token) {
                             state.jwt = token;
-                            (inputCheck) ? localStorage.setItem('jwtToken', token) : sessionStorage.setItem('jwtToken', token);
+                            (rememberUser) ? localStorage.setItem('jwtToken', token) : sessionStorage.setItem('jwtToken', token);
                         }
                     }
                     (typeof action.payload === 'number' && action.payload === httpStatusVars['_401'])
-                        ? state.isErrorStatus = true : state.isErrorStatus = true;
+                        ? state.isErrorStatus = true : state.isErrorStatus = false;
                 })
-                .addCase(getToken.rejected, (state) => {
+                .addCase(authenticateUser.rejected, (state) => {
+                    state.isLoadingRequest = false;
+                    state.isErrorStatus = true;
+                })
+                .addCase(googleAuthenticateUser.pending, (state) => {state.isLoadingRequest = true;})
+                .addCase(googleAuthenticateUser.fulfilled, (state) => {
+                    state.isLoadingRequest = false;
+                })
+                .addCase(googleAuthenticateUser.rejected, (state) => {
                     state.isLoadingRequest = false;
                     state.isErrorStatus = true;
                 })
@@ -146,6 +208,37 @@ export const apiRequestSlice = createSlice({
                 })
                 .addCase(changePassword.rejected, (state) => {
                     state.isLoadingRequest = false;
+                })
+                .addCase(getFeedbacks.pending, (state) => {state.isLoadingRequest = true;})
+                .addCase(getFeedbacks.fulfilled, (state, action:PayloadAction<FeedbackDataPayload[]>) => {
+                    state.isLoadingRequest = false;
+                    if (Array.isArray(action.payload)) {
+                        (action.payload.length) ? state.feedbackData = action.payload.reverse() : state.isEmptyFeedbacksDB = true;
+                    } else {
+                        state.isErrorStatus = true;
+                    }
+
+                })
+                .addCase(getFeedbacks.rejected, (state) => {
+                    state.isLoadingRequest = false;
+                    state.isErrorStatus = true;
+                })
+                .addCase(sendFeedback.pending, (state) => {
+                    state.isLoadingRequest = true;
+                })
+                .addCase(sendFeedback.fulfilled, (state, action:PayloadAction<number | undefined | string>) => {
+                    state.isLoadingRequest = false;
+                    if (typeof action.payload === 'string') {
+                        state.isSuccessSendFeedback = true;
+                    } else if (action.payload === 500 || action.payload === 403) {
+                        state.isErrorSendFeedback = true;
+                    } else {
+                        state.isSuccessSendFeedback = true;
+                    }
+                })
+                .addCase(sendFeedback.rejected, (state) => {
+                    state.isLoadingRequest = false;
+                    state.isErrorSendFeedback = true;
                 })
         }
 })

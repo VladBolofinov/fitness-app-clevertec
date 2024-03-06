@@ -6,8 +6,8 @@ import {useAppDispatch} from "@hooks/typed-react-redux-hooks";
 import {
     apiRequestSlice, changePassword,
     checkEmail,
-    getToken,
-    registerNewUser
+    authenticateUser,
+    registerNewUser, googleAuthenticateUser
 } from "@redux/reducers/apiRequestSlice";
 import {IFormComponentProps} from "@pages/auth/types/IFormComponentProps";
 import {IInputValues} from "@pages/main/components/types/IInputValues";
@@ -21,6 +21,8 @@ import {
 } from "@redux/selectors/getApiRequestState/getSecondConfirmPassword/getSecondConfirmPassword";
 import {getLogin} from "@redux/selectors/getApiRequestState/getLogin/getLogin";
 import {getPreviousLocation} from "@redux/selectors/getRouterState/getPreviousLocation/getPreviousLocation";
+import {checkPasswordRegex, FormValues} from "@pages/auth/types/formTypes";
+import {endpoints, urls} from "@redux/types/httpStatusVars";
 
 export const FormComponent: React.FC<IFormComponentProps> = ({type}) => {
     const [authForm] = Form.useForm();
@@ -32,6 +34,7 @@ export const FormComponent: React.FC<IFormComponentProps> = ({type}) => {
     const secondConfirmPassword = useSelector(getSecondConfirmPassword);
     const login = useSelector(getLogin);
     const {saveRegDataBeforeError} = apiRequestSlice.actions;
+
     useEffect(() => {
         if (previousLocation[1]?.location === '/result/error') {
             dispatch(registerNewUser({login, password}));
@@ -43,7 +46,7 @@ export const FormComponent: React.FC<IFormComponentProps> = ({type}) => {
     })
     const sendAuthData = (inputValues: IInputValues) => {
         const { login, password, remember } = inputValues;
-        dispatch(getToken({ login, password, remember }));
+        dispatch(authenticateUser({ login, password, remember }));
     };
     const sendRegistrationData = (values: IInputValues) => {
         const { login, password } = values;
@@ -61,7 +64,7 @@ export const FormComponent: React.FC<IFormComponentProps> = ({type}) => {
                 onFinish={(type === 'auth') ? sendAuthData : sendRegistrationData}
                 form={type === 'auth' ? authForm : registrationForm}
                 name={type === 'auth' ? "enter-account" : "registration"}
-                initialValues={{ remember: true }}
+                initialValues={{ remember: false }}
             >
                 <Form.Item
                     name="login"
@@ -74,9 +77,9 @@ export const FormComponent: React.FC<IFormComponentProps> = ({type}) => {
                     />
                 </Form.Item>
                 <Form.Item
-                    help={type === 'auth' ? '' : 'Пароль не менее 8 символов, с заглавной буквой и цифрой'}
+                    help={type === 'auth' ? '' : FormValues.MESSAGE_CHECK_PASSWORD}
                     name="password"
-                    rules={[{ required: true, message: '' }, { pattern: /^(?=.*[A-Z])(?=.*\d)(?!.*[^\w\d\s]).{8,}$/, message: 'Пароль не менее 8 символов, с заглавной буквой и цифрой' }]}
+                    rules={[{ required: true, message: '' }, { pattern: checkPasswordRegex, message: FormValues.MESSAGE_CHECK_PASSWORD }]}
                 >
                     <Input.Password
                         placeholder="Пароль"
@@ -135,8 +138,10 @@ export const FormComponent: React.FC<IFormComponentProps> = ({type}) => {
                             >Войти
                             </Button>
                             <Button
+                                href={`${urls.MAIN_URL}${endpoints.GOOGLE}`}
                                 block
-                                style={{ marginTop: '16px', height: '40px' }}
+                                onClick={()=>dispatch(googleAuthenticateUser())}
+                                style={{ marginTop: '16px', height: '40px', paddingBottom: '0px' }}
                                 icon={<span className='google-icon'><GooglePlusOutlined /></span>}>
                                 Войти через Google
                             </Button>

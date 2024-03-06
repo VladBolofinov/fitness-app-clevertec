@@ -1,0 +1,102 @@
+@import 'antd/dist/antd.css';
+@import 'src/variables.scss';
+* {
+    margin: var(--zero-margin);
+}
+html, body {
+    width: var(--media-screen-width-lg);
+    margin: var(--center-margin);
+    font-family: var(--font-family);
+
+}
+p {
+    margin-bottom: var(--zero-margin);
+}
+.ant-layout {
+    background-image: url('assets/background-img/MainPage_light.png');
+    background-size: auto 100%;
+}
+.ant-result {
+    padding: var(--zero-padding);
+}
+.ant-result-title {
+    font-weight: var(--font-weight-md);
+    line-height: var(--default-line-height);
+}
+.ant-result-info .ant-result-icon > .anticon {
+    color: var(--primary-light-6);
+}
+.ant-input-group-wrapper-status-error .ant-input-group-addon {
+    color: var(--character-light-title-85);
+}
+.ant-btn-primary {
+    height: var(--btn-height);
+    background: var(--primary-light-6);
+}
+.ant-btn-default {
+    height: var(--btn-height);
+}
+.ant-btn-link {
+    color: var(--primary-light-6);
+    height: var(--btn-height);
+}
+a.ant-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+textarea.ant-input {
+    margin-top: 16px;
+}
+.ant-modal-footer {
+    padding: 10px 24px;
+}
+.ant-rate-star-second, .ant-rate-star-full {
+    color: var(--character-light-warning);
+}
+.ant-rate-star:not(:last-child) {
+    margin-right: 4px;
+}
+.feedback-card-rate {
+    .ant-rate-star {
+        font-size: var(--font-size-md);
+    }
+}
+.modal-rate {
+    .ant-rate-star {
+        font-size: var(--font-size-lg);
+    }
+}
+.ant-modal-confirm .ant-modal-body {
+    padding: 64px 85px;
+}
+.ant-modal-confirm-btns {
+    display: flex;
+    justify-content: center;
+}
+.ant-modal-close-x {
+    color:rgba(0, 0, 0, 0.85);
+}
+@media screen and (max-width: 834px) {
+    html, body {
+        width: var(--media-screen-width-md);
+    }
+}
+@media screen and (max-width: 360px) {
+    html, body {
+        width: var(--media-screen-width-sm);
+    }
+    .ant-layout-sider {
+        z-index: 3;
+        position: absolute;
+    }
+    .ant-modal-footer {
+        padding: 10px 16px;
+    }
+    .ant-modal-body {
+        padding: 24px 16px;
+    }
+    .ant-modal-confirm .ant-modal-body {
+        padding: 32px 16px;
+    }
+}

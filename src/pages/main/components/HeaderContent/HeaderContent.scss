@@ -5,25 +5,3 @@
         height: 32px;
     }
 }
-.ant-typography .main-header-text {
-    font-weight: var(--font-weight-lg);
-    line-height: 130%;
-    margin: var(--center-margin);
-}
-
-@media screen and (max-width: 1024px) {
-    .ant-typography .main-header-text {
-        font-size: var(--font-size-xl);
-    }
-}
-@media screen and (min-width: 834px) and (max-width: 1024px) {
-    .ant-typography .main-header-text {
-        font-weight: var(--font-weight-md);
-        font-size: var(--font-size-xl);
-    }
-}
-@media screen and (min-width: 300px) and (max-width: 834px) {
-    .ant-typography .main-header-text {
-        font-size: var(--font-size-lg);
-    }
-}

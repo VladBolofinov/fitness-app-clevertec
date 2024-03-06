@@ -7,16 +7,30 @@ import {httpMethods} from "@redux/types/httpStatusVars";
 import {urls} from "@redux/types/httpStatusVars";
 import {endpoints} from "@redux/types/httpStatusVars";
 export const useHttp = () => {
-    const getToken = async (email:string, password:string, rememberUser:boolean|undefined) => {
+    const authenticateUser = async (email:string, password:string, rememberUser:boolean|undefined) => {
         try {
             const response = await axios({
                 method: httpMethods.POST,
                 url: `${urls.MAIN_URL}${endpoints.LOGIN}`,
                 data: {email, password}
             })
-            history.push(AppRoutes.MAIN);
-            const resultData:FetchTokenFulfilledPayload = {token: response.data.accessToken, inputCheck: rememberUser}
+            const resultData:FetchTokenFulfilledPayload = {token: response.data.accessToken, rememberUser};
+            (resultData.token) ? history.push(AppRoutes.MAIN) : history.push(AppRoutes.AUTH);
             return resultData;
+        } catch (e) {
+            if (axios.isAxiosError(e)) {
+                history.push(AppRoutes.ERROR_LOGIN);
+                return e.response?.status;
+            }
+        }
+    }
+    const googleAuthenticateUser = async () => {
+        try {
+            const response = await axios({
+                method: httpMethods.GET,
+                url: `${urls.MAIN_URL}${endpoints.GOOGLE}`,
+            })
+            return response.status;
         } catch (e) {
             if (axios.isAxiosError(e)) {
                 history.push(AppRoutes.ERROR_LOGIN);
@@ -91,11 +105,54 @@ export const useHttp = () => {
             }
         }
     }
+    const getFeedbacks = async (token:string) => {
+        try {
+            const response = await axios({
+                method: httpMethods.GET,
+                url: `${urls.MAIN_URL}${endpoints.FEEDBACK}`,
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            return response.data;
+        } catch (e) {
+            if (axios.isAxiosError(e)) {
+                if (e.response?.status === httpStatusVars["_403"]) {
+                    localStorage.clear();
+                    history.push(AppRoutes.AUTH);
+                }
+                return e.response?.status;
+            }
+        }
+    }
+    const sendFeedback = async (token:string, message: string, rating: number) => {
+        try {
+            const response = await axios({
+                method: httpMethods.POST,
+                url: `${urls.MAIN_URL}${endpoints.FEEDBACK}`,
+                data: {
+                    message,
+                    rating
+                },
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            return response.data;
+        } catch (e) {
+            if (axios.isAxiosError(e)) {
+                return e.response?.status;
+            }
+        }
+    }
     return {
-        getToken,
+        authenticateUser,
+        googleAuthenticateUser,
         registerNewUser,
         checkEmail,
         confirmEmail,
-        changePassword
+        changePassword,
+        getFeedbacks,
+        sendFeedback
     }
 }

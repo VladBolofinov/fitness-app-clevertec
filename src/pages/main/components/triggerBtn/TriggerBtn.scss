@@ -1,0 +1,26 @@
+.btn-trigger, .btn-trigger-collapsed {
+    border:none;
+    background: none;
+    padding: var(--zero-padding);
+    position: absolute;
+    top: 479px;
+    cursor: pointer;
+}
+@media screen and (max-width: 834px) {
+    .btn-trigger, .btn-trigger-collapsed {
+        top: 565px;
+    }
+}
+
+@media screen and (max-width: 360px) {
+    .btn-trigger {
+        top: 24px;
+        left: 105px;
+        transition: all 0.2s;
+    }
+    .btn-trigger-collapsed {
+        top: 24px;
+        left: 0;
+        transition: all 0.2s;
+    }
+}

@@ -1,8 +1,8 @@
 import {createSelector} from "@reduxjs/toolkit";
 import {getApiRequestState} from "@redux/selectors/getApiRequestState/getApiRequestState";
-import {IApiRequest} from "@redux/types/IApiRequestSlice";
+import {ApiRequestType} from "@redux/types/ApiRequestType";
 
 export const getLogin = createSelector(
     getApiRequestState,
-    (apiRequestSlice:IApiRequest) => apiRequestSlice.login
+    (apiRequestSlice:ApiRequestType) => apiRequestSlice.login
 )
