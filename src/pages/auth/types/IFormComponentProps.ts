@@ -1,3 +1,3 @@
 export interface IFormComponentProps {
-    type: 'auth' | 'registration';
+    type: "auth" | "registration";
 }

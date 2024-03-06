@@ -5,7 +5,6 @@
     box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
     background: var(--character-light-primary-inverse);
     height: 345px;
-    //padding: 64px 32px;
     .ant-btn {
         height: 40px;
     }
@@ -31,7 +30,6 @@
 }
 .ant-result-subtitle {
     color: var(--character-light-secondary-45);
-    //width: 350px;
 }
 .ant-btn-primary {
     background: var(--primary-light-6);
@@ -98,11 +96,5 @@
         width: 328px;
         height: 568px;
         margin-top: 0;
-    }
-    .ant-result-subtitle {
-        //width: 264px;
-    }
-    .ant-result-title {
-        //width: 264px;
     }
 }

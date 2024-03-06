@@ -15,16 +15,16 @@ export const App:React.FC = () => {
     const {saveTokenAtStore} = apiRequestSlice.actions;
     useEffect(() => {
         if (location.search) {
-            const prefix = '?accessToken=';
+            const prefix = "?accessToken=";
             const token = (location.search.startsWith(prefix)) && location.search.substring(prefix.length);
             if (token) {
-                localStorage.setItem('jwtToken', token);
+                localStorage.setItem("jwtToken", token);
                 dispatch(saveTokenAtStore(token));
                 history.push(AppRoutes.MAIN);
             }
         } else {
-            const jwt = localStorage.getItem('jwtToken');
-            if (location.pathname === '/' || location.pathname === '/main' && jwt !== null) {
+            const jwt = localStorage.getItem("jwtToken");
+            if (location.pathname === AppRoutes.ROOT || location.pathname === AppRoutes.MAIN && jwt !== null) {
                 dispatch(saveTokenAtStore(jwt));
             }
         }
@@ -38,9 +38,9 @@ return (
         {(isLoadingRequest) ? <MyLoader/> : null}
         <Routes>
             {Object.values(routeConfig).map(({ path, element, id }, index) => {
-                if (id === 'error') {
+                if (id === "error") {
                     return <Route key={index} path={path} element={(isErrorStatus) ? element : <Navigate to={AppRoutes.AUTH} />} />;
-                } else if (id === 'success') {
+                } else if (id === "success") {
                     return <Route key={index} path={path} element={(isSuccessRequest) ? element : <Navigate to={AppRoutes.AUTH} />} />;
                 }
                 return <Route key={index} path={path} element={element} />;

@@ -1,9 +1,9 @@
-import { useLocation, Navigate } from 'react-router-dom';
+import { useLocation, Navigate } from "react-router-dom";
 import {AppRoutes} from "../routeConfig";
 import React from "react";
 export const RequireAuth = ({ children }: { children: React.ReactNode }) => {
-    const hasTokenLocalSt: string | null = localStorage.getItem('jwtToken');
-    const hasTokenSessionSt: string | null = sessionStorage.getItem('jwtToken');
+    const hasTokenLocalSt: string | null = localStorage.getItem("jwtToken");
+    const hasTokenSessionSt: string | null = sessionStorage.getItem("jwtToken");
     const location = useLocation();
 
     if ((location.pathname === AppRoutes.ROOT) && (hasTokenLocalSt || hasTokenSessionSt)) {

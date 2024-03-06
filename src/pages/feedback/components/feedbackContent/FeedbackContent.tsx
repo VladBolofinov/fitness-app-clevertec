@@ -1,5 +1,5 @@
-import React, {useEffect, useMemo} from 'react';
-import './FeedbackContent.scss';
+import React, {useEffect, useMemo} from "react";
+import "./FeedbackContent.scss";
 import {Button, Modal, Result} from "antd";
 import {useSelector} from "react-redux";
 import {getFeedbackData} from "@redux/selectors/getApiRequestState/getFeedbackData/getFeedbackData";
@@ -45,37 +45,37 @@ export const FeedbackContent:React.FC = () => {
         return feedbackSlice.map((item) => <FeedbackCard item={item}/>);
     }, [feedbackData, isCollapseFeedback]);
     const errorModal = () => {
-        Modal.confirm({icon: null, centered: true, title: '', cancelText: 'Написать отзыв',
+        Modal.confirm({icon: null, centered: true, title: "", cancelText: "Написать отзыв",
             onCancel: () => {showModalFeedback();onDeleteErrorStatus();},
-            cancelButtonProps: {block: true, type: "primary", 'data-test-id': 'write-review-not-saved-modal'},
-            okText: 'Закрыть', onOk: onDeleteErrorStatus, okButtonProps: {block:true, type: "default"},
-            maskStyle: { backgroundColor: 'rgba(121, 156, 213, 0.5)', backdropFilter: 'blur(5px)' }, width: 539,
-            content: <><Result
-                status='error'
+            cancelButtonProps: {block: true, type: "primary", "data-test-id": "write-review-not-saved-modal"},
+            okText: "Закрыть", onOk: onDeleteErrorStatus, okButtonProps: {block:true, type: "default"},
+            maskStyle: { backgroundColor: "rgba(121, 156, 213, 0.5)", backdropFilter: "blur(5px)" }, width: 539,
+            content: <Result
+                status="error"
                 title="Данные не сохранились"
                 subTitle="Что-то пошло не так. Попробуйте еще раз."
-            /></>
+            />
         });
     };
     const successModal = () => {
-        Modal.success({icon: null, centered: true, title: '', okText: 'Отлично', okButtonProps: {block:true},
-            maskStyle: { backgroundColor: 'rgba(121, 156, 213, 0.5)', backdropFilter: 'blur(5px)' }, width: 539,
-            content: <><Result status='success' title="Отзыв успешно опубликован"/></>
+        Modal.success({icon: null, centered: true, title: "", okText: "Отлично", okButtonProps: {block:true},
+            maskStyle: { backgroundColor: "rgba(121, 156, 213, 0.5)", backdropFilter: "blur(5px)" }, width: 539,
+            content: <Result status="success" title="Отзыв успешно опубликован"/>
         });
     };
 
     const errorHTTPModal = () => {
-        Modal.error({icon: null, centered: true, title: '', okText: 'Назад',
+        Modal.error({icon: null, centered: true, title: "", okText: "Назад",
             okButtonProps: {block:false},
-            maskStyle: { backgroundColor: 'rgba(121, 156, 213, 0.5)', backdropFilter: 'blur(5px)' },
+            maskStyle: { backgroundColor: 'rgba(121, 156, 213, 0.5)', backdropFilter: "blur(5px)" },
             width: 539,
             onOk: onClearErrorStatus,
-            bodyStyle: {padding: '64px 32px 56px 32px'},
-            content: <><Result
-                status='500'
+            bodyStyle: {padding: "64px 32px 56px 32px"},
+            content: <Result
+                status="500"
                 title="Что-то пошло не так"
                 subTitle="Произошла ошибка.Попробуйте еще раз."
-            /></>
+            />
         });
     };
     useEffect(() => {
@@ -90,30 +90,29 @@ export const FeedbackContent:React.FC = () => {
     },[isSuccessSendFeedback, isErrorSendFeedback, isErrorStatus])
 
     useEffect(() => {
-            if (!(previousLocation[1]?.location === '/' || previousLocation[1]?.location === '/main')) {
+            if (!(previousLocation[1]?.location === AppRoutes.ROOT || previousLocation[1]?.location === AppRoutes.MAIN)) {
                 localStorage.clear();
                 history.push(AppRoutes.AUTH);
             }
     },[])
     return (
-        <div className='feedback-content-wrapper'>
+        <div className="feedback-content-wrapper">
             {(isEmptyFeedbacksDB)
                 ? <NotFindFeedbacks/>
                 : <>
-                        <div className='feedback-cards-wrapper'>
+                        <div className="feedback-cards-wrapper">
                             {renderFeedbackElems}
                             <ModalFeedbackForm/>
                         </div>
-            <div className='feedback-content-btn-wrapper'>
+            <div className="feedback-content-btn-wrapper">
                 <Button type="primary" onClick={showModalFeedback}
-                        data-test-id='write-review'>Написать отзыв</Button>
-                <Button type={"link"} onClick={() => dispatch(setIsCollapseFeedback())}
-                        data-test-id='all-reviews-button'>
-                    {isCollapseFeedback ? 'Свернуть' : 'Развернуть'} все отзывы
+                        data-test-id="write-review">Написать отзыв</Button>
+                <Button type="link" onClick={() => dispatch(setIsCollapseFeedback())}
+                        data-test-id="all-reviews-button">
+                    {isCollapseFeedback ? "Свернуть" : "Развернуть"} все отзывы
                 </Button>
             </div>
-        </>
-    }
+        </>}
         </div>
     );
 };

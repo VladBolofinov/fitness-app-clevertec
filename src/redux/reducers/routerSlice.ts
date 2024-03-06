@@ -19,7 +19,7 @@ export const routerSlice = (
     state: RouterState = initialState,
     action: RouterAction
 ): RouterState => {
-    if (action.type === '@@router/LOCATION_CHANGE') {
+    if (action.type === "@@router/LOCATION_CHANGE") {
         const { location } = action.payload;
         const previousLocation = {
             location: location.pathname,

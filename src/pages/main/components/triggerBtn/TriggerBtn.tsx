@@ -1,5 +1,5 @@
-import React from 'react';
-import './TriggerBtn.scss';
+import React from "react";
+import "./TriggerBtn.scss";
 import {
     BtnIconCollapsedLg,
     BtnIconCollapsedSm, BtnIconNotCollapsedLg,
@@ -18,10 +18,9 @@ export const TriggerBtn:React.FC = () => {
     const isCollapseSider = useSelector(getIsCollapseSider);
     return (
             <button
-                data-test-id={screens.xs ? 'sider-switch-mobile' : 'sider-switch'}
-                className={isCollapseSider ? 'btn-trigger-collapsed' : 'btn-trigger'}
-                onClick={() =>dispatch(setIsCollapseSider())}
-            >
+                data-test-id={screens.xs ? "sider-switch-mobile" : "sider-switch"}
+                className={isCollapseSider ? "btn-trigger-collapsed" : "btn-trigger"}
+                onClick={() =>dispatch(setIsCollapseSider())}>
                 {screens.xs ? (
                     isCollapseSider ? <BtnIconNotCollapsedSm /> : <BtnIconCollapsedSm />
                 ) : (

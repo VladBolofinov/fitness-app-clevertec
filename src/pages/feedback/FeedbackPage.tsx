@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {CommonPage} from "@pages/commonPage/CommonPage";
 import {FeedbackContent} from "@pages/feedback/components/feedbackContent/FeedbackContent";
 

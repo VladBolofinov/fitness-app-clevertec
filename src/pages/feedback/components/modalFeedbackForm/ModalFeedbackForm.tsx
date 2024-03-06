@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {Button, Input, Modal, Rate} from "antd";
 import {StarFilled, StarOutlined} from "@ant-design/icons";
 import {useSelector} from "react-redux";
@@ -29,25 +29,25 @@ export const ModalFeedbackForm:React.FC = () => {
     return (
         <>
             <Modal title="Ваш отзыв" open={isOpenModal} centered onCancel={closeModal}
-                   maskStyle={{ backgroundColor: 'rgba(121, 156, 213, 0.5)', backdropFilter: 'blur(5px)' }}
+                   maskStyle={{ backgroundColor: "rgba(121, 156, 213, 0.5)", backdropFilter: "blur(5px)" }}
                    footer={[
                        <Button key="submit" type="primary" block={(screens.xs && true)}
                                onClick={handleCancel}
-                               data-test-id='new-review-submit-button'
-                               disabled={(rateScore) ? false : true}>
+                               data-test-id="new-review-submit-button"
+                               disabled={(!rateScore)}>
                            Опубликовать
                        </Button>
                    ]}>
                 <Rate
                     disabled={false}
-                    className='modal-rate'
+                    className="modal-rate"
                     value={rateScore}
                     onChange={(value)=>dispatch(setRateScore(value))}
                     character={({value, index}) => {
                         return value && index! < value ? <StarFilled/> : <StarOutlined/>
                     }}
                 />
-                <TextArea rows={2} placeholder='Autosize height based on content lines'
+                <TextArea rows={2} placeholder="Autosize height based on content lines"
                           onChange={(e)=>dispatch(setFeedbackMessage(e.currentTarget.value))} value={feedbackMessage} />
             </Modal>
         </>

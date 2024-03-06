@@ -65,7 +65,7 @@ export const useHttp = () => {
             return response.status;
         } catch (e) {
             if (axios.isAxiosError(e)) {
-                    (e.response?.data.message === 'Email не найден')
+                    (e.response?.data.message === "Email не найден")
                         ? history.push(AppRoutes.ERROR_CHECK_EMAIL_NO_EXIST)
                         : history.push(AppRoutes.ERROR_CHECK_EMAIL);
                 return e.response?.status;

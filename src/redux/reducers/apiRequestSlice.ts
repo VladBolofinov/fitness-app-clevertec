@@ -9,76 +9,76 @@ import {FeedbackDataPayload} from "@redux/types/FeedbackDataPayload";
 import {SendFeedbackArgsType} from "@redux/types/SendFeedbackArgsType";
 
 const initialState: ApiRequestType = {
-    jwt: '',
+    jwt: "",
     isLoadingRequest: false,
     isErrorStatus: false,
     isSuccessRequest: false,
     isCollapseSider: false,
-    checkCodeInputValue: '',
-    login: '',
-    password: '',
-    firstConfirmPassword: '',
-    secondConfirmPassword: '',
+    checkCodeInputValue: "",
+    login: "",
+    password: "",
+    firstConfirmPassword: "",
+    secondConfirmPassword: "",
     feedbackData: [],
     isEmptyFeedbacksDB: false,
-    isCollapseFeedback: false,   //раздели на новый слайс все что связано с feedback запросы тоже
+    isCollapseFeedback: false,
     rateScore: 0,
-    feedbackMessage: '',
+    feedbackMessage: "",
     isOpenModal: false,
     isSuccessSendFeedback: false,
     isErrorSendFeedback: false,
 }
 export const authenticateUser = createAsyncThunk(
-    'apiRequest/authenticateUser',
+    "apiRequest/authenticateUser",
     ({login, password, remember}:IInputValues) => {
         const {authenticateUser} = useHttp();
         return authenticateUser(login, password, remember);
     }
 )
 export const googleAuthenticateUser = createAsyncThunk(
-    'apiRequest/googleAuthenticateUser',
+    "apiRequest/googleAuthenticateUser",
     () => {
         const {googleAuthenticateUser} = useHttp();
         return googleAuthenticateUser();
     }
 )
 export const registerNewUser = createAsyncThunk(
-    'apiRequest/registerNewUser',
+    "apiRequest/registerNewUser",
     ({login, password}:IInputValues) => {
         const {registerNewUser} = useHttp();
         return registerNewUser(login, password);
     }
 )
 export const checkEmail = createAsyncThunk(
-    'apiRequest/checkEmail',
+    "apiRequest/checkEmail",
     (email:string) => {
         const {checkEmail} = useHttp();
         return checkEmail(email);
     }
 )
 export const confirmEmail = createAsyncThunk(
-    'apiRequest/confirmEmail',
+    "apiRequest/confirmEmail",
     ({login, code}: { login: string, code: string }) => {
         const {confirmEmail} = useHttp();
         return confirmEmail(login, code);
     }
 )
 export const changePassword = createAsyncThunk(
-    'apiRequest/changePassword',
+    "apiRequest/changePassword",
     ({password, confirmPassword}: ConfirmPasswordArguments) => {
         const {changePassword} = useHttp();
         return changePassword(password, confirmPassword);
     }
 )
 export const getFeedbacks = createAsyncThunk(
-    'apiRequest/getFeedbacks',
+    "apiRequest/getFeedbacks",
     (token:string) => {
         const {getFeedbacks} = useHttp();
         return getFeedbacks(token);
     }
 )
 export const sendFeedback = createAsyncThunk(
-    'apiRequest/sendFeedback',
+    "apiRequest/sendFeedback",
     ({token, message, rating}:SendFeedbackArgsType) => {
         const {sendFeedback} = useHttp();
         return sendFeedback(token, message, rating);
@@ -86,7 +86,7 @@ export const sendFeedback = createAsyncThunk(
 )
 
 export const apiRequestSlice = createSlice({
-    name: 'apiRequestSlice',
+    name: "apiRequestSlice",
     initialState,
     reducers: {
         deleteErrorStatus(state) {
@@ -136,14 +136,14 @@ export const apiRequestSlice = createSlice({
             builder.addCase(authenticateUser.pending, (state) => {state.isLoadingRequest = true;})
                 .addCase(authenticateUser.fulfilled, (state, action: PayloadAction<FetchTokenFulfilledPayload | number | undefined>) => {
                     state.isLoadingRequest = false;
-                    if (typeof action.payload === 'object' && 'rememberUser' in action.payload) {
+                    if (typeof action.payload === "object" && "rememberUser" in action.payload) {
                         const { token, rememberUser } = action.payload;
                         if (token) {
                             state.jwt = token;
-                            (rememberUser) ? localStorage.setItem('jwtToken', token) : sessionStorage.setItem('jwtToken', token);
+                            (rememberUser) ? localStorage.setItem("jwtToken", token) : sessionStorage.setItem("jwtToken", token);
                         }
                     }
-                    (typeof action.payload === 'number' && action.payload === httpStatusVars['_401'])
+                    (typeof action.payload === "number" && action.payload === httpStatusVars["_401"])
                         ? state.isErrorStatus = true : state.isErrorStatus = false;
                 })
                 .addCase(authenticateUser.rejected, (state) => {
@@ -162,9 +162,9 @@ export const apiRequestSlice = createSlice({
                 .addCase(registerNewUser.fulfilled, (state, action:PayloadAction<number | undefined>) => {
                     state.isLoadingRequest = false;
                     state.isSuccessRequest = true;
-                    if (action.payload === httpStatusVars['_409']) {
+                    if (action.payload === httpStatusVars["_409"]) {
                         state.isErrorStatus = true;
-                    } else if (action.payload !== httpStatusVars['_201']) {
+                    } else if (action.payload !== httpStatusVars["_201"]) {
                         state.isErrorStatus = true;
                     }
                 })
@@ -176,9 +176,9 @@ export const apiRequestSlice = createSlice({
                 .addCase(checkEmail.fulfilled, (state, action:PayloadAction<number | undefined>) => {
                     state.isLoadingRequest = false;
                     state.isSuccessRequest = true;
-                    if (action.payload === httpStatusVars['_404']) {
+                    if (action.payload === httpStatusVars["_404"]) {
                         state.isErrorStatus = true;
-                    } else if (action.payload !== httpStatusVars['_200']) {
+                    } else if (action.payload !== httpStatusVars["_200"]) {
                         state.isErrorStatus = true;
                     }
                 })
@@ -190,9 +190,9 @@ export const apiRequestSlice = createSlice({
                 .addCase(confirmEmail.fulfilled, (state, action:PayloadAction<number | undefined>) => {
                     state.isLoadingRequest = false;
                     state.isSuccessRequest = true;
-                    if (action.payload !== httpStatusVars['_200']) {
+                    if (action.payload !== httpStatusVars["_200"]) {
                         state.isErrorStatus = true;
-                        state.checkCodeInputValue = '';
+                        state.checkCodeInputValue = "";
                     }
                 })
                 .addCase(confirmEmail.rejected, (state) => {
@@ -202,7 +202,7 @@ export const apiRequestSlice = createSlice({
                 .addCase(changePassword.fulfilled, (state, action:PayloadAction<number | undefined>) => {
                     state.isLoadingRequest = false;
                     state.isSuccessRequest = true;
-                    if (action.payload !== httpStatusVars['_200']) {
+                    if (action.payload !== httpStatusVars["_200"]) {
                         state.isErrorStatus = true;
                     }
                 })
@@ -228,7 +228,7 @@ export const apiRequestSlice = createSlice({
                 })
                 .addCase(sendFeedback.fulfilled, (state, action:PayloadAction<number | undefined | string>) => {
                     state.isLoadingRequest = false;
-                    if (typeof action.payload === 'string') {
+                    if (typeof action.payload === "string") {
                         state.isSuccessSendFeedback = true;
                     } else if (action.payload === 500 || action.payload === 403) {
                         state.isErrorSendFeedback = true;

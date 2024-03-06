@@ -1,6 +1,6 @@
-import {combineReducers, configureStore} from '@reduxjs/toolkit';
+import {combineReducers, configureStore} from "@reduxjs/toolkit";
 import { createReduxHistoryContext } from "redux-first-history";
-import { createBrowserHistory } from 'history';
+import { createBrowserHistory } from "history";
 import {apiRequestReducer} from "@redux/reducers/apiRequestSlice";
 import {routerSlice} from "@redux/reducers/routerSlice";
 

@@ -4,4 +4,4 @@ export interface IInputValues {
     remember?: boolean;
     'password-compare'?: string;
 }
-export type ForgetPasswordFields = Pick<IInputValues, 'password' | 'password-compare'>;
+export type ForgetPasswordFields = Pick<IInputValues, "password" | "password-compare">;

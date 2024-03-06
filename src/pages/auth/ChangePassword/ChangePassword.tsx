@@ -1,5 +1,5 @@
-import React, {useEffect} from 'react';
-import './ChangePassword.scss';
+import React, {useEffect} from "react";
+import "./ChangePassword.scss";
 import {Input, Form, Button} from "antd";
 import {EyeInvisibleOutlined, EyeTwoTone} from "@ant-design/icons";
 import {apiRequestSlice, changePassword} from "@redux/reducers/apiRequestSlice";
@@ -8,7 +8,8 @@ import {ForgetPasswordFields} from "@pages/main/components/types/IInputValues";
 import {history} from "@redux/configure-store";
 import {useSelector} from "react-redux";
 import {getIsSuccessRequest} from "@redux/selectors/getApiRequestState/getIsSuccessRequest/getIsSuccessRequest";
-import {checkPasswordRegex, FormValues} from "@pages/auth/types/formTypes";
+import {checkPasswordRegex, FormValuesText, PlaceholdersText} from "@pages/auth/types/formTypes";
+import {AppRoutes} from "../../../router/routeConfig";
 
 export const ChangePassword:React.FC = () => {
     const [changePasswordForm] = Form.useForm();
@@ -16,18 +17,18 @@ export const ChangePassword:React.FC = () => {
     const {saveConfirmPasswords} = apiRequestSlice.actions;
     const isSuccessRequest = useSelector(getIsSuccessRequest);
     const sendConfirmData = (values: ForgetPasswordFields) => {
-        dispatch(saveConfirmPasswords({password: values.password, confirmPassword: values['password-compare']}));
-        dispatch(changePassword({password: values.password, confirmPassword: values['password-compare']}));
+        dispatch(saveConfirmPasswords({password: values.password, confirmPassword: values["password-compare"]}));
+        dispatch(changePassword({password: values.password, confirmPassword: values["password-compare"]}));
     }
     useEffect(() => {
         if (!isSuccessRequest) {
-            history.push('/auth');
+            history.push(AppRoutes.AUTH);
         }
     },[])
     return (
         <div className="wrapper-change-password-form">
             <div className="change-password-form">
-                <span className='modal-header'>Восстановление аккаунта</span>
+                <span className="modal-header">Восстановление аккаунта</span>
                 <Form
                 onFinish={sendConfirmData}
                 form={changePasswordForm}
@@ -35,37 +36,37 @@ export const ChangePassword:React.FC = () => {
                 initialValues={{ remember: true }}
             >
                 <Form.Item
-                    help={FormValues.MESSAGE_CHECK_PASSWORD}
+                    help={FormValuesText.MESSAGE_CHECK_PASSWORD}
                     name="password"
-                    rules={[{ required: true, message: '' }, { pattern: checkPasswordRegex, message: FormValues.MESSAGE_CHECK_PASSWORD }]}
+                    rules={[{ required: true, message: "" }, { pattern: checkPasswordRegex, message: FormValuesText.MESSAGE_CHECK_PASSWORD }]}
                 >
                     <Input.Password
-                        placeholder="Новый пароль"
-                        style={{ marginTop: '32px' }}
+                        placeholder={PlaceholdersText.NEW_PASSWORD}
+                        style={{ marginTop: "32px" }}
                         iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
-                        data-test-id={'change-password'}
+                        data-test-id="change-password"
                     />
                 </Form.Item>
                 <Form.Item
                     name="password-compare"
-                    dependencies={['password']}
+                    dependencies={["password"]}
                     rules={[
-                        { required: true, message: '' },
+                        { required: true, message: "" },
                         ({ getFieldValue }) => ({
                             validator(_, value) {
-                                if (!value || getFieldValue('password') === value) {
+                                if (!value || getFieldValue("password") === value) {
                                     return Promise.resolve();
                                 }
-                                return Promise.reject(new Error('Пароли не совпадают'));
+                                return Promise.reject(new Error(FormValuesText.MESSAGE_COMPARE_PASSWORD));
                             },
                         }),
                     ]}
                 >
                     <Input.Password
-                        placeholder="Повторите пароль"
-                        style={{ marginTop: '16px' }}
+                        placeholder={PlaceholdersText.CONFIRM_PASSWORD}
+                        style={{ marginTop: "16px" }}
                         iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
-                        data-test-id={'change-confirm-password'}
+                        data-test-id="change-confirm-password"
                     />
                 </Form.Item>
                     <Form.Item shouldUpdate>
@@ -75,9 +76,9 @@ export const ChangePassword:React.FC = () => {
                                     type="primary"
                                     block
                                     htmlType="submit"
-                                    style={{ marginTop: '32px' }}
+                                    style={{ marginTop: "32px" }}
                                     disabled={Boolean(changePasswordForm.getFieldsError().filter(({ errors }) => errors.length).length)}
-                                    data-test-id={'change-submit-button'}
+                                    data-test-id="change-submit-button"
                                 >Сохранить
                                 </Button>
                             </>

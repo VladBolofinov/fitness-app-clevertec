@@ -1,8 +1,7 @@
-import React from 'react';
-import './AuthPage.scss';
-import {IAuthPageProps} from "@pages/auth/types/IAuthPageProps";
+import React, {ReactNode} from "react";
+import "./AuthPage.scss";
 
-const AuthPage: React.FC<IAuthPageProps> = ({children}) => (
-        <div className='auth-wrapper'>{children}</div>
+const AuthPage: React.FC<ReactNode> = ({children}) => (
+        <div className="auth-wrapper">{children}</div>
     );
 export default AuthPage;
