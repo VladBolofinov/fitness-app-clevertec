@@ -5,10 +5,7 @@ import {AuthPageAsync} from "@pages/auth/AuthPage.async";
 import {FormWrapper} from "@pages/auth/FormWrapper/FormWrapper";
 import {ResultMessage} from "@pages/auth/ResultMessage/ResultMessage";
 import {ChangePassword} from "@pages/auth/ChangePassword/ChangePassword";
-import {
-    MessageTypeError,
-    MessageTypeSuccess
-} from "@pages/auth/types/messageTypes";
+import {MessageTypeError, MessageTypeSuccess} from "@pages/auth/types/messageTypes";
 import {FeedbackPage} from "@pages/feedback/FeedbackPage";
 
 export enum AppRoutes {

@@ -1,5 +1,5 @@
 .feedback-content-card {
-    border-radius: 2px;
+    border-radius: var(--border-radius-default);
     padding: 16px;
     max-width: 1184px;
     min-height: 128px;
@@ -8,8 +8,8 @@
     margin-top: 20px;
     display: flex;
     .item-name {
-        font-size: 16px;
-        line-height: 130%;
+        font-size: var(--font-size-md);
+        line-height: var(--default-line-height);
     }
 }
 .avatar-wrapper {
@@ -17,31 +17,31 @@
     width: 174px;
     height: 96px;
     flex-direction: column;
-    align-items: center;
+    align-items: var(--align-center);
     justify-content: space-between;
     .avatar-img {
-        width: 42px;
-        height: 42px;
+        width: var(--avatar-size-sm);
+        height: var(--avatar-size-sm);
         border-radius: 50%;
     }
 }
 .feedback-date {
     margin: 5px 0 0 16px;
-    font-size: 12px;
-    line-height: 130%;
+    font-size: var(--font-size-small);
+    line-height: var(--default-line-height);
     color: var(--character-light-disable-25);
 }
 .rate-date-wrapper {
     display: flex;
-    align-items: center;
+    align-items: var(--align-center);
 }
 .right-elems-wrapper {
     max-width: 966px;
     margin-left: 12px;
 }
 .feedback-text {
-    word-break: break-all;
-    line-height: 130%;
+    word-break: var(--break-all-word);
+    line-height: var(--default-line-height);
     color: var(--character-light-secondary-45);
 }
 @media screen and (max-width: 360px) {
@@ -53,11 +53,11 @@
     }
     .avatar-wrapper {
         flex-direction: row;
-        align-items: center;
+        align-items: var(--align-center);
         justify-content: space-between;
-        height: 42px;
+        height: var(--avatar-size-sm);
     }
     .right-elems-wrapper {
-        margin-left: 0;
+        margin-left: var(--zero-margin);
     }
 }

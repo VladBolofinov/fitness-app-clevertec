@@ -47,7 +47,6 @@ export const ModalFeedbackForm:React.FC = () => {
                         return value && index! < value ? <StarFilled/> : <StarOutlined/>
                     }}
                 />
-                {/*разберись как добавить ползунок*/}
                 <TextArea rows={2} placeholder='Autosize height based on content lines'
                           onChange={(e)=>dispatch(setFeedbackMessage(e.currentTarget.value))} value={feedbackMessage} />
             </Modal>

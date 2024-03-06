@@ -1,7 +1,7 @@
 .btn-trigger, .btn-trigger-collapsed {
     border:none;
     background: none;
-    padding: 0;
+    padding: var(--zero-padding);
     position: absolute;
     top: 479px;
     cursor: pointer;

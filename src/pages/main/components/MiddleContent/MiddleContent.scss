@@ -4,23 +4,23 @@
     height: 216px;
     box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.04);
     background: var(--character-light-primary-inverse);
-    border-radius: 2px;
+    border-radius: var(--border-radius-default);
     font-size: var(--font-size-md);
-    line-height: 130%;
+    line-height: var(--default-line-height);
     color: var(--primary-light-9);
     margin: 24px 0 0 24px;
 }
 .app-descr {
     margin: 24px 0 0 24px;
     padding: 24px;
-    border-radius: 2px;
+    border-radius: var(--border-radius-default);
     width: 752px;
     height: 126px;
     box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.04);
     background: var(--character-light-primary-inverse);
     font-weight: var(--font-weight-md);
     font-size: var(--font-size-lg);
-    line-height: 130%;
+    line-height: var(--default-line-height);
     color: var(--character-light-title-85);
 }
 @media screen and (min-width: 834px) and (max-width: 1024px) {

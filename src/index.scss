@@ -1,27 +1,27 @@
 @import 'antd/dist/antd.css';
 @import 'src/variables.scss';
 * {
-    margin: 0;
+    margin: var(--zero-margin);
 }
 html, body {
-    width: 1440px;
+    width: var(--media-screen-width-lg);
     margin: var(--center-margin);
     font-family: var(--font-family);
 
 }
 p {
-    margin-bottom: 0;
+    margin-bottom: var(--zero-margin);
 }
 .ant-layout {
     background-image: url('assets/background-img/MainPage_light.png');
     background-size: auto 100%;
 }
 .ant-result {
-    padding: 0;
+    padding: var(--zero-padding);
 }
 .ant-result-title {
     font-weight: var(--font-weight-md);
-    line-height: 130%;
+    line-height: var(--default-line-height);
 }
 .ant-result-info .ant-result-icon > .anticon {
     color: var(--primary-light-6);
@@ -30,15 +30,15 @@ p {
     color: var(--character-light-title-85);
 }
 .ant-btn-primary {
-    height: 40px;
+    height: var(--btn-height);
     background: var(--primary-light-6);
 }
 .ant-btn-default {
-    height: 40px;
+    height: var(--btn-height);
 }
 .ant-btn-link {
     color: var(--primary-light-6);
-    height: 40px;
+    height: var(--btn-height);
 }
 a.ant-btn {
     display: flex;
@@ -59,12 +59,12 @@ textarea.ant-input {
 }
 .feedback-card-rate {
     .ant-rate-star {
-        font-size: 16px;
+        font-size: var(--font-size-md);
     }
 }
 .modal-rate {
     .ant-rate-star {
-        font-size: 20px;
+        font-size: var(--font-size-lg);
     }
 }
 .ant-modal-confirm .ant-modal-body {
@@ -79,12 +79,12 @@ textarea.ant-input {
 }
 @media screen and (max-width: 834px) {
     html, body {
-        width: 834px;
+        width: var(--media-screen-width-md);
     }
 }
 @media screen and (max-width: 360px) {
     html, body {
-        width: 360px;
+        width: var(--media-screen-width-sm);
     }
     .ant-layout-sider {
         z-index: 3;

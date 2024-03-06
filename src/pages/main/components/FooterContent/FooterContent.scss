@@ -9,21 +9,21 @@
     width: 240px;
     height: 101px;
     background: var(--character-light-primary-inverse);
-    border-radius: 2px;
+    border-radius: var(--border-radius-default);
 }
 .item-title {
     height: 45px;
     border-bottom: 1px solid;
     border-bottom-color: var(--character-light-dividers);
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: var(--align-center);
+    align-items: var(--align-center);
 }
 .item-btn-wrapper {
     display: flex;
     height: 55px;
-    justify-content: center;
-    align-items: center;
+    justify-content: var(--align-center);
+    align-items: var(--align-center);
 }
 .ant-btn-link {
     color: var(--primary-light-6);;
@@ -40,7 +40,7 @@
     }
 }
 .download-section {
-    border-radius: 2px;
+    border-radius: var(--border-radius-default);
     width: 240px;
     height: 127px;
     box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.02);
@@ -51,7 +51,7 @@
     border-bottom: 1px solid;
     border-bottom-color: var(--character-light-dividers);
     display: flex;
-    justify-content: center;
+    justify-content: var(--align-center);
     flex-direction: column;
     .ant-btn-text {
         color: var(--character-light-secondary-45);
@@ -60,7 +60,7 @@
 .os-links {
     height: 55px;
     display: flex;
-    align-items: center;
+    align-items: var(--align-center);
 }
 
 @media screen and (max-width: 834px) {
@@ -109,9 +109,9 @@
         }
     }
     .bottom-content-wrapper, .bottom-content-wrapper.collapsed {
-        width: 360px;
+        width: var(--media-screen-width-sm);
         height: 191px;
         flex-direction: column-reverse;
-        align-items: center;
+        align-items: var(--align-center);
     }
 }
