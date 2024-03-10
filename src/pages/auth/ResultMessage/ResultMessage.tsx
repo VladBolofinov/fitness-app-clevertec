@@ -8,9 +8,9 @@ import {authSlice, confirmEmail} from "@redux/reducers/authSlice";
 import {IResultMessageData} from "@pages/auth/types/IResultMessageData";
 import {MessageTypeError, MessageTypeSuccess} from "@pages/auth/types/messageTypes";
 import {useSelector} from "react-redux";
-import {getCheckCodeInputValue} from "@redux/selectors/getApiRequestState/getCheckCodeInputValue/getCheckCodeInputValue";
-import {getIsErrorStatus} from "@redux/selectors/getApiRequestState/getIsErrorStatus/getIsErrorStatus";
-import {getLogin} from "@redux/selectors/getApiRequestState/getLogin/getLogin";
+import {getCheckCodeInputValue} from "@redux/selectors/getAuthState/getCheckCodeInputValue/getCheckCodeInputValue";
+import {getIsErrorStatus} from "@redux/selectors/getAuthState/getIsErrorStatus/getIsErrorStatus";
+import {getLogin} from "@redux/selectors/getAuthState/getLogin/getLogin";
 import {AppRoutes} from "../../../router/routeConfig";
 import {ResultMessageType} from "@pages/auth/ResultMessage/resultMessageType";
 

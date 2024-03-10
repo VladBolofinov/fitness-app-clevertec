@@ -7,7 +7,7 @@ import useBreakpoint from "antd/es/grid/hooks/useBreakpoint";
 import {getRateScore} from "@redux/selectors/getFeedbackState/getRateScore/getRateScore";
 import {getFeedbackMessage} from "@redux/selectors/getFeedbackState/getFeedbackMessage/getFeedbackMessage";
 import {useAppDispatch} from "@hooks/typed-react-redux-hooks";
-import {getToken} from "@redux/selectors/getApiRequestState/getToken/getToken";
+import {getToken} from "@redux/selectors/getAuthState/getToken/getToken";
 import {feedbackSlice, sendFeedback} from "@redux/reducers/feedbackSlice";
 const { TextArea } = Input;
 export const ModalFeedbackForm:React.FC = () => {

@@ -7,7 +7,7 @@ import {useSelector} from "react-redux";
 import {getLocation} from "@redux/selectors/getRouterState/getLocation/getLocation";
 import {history} from "@redux/configure-store";
 import {authSlice} from "@redux/reducers/authSlice";
-import {getIsLoadingRequest} from "@redux/selectors/getApiRequestState/getIsLoadingRequest/getIsLoadingRequest";
+import {getIsLoadingRequest} from "@redux/selectors/getAuthState/getIsLoadingRequest/getIsLoadingRequest";
 export const App:React.FC = () => {
     const {isErrorStatus, isSuccessRequest} = useAppSelector(state => state.authSlice);
     const location = useSelector(getLocation);

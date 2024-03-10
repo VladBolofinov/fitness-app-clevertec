@@ -1,8 +1,8 @@
 import {createSelector} from "@reduxjs/toolkit";
-import {getApiRequestState} from "@redux/selectors/getApiRequestState/getApiRequestState";
+import {getAuthState} from "@redux/selectors/getAuthState/getAuthState";
 import {AuthStateType} from "@redux/types/AuthStateType";
 
 export const getPassword = createSelector(
-    getApiRequestState,
+    getAuthState,
     (authSlice:AuthStateType) => authSlice.password
 )

@@ -5,7 +5,7 @@ import React from "react";
 import {SiderContent} from "@pages/main/components/SiderContent/SiderContent";
 import {TriggerBtn} from "@pages/main/components/triggerBtn/TriggerBtn";
 import {useSelector} from "react-redux";
-import {getIsCollapseSider} from "@redux/selectors/getApiRequestState/getIsCollapseSider/getIsCollapseSider";
+import {getIsCollapseSider} from "@redux/selectors/getAuthState/getIsCollapseSider/getIsCollapseSider";
 import {useLocation} from "react-router-dom";
 import {AppRoutes} from "../../router/routeConfig";
 import {CommonPagePropsType} from "@pages/commonPage/commonPagePropsType";

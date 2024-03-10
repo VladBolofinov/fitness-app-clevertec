@@ -7,12 +7,14 @@ import {ResultMessage} from "@pages/auth/ResultMessage/ResultMessage";
 import {ChangePassword} from "@pages/auth/ChangePassword/ChangePassword";
 import {MessageTypeError, MessageTypeSuccess} from "@pages/auth/types/messageTypes";
 import {FeedbackPage} from "@pages/feedback/FeedbackPage";
+import {CalendarPage} from "@pages/calendar/CalendarPage";
 
 export enum AppRoutes {
     ROOT = "/",
     MAIN = "/main",
     AUTH = "/auth",
     FEEDBACK = "/feedbacks",
+    CALENDAR = "/calendar",
     REGISTRATION = "/auth/registration",
     ERROR_LOGIN = "/result/error-login",
     SUCCESS = "/result/success",
@@ -31,6 +33,7 @@ export const RoutePath: Record<AppRoutes, string> = {
     [AppRoutes.MAIN]: "/main",
     [AppRoutes.AUTH]: "/auth",
     [AppRoutes.FEEDBACK]: "/feedbacks",
+    [AppRoutes.CALENDAR]: "/calendar",
     [AppRoutes.REGISTRATION]: "/auth/registration",
     [AppRoutes.ERROR_LOGIN]: "/result/error-login",
     [AppRoutes.SUCCESS]: "/result/success",
@@ -63,6 +66,11 @@ export const routeConfig: Record<AppRoutes, RouteProps> = {
     [AppRoutes.FEEDBACK]: {
         path: RoutePath[AppRoutes.FEEDBACK],
         element: <RequireAuth><FeedbackPage/></RequireAuth>,
+        id: "none"
+    },
+    [AppRoutes.CALENDAR]: {
+        path: RoutePath[AppRoutes.CALENDAR],
+        element: <CalendarPage/>,
         id: "none"
     },
     [AppRoutes.REGISTRATION]: {

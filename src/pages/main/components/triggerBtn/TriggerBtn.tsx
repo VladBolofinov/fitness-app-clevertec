@@ -9,7 +9,7 @@ import {Grid} from "antd";
 import {authSlice} from "@redux/reducers/authSlice";
 import {useAppDispatch} from "@hooks/typed-react-redux-hooks";
 import {useSelector} from "react-redux";
-import {getIsCollapseSider} from "@redux/selectors/getApiRequestState/getIsCollapseSider/getIsCollapseSider";
+import {getIsCollapseSider} from "@redux/selectors/getAuthState/getIsCollapseSider/getIsCollapseSider";
 const { useBreakpoint } = Grid;
 export const TriggerBtn:React.FC = () => {
     const screens = useBreakpoint();

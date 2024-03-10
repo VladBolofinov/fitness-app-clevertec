@@ -11,7 +11,7 @@ import { IMainPageComponentsProps } from "@pages/main/components/types/IMainPage
 import React from "react";
 import {useAppDispatch} from "@hooks/typed-react-redux-hooks";
 import {useSelector} from "react-redux";
-import {getToken} from "@redux/selectors/getApiRequestState/getToken/getToken";
+import {getToken} from "@redux/selectors/getAuthState/getToken/getToken";
 import {history} from "@redux/configure-store";
 import {AppRoutes} from "../../../../router/routeConfig";
 import {getFeedbacks} from "@redux/reducers/feedbackSlice";

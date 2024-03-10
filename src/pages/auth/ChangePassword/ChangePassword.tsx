@@ -7,7 +7,7 @@ import {useAppDispatch} from "@hooks/typed-react-redux-hooks";
 import {ForgetPasswordFields} from "@pages/main/components/types/IInputValues";
 import {history} from "@redux/configure-store";
 import {useSelector} from "react-redux";
-import {getIsSuccessRequest} from "@redux/selectors/getApiRequestState/getIsSuccessRequest/getIsSuccessRequest";
+import {getIsSuccessRequest} from "@redux/selectors/getAuthState/getIsSuccessRequest/getIsSuccessRequest";
 import {checkPasswordRegex, FormValuesText, PlaceholdersText} from "@pages/auth/types/formTypes";
 import {AppRoutes} from "../../../router/routeConfig";
 

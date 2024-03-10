@@ -6,7 +6,7 @@ import {getFeedbackData} from "@redux/selectors/getFeedbackState/getFeedbackData
 import {FeedbackCard} from "@pages/feedback/components/feedbackCard/FeedbackCard";
 import {getIsCollapseFeedback} from "@redux/selectors/getFeedbackState/getIsCollapseFeedback/getIsCollapseFeedback";
 import {useAppDispatch} from "@hooks/typed-react-redux-hooks";
-import {getToken} from "@redux/selectors/getApiRequestState/getToken/getToken";
+import {getToken} from "@redux/selectors/getAuthState/getToken/getToken";
 import {getIsSuccessSendFeedback} from "@redux/selectors/getFeedbackState/getIsSuccessSendFeedback/getIsSuccessSendFeedback";
 import {ModalFeedbackForm} from "@pages/feedback/components/modalFeedbackForm/ModalFeedbackForm";
 import {NotFindFeedbacks} from "@pages/feedback/components/notFindFeedbacks/NotFindFeedbacks";

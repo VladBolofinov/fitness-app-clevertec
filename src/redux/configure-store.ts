@@ -4,6 +4,7 @@ import { createBrowserHistory } from "history";
 import {authReducer} from "@redux/reducers/authSlice";
 import {routerSlice} from "@redux/reducers/routerSlice";
 import {feedbackReducer} from "@redux/reducers/feedbackSlice";
+import {calendarReducer} from "@redux/reducers/calendarSlice";
 
 const {
     createReduxHistory,
@@ -14,7 +15,8 @@ export const store = configureStore({
     reducer: combineReducers({
         router: routerSlice,
         authSlice: authReducer,
-        feedbackSlice: feedbackReducer
+        feedbackSlice: feedbackReducer,
+        calendarSlice: calendarReducer
     }),
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(routerMiddleware),
 });

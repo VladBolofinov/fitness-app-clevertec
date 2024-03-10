@@ -7,10 +7,10 @@ import {authSlice, changePassword, checkEmail, authenticateUser, registerNewUser
 import {IFormComponentProps} from "@pages/auth/types/IFormComponentProps";
 import {IInputValues} from "@pages/main/components/types/IInputValues";
 import {useSelector} from "react-redux";
-import {getPassword} from "@redux/selectors/getApiRequestState/getPassword/getPassword";
-import {getFirstConfirmPassword} from "@redux/selectors/getApiRequestState/getFirstConfirmPassword/getFirstConfirmPassword";
-import {getSecondConfirmPassword} from "@redux/selectors/getApiRequestState/getSecondConfirmPassword/getSecondConfirmPassword";
-import {getLogin} from "@redux/selectors/getApiRequestState/getLogin/getLogin";
+import {getPassword} from "@redux/selectors/getAuthState/getPassword/getPassword";
+import {getFirstConfirmPassword} from "@redux/selectors/getAuthState/getFirstConfirmPassword/getFirstConfirmPassword";
+import {getSecondConfirmPassword} from "@redux/selectors/getAuthState/getSecondConfirmPassword/getSecondConfirmPassword";
+import {getLogin} from "@redux/selectors/getAuthState/getLogin/getLogin";
 import {getPreviousLocation} from "@redux/selectors/getRouterState/getPreviousLocation/getPreviousLocation";
 import {checkPasswordRegex, FormValuesText, PlaceholdersText} from "@pages/auth/types/formTypes";
 import {endpoints, urls} from "@redux/types/httpStatusVars";

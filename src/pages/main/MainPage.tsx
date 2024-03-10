@@ -3,7 +3,7 @@ import {HeaderContent} from "@pages/main/components/HeaderContent/HeaderContent"
 import {MiddleContent} from "@pages/main/components/MiddleContent/MiddleContent";
 import {FooterContent} from "@pages/main/components/FooterContent/FooterContent";
 import {useSelector} from "react-redux";
-import {getIsCollapseSider} from "@redux/selectors/getApiRequestState/getIsCollapseSider/getIsCollapseSider";
+import {getIsCollapseSider} from "@redux/selectors/getAuthState/getIsCollapseSider/getIsCollapseSider";
 import {CommonPage} from "@pages/commonPage/CommonPage";
 
 const MainPage: React.FC = () => {

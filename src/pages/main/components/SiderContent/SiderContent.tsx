@@ -13,7 +13,7 @@ export const SiderContent: React.FC<IMainPageComponentsProps> = ({collapsed}) =>
     const screens = useBreakpoint();
     const commonMenuItemStyle = screens.xs ? { paddingLeft: "4px" } : { padding: "0 16px" };
     const menuItems = [
-        { key: "1", label: "Календарь", icon: screens.xs ? null : <CalendarTwoTone twoToneColor="var(--primary-light-9)" />, style: commonMenuItemStyle },
+        { key: AppRoutes.CALENDAR, label: "Календарь", icon: screens.xs ? null : <CalendarTwoTone twoToneColor="var(--primary-light-9)" />, style: commonMenuItemStyle },
         { key: "2", label: "Тренировки", icon: screens.xs ? null : <HeartFilled style={{ color: "var(--primary-light-9)" }} />, style: commonMenuItemStyle },
         { key: "3", label: "Достижения", icon: screens.xs ? null : <TrophyFilled style={{ color: "var(--primary-light-9)" }} />, style: commonMenuItemStyle },
         { key: "4", label: "Профиль", icon: screens.xs ? null : <IdcardOutlined style={{ color: "var(--primary-light-9)" }} />, style: commonMenuItemStyle },
@@ -32,6 +32,7 @@ export const SiderContent: React.FC<IMainPageComponentsProps> = ({collapsed}) =>
                     mode="inline"
                     items={[...menuItems]}
                     onClick={(item) => {
+                        history.push(item.key);
                         if (item.key === "5") {
                             sessionStorage.clear();
                             localStorage.clear();
