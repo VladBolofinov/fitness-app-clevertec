@@ -6,13 +6,13 @@ import {useAppDispatch, useAppSelector} from "@hooks/typed-react-redux-hooks";
 import {useSelector} from "react-redux";
 import {getLocation} from "@redux/selectors/getRouterState/getLocation/getLocation";
 import {history} from "@redux/configure-store";
-import {apiRequestSlice} from "@redux/reducers/apiRequestSlice";
+import {authSlice} from "@redux/reducers/authSlice";
 import {getIsLoadingRequest} from "@redux/selectors/getApiRequestState/getIsLoadingRequest/getIsLoadingRequest";
 export const App:React.FC = () => {
-    const {isErrorStatus, isSuccessRequest} = useAppSelector(state => state.apiRequestSlice);
+    const {isErrorStatus, isSuccessRequest} = useAppSelector(state => state.authSlice);
     const location = useSelector(getLocation);
     const dispatch = useAppDispatch();
-    const {saveTokenAtStore} = apiRequestSlice.actions;
+    const {saveTokenAtStore} = authSlice.actions;
     useEffect(() => {
         if (location.search) {
             const prefix = "?accessToken=";

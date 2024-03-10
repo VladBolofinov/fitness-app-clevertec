@@ -1,9 +1,8 @@
 import {createSelector} from "@reduxjs/toolkit";
 import {getApiRequestState} from "@redux/selectors/getApiRequestState/getApiRequestState";
-import {ApiRequestType} from "@redux/types/ApiRequestType";
-
+import {AuthStateType} from "@redux/types/AuthStateType";
 
 export const getCheckCodeInputValue = createSelector(
     getApiRequestState,
-    (apiRequestSlice:ApiRequestType) => apiRequestSlice.checkCodeInputValue
+    (authSlice:AuthStateType) => authSlice.checkCodeInputValue
 )

@@ -10,11 +10,11 @@ import {
 import { IMainPageComponentsProps } from "@pages/main/components/types/IMainPageComponentsProps";
 import React from "react";
 import {useAppDispatch} from "@hooks/typed-react-redux-hooks";
-import {getFeedbacks} from "@redux/reducers/apiRequestSlice";
 import {useSelector} from "react-redux";
 import {getToken} from "@redux/selectors/getApiRequestState/getToken/getToken";
 import {history} from "@redux/configure-store";
 import {AppRoutes} from "../../../../router/routeConfig";
+import {getFeedbacks} from "@redux/reducers/feedbackSlice";
 export const FooterContent: React.FC<IMainPageComponentsProps> = ({ collapsed }) => {
     const items = [
         { title: "Расписать тренировки", icon: <HeartFilled />, buttonText: "Настройки" },

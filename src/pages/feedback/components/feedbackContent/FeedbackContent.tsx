@@ -2,21 +2,21 @@ import React, {useEffect, useMemo} from "react";
 import "./FeedbackContent.scss";
 import {Button, Modal, Result} from "antd";
 import {useSelector} from "react-redux";
-import {getFeedbackData} from "@redux/selectors/getApiRequestState/getFeedbackData/getFeedbackData";
+import {getFeedbackData} from "@redux/selectors/getFeedbackState/getFeedbackData/getFeedbackData";
 import {FeedbackCard} from "@pages/feedback/components/feedbackCard/FeedbackCard";
-import {getIsCollapseFeedback} from "@redux/selectors/getApiRequestState/getIsCollapseFeedback/getIsCollapseFeedback";
+import {getIsCollapseFeedback} from "@redux/selectors/getFeedbackState/getIsCollapseFeedback/getIsCollapseFeedback";
 import {useAppDispatch} from "@hooks/typed-react-redux-hooks";
-import {apiRequestSlice, getFeedbacks} from "@redux/reducers/apiRequestSlice";
 import {getToken} from "@redux/selectors/getApiRequestState/getToken/getToken";
-import {getIsSuccessSendFeedback} from "@redux/selectors/getApiRequestState/getIsSuccessSendFeedback/getIsSuccessSendFeedback";
+import {getIsSuccessSendFeedback} from "@redux/selectors/getFeedbackState/getIsSuccessSendFeedback/getIsSuccessSendFeedback";
 import {ModalFeedbackForm} from "@pages/feedback/components/modalFeedbackForm/ModalFeedbackForm";
 import {NotFindFeedbacks} from "@pages/feedback/components/notFindFeedbacks/NotFindFeedbacks";
-import {getIsEmptyFeedbacksDB} from "@redux/selectors/getApiRequestState/getIsEmptyFeedbacksDB/getIsEmptyFeedbacksDB";
-import {getIsErrorSendFeedback} from "@redux/selectors/getApiRequestState/getIsErrorSendFeedback/getIsErrorSendFeedback";
-import {getIsErrorStatus} from "@redux/selectors/getApiRequestState/getIsErrorStatus/getIsErrorStatus";
+import {getIsEmptyFeedbacksDB} from "@redux/selectors/getFeedbackState/getIsEmptyFeedbacksDB/getIsEmptyFeedbacksDB";
+import {getIsErrorSendFeedback} from "@redux/selectors/getFeedbackState/getIsErrorSendFeedback/getIsErrorSendFeedback";
 import {history} from "@redux/configure-store";
 import {AppRoutes} from "../../../../router/routeConfig";
 import {getPreviousLocation} from "@redux/selectors/getRouterState/getPreviousLocation/getPreviousLocation";
+import {feedbackSlice, getFeedbacks} from "@redux/reducers/feedbackSlice";
+import {getIsErrorGetFeedbacks} from "@redux/selectors/getFeedbackState/getIsErrorGetFeedbacks/getIsErrorGetFeedbacks";
 
 export const FeedbackContent:React.FC = () => {
     const feedbackData = useSelector(getFeedbackData);
@@ -26,18 +26,21 @@ export const FeedbackContent:React.FC = () => {
     const isErrorSendFeedback = useSelector(getIsErrorSendFeedback);
     const isEmptyFeedbacksDB = useSelector(getIsEmptyFeedbacksDB);
     const previousLocation = useSelector(getPreviousLocation);
-    const isErrorStatus = useSelector(getIsErrorStatus);
-    const {setIsCollapseFeedback,setIsOpenModal, deleteErrorStatus, deleteIsErrorSendFeedback} = apiRequestSlice.actions;
+    const isErrorGetFeedbacks = useSelector(getIsErrorGetFeedbacks);
+    const {deleteIsErrorSendFeedback, deleteIsErrorGetFeedbacks, setIsOpenModal,setIsCollapseFeedback, deleteIsSuccessSendFeedback} = feedbackSlice.actions;
     const dispatch = useAppDispatch();
 
     const showModalFeedback = () => {
         dispatch(setIsOpenModal(true));
     };
-    const onClearErrorStatus = () => {
-        dispatch(deleteErrorStatus());
+    const onClearSuccessStatusSendFB = () => {
+        dispatch(deleteIsSuccessSendFeedback());
+    }
+    const onClearErrorStatusGetFB = () => {
+        dispatch(deleteIsErrorGetFeedbacks());
         history.push(AppRoutes.MAIN);
     }
-    const onDeleteErrorStatus = () => {
+    const onDeleteErrorStatusSendFB = () => {
         dispatch(deleteIsErrorSendFeedback());
     }
     const renderFeedbackElems = useMemo(() => {
@@ -46,9 +49,9 @@ export const FeedbackContent:React.FC = () => {
     }, [feedbackData, isCollapseFeedback]);
     const errorModal = () => {
         Modal.confirm({icon: null, centered: true, title: "", cancelText: "Написать отзыв",
-            onCancel: () => {showModalFeedback();onDeleteErrorStatus();},
+            onCancel: () => {showModalFeedback();onDeleteErrorStatusSendFB();},
             cancelButtonProps: {block: true, type: "primary", "data-test-id": "write-review-not-saved-modal"},
-            okText: "Закрыть", onOk: onDeleteErrorStatus, okButtonProps: {block:true, type: "default"},
+            okText: "Закрыть", onOk: onDeleteErrorStatusSendFB, okButtonProps: {block:true, type: "default"},
             maskStyle: { backgroundColor: "rgba(121, 156, 213, 0.5)", backdropFilter: "blur(5px)" }, width: 539,
             content: <Result
                 status="error"
@@ -58,7 +61,7 @@ export const FeedbackContent:React.FC = () => {
         });
     };
     const successModal = () => {
-        Modal.success({icon: null, centered: true, title: "", okText: "Отлично", okButtonProps: {block:true},
+        Modal.success({icon: null, centered: true, title: "", okText: "Отлично", onOk: onClearSuccessStatusSendFB, okButtonProps: {block:true},
             maskStyle: { backgroundColor: "rgba(121, 156, 213, 0.5)", backdropFilter: "blur(5px)" }, width: 539,
             content: <Result status="success" title="Отзыв успешно опубликован"/>
         });
@@ -69,7 +72,7 @@ export const FeedbackContent:React.FC = () => {
             okButtonProps: {block:false},
             maskStyle: { backgroundColor: 'rgba(121, 156, 213, 0.5)', backdropFilter: "blur(5px)" },
             width: 539,
-            onOk: onClearErrorStatus,
+            onOk: onClearErrorStatusGetFB,
             bodyStyle: {padding: "64px 32px 56px 32px"},
             content: <Result
                 status="500"
@@ -84,10 +87,10 @@ export const FeedbackContent:React.FC = () => {
             successModal();
         } else if (isErrorSendFeedback) {
             errorModal();
-        } else if (isErrorStatus) {
+        } else if (isErrorGetFeedbacks) {
             errorHTTPModal();
         }
-    },[isSuccessSendFeedback, isErrorSendFeedback, isErrorStatus])
+    },[isSuccessSendFeedback, isErrorSendFeedback, isErrorGetFeedbacks])
 
     useEffect(() => {
             if (!(previousLocation[1]?.location === AppRoutes.ROOT || previousLocation[1]?.location === AppRoutes.MAIN)) {

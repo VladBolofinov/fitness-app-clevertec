@@ -3,12 +3,7 @@ import "./FormComponent.scss";
 import {Button, Checkbox, Input, Form} from "antd";
 import {EyeInvisibleOutlined, EyeTwoTone, GooglePlusOutlined} from "@ant-design/icons";
 import {useAppDispatch} from "@hooks/typed-react-redux-hooks";
-import {
-    apiRequestSlice, changePassword,
-    checkEmail,
-    authenticateUser,
-    registerNewUser, googleAuthenticateUser
-} from "@redux/reducers/apiRequestSlice";
+import {authSlice, changePassword, checkEmail, authenticateUser, registerNewUser, googleAuthenticateUser} from "@redux/reducers/authSlice";
 import {IFormComponentProps} from "@pages/auth/types/IFormComponentProps";
 import {IInputValues} from "@pages/main/components/types/IInputValues";
 import {useSelector} from "react-redux";
@@ -30,7 +25,7 @@ export const FormComponent: React.FC<IFormComponentProps> = ({type}) => {
     const firstConfirmPassword = useSelector(getFirstConfirmPassword);
     const secondConfirmPassword = useSelector(getSecondConfirmPassword);
     const login = useSelector(getLogin);
-    const {saveRegDataBeforeError} = apiRequestSlice.actions;
+    const {saveRegDataBeforeError} = authSlice.actions;
 
     useEffect(() => {
         if (previousLocation[1]?.location === AppRoutes.ERROR) {

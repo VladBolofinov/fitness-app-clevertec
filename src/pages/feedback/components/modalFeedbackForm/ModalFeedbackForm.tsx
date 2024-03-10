@@ -2,13 +2,13 @@ import React from "react";
 import {Button, Input, Modal, Rate} from "antd";
 import {StarFilled, StarOutlined} from "@ant-design/icons";
 import {useSelector} from "react-redux";
-import {getIsOpenModal} from "@redux/selectors/getApiRequestState/getIsOpenModal/getIsOpenModal";
+import {getIsOpenModal} from "@redux/selectors/getFeedbackState/getIsOpenModal/getIsOpenModal";
 import useBreakpoint from "antd/es/grid/hooks/useBreakpoint";
-import {apiRequestSlice, sendFeedback} from "@redux/reducers/apiRequestSlice";
-import {getRateScore} from "@redux/selectors/getApiRequestState/getRateScore/getRateScore";
-import {getFeedbackMessage} from "@redux/selectors/getApiRequestState/getFeedbackMessage/getFeedbackMessage";
+import {getRateScore} from "@redux/selectors/getFeedbackState/getRateScore/getRateScore";
+import {getFeedbackMessage} from "@redux/selectors/getFeedbackState/getFeedbackMessage/getFeedbackMessage";
 import {useAppDispatch} from "@hooks/typed-react-redux-hooks";
 import {getToken} from "@redux/selectors/getApiRequestState/getToken/getToken";
+import {feedbackSlice, sendFeedback} from "@redux/reducers/feedbackSlice";
 const { TextArea } = Input;
 export const ModalFeedbackForm:React.FC = () => {
     const isOpenModal = useSelector(getIsOpenModal);
@@ -16,7 +16,7 @@ export const ModalFeedbackForm:React.FC = () => {
     const token = useSelector(getToken);
     const rateScore  = useSelector(getRateScore);
     const feedbackMessage = useSelector(getFeedbackMessage);
-    const {setRateScore, setFeedbackMessage, deleteIsSuccessSendFeedback, setIsOpenModal} = apiRequestSlice.actions;
+    const {deleteIsSuccessSendFeedback, setIsOpenModal, setFeedbackMessage, setRateScore} = feedbackSlice.actions;
     const dispatch = useAppDispatch();
     const closeModal = () => {
         dispatch(setIsOpenModal(false));

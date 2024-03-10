@@ -4,7 +4,7 @@ import {Button, Result} from "antd";
 import VerificationInput from "react-verification-input";
 import {useAppDispatch} from "@hooks/typed-react-redux-hooks";
 import {push} from "redux-first-history";
-import {apiRequestSlice, confirmEmail} from "@redux/reducers/apiRequestSlice";
+import {authSlice, confirmEmail} from "@redux/reducers/authSlice";
 import {IResultMessageData} from "@pages/auth/types/IResultMessageData";
 import {MessageTypeError, MessageTypeSuccess} from "@pages/auth/types/messageTypes";
 import {useSelector} from "react-redux";
@@ -15,7 +15,7 @@ import {AppRoutes} from "../../../router/routeConfig";
 import {ResultMessageType} from "@pages/auth/ResultMessage/resultMessageType";
 
 export const ResultMessage:React.FC<ResultMessageType> = ({type}) => {
-    const {deleteErrorStatus, deleteSuccessStatus, setCheckCodeInput} = apiRequestSlice.actions;
+    const {deleteErrorStatus, deleteSuccessStatus, setCheckCodeInput} = authSlice.actions;
     const dispatch = useAppDispatch();
     const isErrorStatus = useSelector(getIsErrorStatus);
     const login = useSelector(getLogin);

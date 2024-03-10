@@ -1,11 +1,11 @@
 import React from "react";
 import "./NotFindFeedbacks.scss";
 import {Button} from "antd/es";
-import {apiRequestSlice} from "@redux/reducers/apiRequestSlice";
 import {useAppDispatch} from "@hooks/typed-react-redux-hooks";
 import {ModalFeedbackForm} from "@pages/feedback/components/modalFeedbackForm/ModalFeedbackForm";
+import {feedbackSlice} from "@redux/reducers/feedbackSlice";
 export const NotFindFeedbacks:React.FC = () => {
-    const {setIsOpenModal} = apiRequestSlice.actions;
+    const {setIsOpenModal} = feedbackSlice.actions;
     const dispatch = useAppDispatch();
     return (
         <>

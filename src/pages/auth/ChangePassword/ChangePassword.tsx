@@ -2,7 +2,7 @@ import React, {useEffect} from "react";
 import "./ChangePassword.scss";
 import {Input, Form, Button} from "antd";
 import {EyeInvisibleOutlined, EyeTwoTone} from "@ant-design/icons";
-import {apiRequestSlice, changePassword} from "@redux/reducers/apiRequestSlice";
+import {authSlice, changePassword} from "@redux/reducers/authSlice";
 import {useAppDispatch} from "@hooks/typed-react-redux-hooks";
 import {ForgetPasswordFields} from "@pages/main/components/types/IInputValues";
 import {history} from "@redux/configure-store";
@@ -14,7 +14,7 @@ import {AppRoutes} from "../../../router/routeConfig";
 export const ChangePassword:React.FC = () => {
     const [changePasswordForm] = Form.useForm();
     const dispatch = useAppDispatch();
-    const {saveConfirmPasswords} = apiRequestSlice.actions;
+    const {saveConfirmPasswords} = authSlice.actions;
     const isSuccessRequest = useSelector(getIsSuccessRequest);
     const sendConfirmData = (values: ForgetPasswordFields) => {
         dispatch(saveConfirmPasswords({password: values.password, confirmPassword: values["password-compare"]}));

@@ -8,7 +8,7 @@ import avatar from "../../../../assets/img/avatar.png";
 export const FeedbackCard:React.FC<FeedbackCardProps> = ({item}) => {
     const formatDate = (dateString:string) => {
         const date = new Date(dateString);
-        return `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`;
+        return `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`    //в отдельный файл(хелпер) вынеси функцию
     }
     return (
         <div className="feedback-content-card" key={item.id}>

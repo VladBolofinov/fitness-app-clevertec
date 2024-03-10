@@ -6,14 +6,14 @@ import {
     BtnIconNotCollapsedSm
 } from "@pages/main/components/customSvgIcons/customSvgIcons";
 import {Grid} from "antd";
-import {apiRequestSlice} from "@redux/reducers/apiRequestSlice";
+import {authSlice} from "@redux/reducers/authSlice";
 import {useAppDispatch} from "@hooks/typed-react-redux-hooks";
 import {useSelector} from "react-redux";
 import {getIsCollapseSider} from "@redux/selectors/getApiRequestState/getIsCollapseSider/getIsCollapseSider";
 const { useBreakpoint } = Grid;
 export const TriggerBtn:React.FC = () => {
     const screens = useBreakpoint();
-    const {setIsCollapseSider} = apiRequestSlice.actions;
+    const {setIsCollapseSider} = authSlice.actions;
     const dispatch = useAppDispatch();
     const isCollapseSider = useSelector(getIsCollapseSider);
     return (
