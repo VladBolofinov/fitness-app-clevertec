@@ -20,6 +20,8 @@ export enum endpoints {
     "CONFIRM_EMAIL"= "/auth/confirm-email",
     "CHANGE_PASSWORD"= "/auth/change-password",
     "FEEDBACK" = "/feedback",
+    "TRAININGS" = "/training",
+    "CATALOGS_TRAININGS" = "/catalogs/training-list"
 }
 export enum urls {
     MAIN_URL = "https://marathon-api.clevertec.ru"

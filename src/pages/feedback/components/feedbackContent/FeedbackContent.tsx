@@ -1,6 +1,6 @@
 import React, {useEffect, useMemo} from "react";
 import "./FeedbackContent.scss";
-import {Button, Modal, Result} from "antd";
+import {Button} from "antd";
 import {useSelector} from "react-redux";
 import {getFeedbackData} from "@redux/selectors/getFeedbackState/getFeedbackData/getFeedbackData";
 import {FeedbackCard} from "@pages/feedback/components/feedbackCard/FeedbackCard";
@@ -17,6 +17,9 @@ import {AppRoutes} from "../../../../router/routeConfig";
 import {getPreviousLocation} from "@redux/selectors/getRouterState/getPreviousLocation/getPreviousLocation";
 import {feedbackSlice, getFeedbacks} from "@redux/reducers/feedbackSlice";
 import {getIsErrorGetFeedbacks} from "@redux/selectors/getFeedbackState/getIsErrorGetFeedbacks/getIsErrorGetFeedbacks";
+import {errorHTTPModal} from "../../../../sharedComponents/errorHTTPModal";
+import {successModal} from "../../../../sharedComponents/suceessModal";
+import {errorModal} from "../../../../sharedComponents/errorModal";
 
 export const FeedbackContent:React.FC = () => {
     const feedbackData = useSelector(getFeedbackData);
@@ -47,48 +50,17 @@ export const FeedbackContent:React.FC = () => {
         const feedbackSlice = isCollapseFeedback ? feedbackData : feedbackData.slice(0, 4);
         return feedbackSlice.map((item) => <FeedbackCard item={item}/>);
     }, [feedbackData, isCollapseFeedback]);
-    const errorModal = () => {
-        Modal.confirm({icon: null, centered: true, title: "", cancelText: "Написать отзыв",
-            onCancel: () => {showModalFeedback();onDeleteErrorStatusSendFB();},
-            cancelButtonProps: {block: true, type: "primary", "data-test-id": "write-review-not-saved-modal"},
-            okText: "Закрыть", onOk: onDeleteErrorStatusSendFB, okButtonProps: {block:true, type: "default"},
-            maskStyle: { backgroundColor: "rgba(121, 156, 213, 0.5)", backdropFilter: "blur(5px)" }, width: 539,
-            content: <Result
-                status="error"
-                title="Данные не сохранились"
-                subTitle="Что-то пошло не так. Попробуйте еще раз."
-            />
-        });
-    };
-    const successModal = () => {
-        Modal.success({icon: null, centered: true, title: "", okText: "Отлично", onOk: onClearSuccessStatusSendFB, okButtonProps: {block:true},
-            maskStyle: { backgroundColor: "rgba(121, 156, 213, 0.5)", backdropFilter: "blur(5px)" }, width: 539,
-            content: <Result status="success" title="Отзыв успешно опубликован"/>
-        });
-    };
 
-    const errorHTTPModal = () => {
-        Modal.error({icon: null, centered: true, title: "", okText: "Назад",
-            okButtonProps: {block:false},
-            maskStyle: { backgroundColor: 'rgba(121, 156, 213, 0.5)', backdropFilter: "blur(5px)" },
-            width: 539,
-            onOk: onClearErrorStatusGetFB,
-            bodyStyle: {padding: "64px 32px 56px 32px"},
-            content: <Result
-                status="500"
-                title="Что-то пошло не так"
-                subTitle="Произошла ошибка.Попробуйте еще раз."
-            />
-        });
-    };
     useEffect(() => {
         if (isSuccessSendFeedback) {
             dispatch(getFeedbacks(token));
-            successModal();
+            successModal(onClearSuccessStatusSendFB);
         } else if (isErrorSendFeedback) {
-            errorModal();
+            errorModal(onDeleteErrorStatusSendFB,() => {
+                showModalFeedback();
+                onDeleteErrorStatusSendFB();});
         } else if (isErrorGetFeedbacks) {
-            errorHTTPModal();
+            errorHTTPModal(onClearErrorStatusGetFB);
         }
     },[isSuccessSendFeedback, isErrorSendFeedback, isErrorGetFeedbacks])
 

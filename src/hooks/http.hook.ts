@@ -145,6 +145,42 @@ export const useHttp = () => {
             }
         }
     }
+    const getUserTrainings = async (token:string) => {
+        try {
+            const response = await axios({
+                method: httpMethods.GET,
+                url: `${urls.MAIN_URL}${endpoints.TRAININGS}`,
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            console.log(response.data);
+            return response.data;
+        } catch (e) {
+            if (axios.isAxiosError(e)) {
+                console.log(e.response);
+                return e.response?.status;
+            }
+        }
+    }
+    const getAllTrainings = async (token:string) => {
+        try {
+            const response = await axios({
+                method: httpMethods.GET,
+                url: `${urls.MAIN_URL}${endpoints.CATALOGS_TRAININGS}`,
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            console.log(response.data);
+            return response.data;
+        } catch (e) {
+            if (axios.isAxiosError(e)) {
+                console.log(e.response);
+                return e.response?.status;
+            }
+        }
+    }
     return {
         authenticateUser,
         googleAuthenticateUser,
@@ -153,6 +189,8 @@ export const useHttp = () => {
         confirmEmail,
         changePassword,
         getFeedbacks,
-        sendFeedback
+        sendFeedback,
+        getUserTrainings,
+        getAllTrainings
     }
 }
