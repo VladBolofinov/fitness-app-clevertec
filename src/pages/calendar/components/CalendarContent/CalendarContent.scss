@@ -10,3 +10,20 @@
     bottom: 100px;
     overflow: hidden;
 }*/
+
+.error-training-list-modal-wrapper {
+    .ant-modal-close-x {
+        color: var(--character-light-secondary-45);
+    }
+    .ant-modal-confirm-title {
+        margin-right: 40px;
+        font-weight: 400;
+    }
+    .ant-modal-confirm-content {
+        color: var(--character-light-secondary-45);
+    }
+    .ant-modal-confirm .ant-modal-confirm-btns {
+        margin-top: 16px;
+        justify-content: flex-end;
+    }
+}

@@ -1,19 +1,25 @@
+import React from "react";
 import "./SiderContent.scss";
 import {MainLogoIconLg, MainLogoIconSm, MainLogoShortIcon, RollbackIcon} from "@pages/main/components/customSvgIcons/customSvgIcons";
 import {Grid, Menu, Layout} from "antd";
 import {CalendarTwoTone, HeartFilled, IdcardOutlined, TrophyFilled} from "@ant-design/icons";
 import {IMainPageComponentsProps} from "@pages/main/components/types/IMainPageComponentsProps";
-import React from "react";
-const { Sider } = Layout;
-const { useBreakpoint } = Grid;
 import {history} from "@redux/configure-store";
 import {AppRoutes} from "../../../../router/routeConfig";
+import {useAppDispatch} from "@hooks/typed-react-redux-hooks";
+import {useSelector} from "react-redux";
+import {getToken} from "@redux/selectors/getAuthState/getToken/getToken";
+import {handleCalendarClick} from "@pages/calendar/helpers/handleCalendarClick";
+const { Sider } = Layout;
+const { useBreakpoint } = Grid;
 
 export const SiderContent: React.FC<IMainPageComponentsProps> = ({collapsed}) => {
     const screens = useBreakpoint();
+    const dispatch = useAppDispatch();
+    const token = useSelector(getToken);
     const commonMenuItemStyle = screens.xs ? { paddingLeft: "4px" } : { padding: "0 16px" };
     const menuItems = [
-        { key: AppRoutes.CALENDAR, label: "Календарь", icon: screens.xs ? null : <CalendarTwoTone twoToneColor="var(--primary-light-9)" />, style: commonMenuItemStyle },
+        { key: "1", label: "Календарь", icon: screens.xs ? null : <CalendarTwoTone twoToneColor="var(--primary-light-9)" />, style: commonMenuItemStyle },
         { key: "2", label: "Тренировки", icon: screens.xs ? null : <HeartFilled style={{ color: "var(--primary-light-9)" }} />, style: commonMenuItemStyle },
         { key: "3", label: "Достижения", icon: screens.xs ? null : <TrophyFilled style={{ color: "var(--primary-light-9)" }} />, style: commonMenuItemStyle },
         { key: "4", label: "Профиль", icon: screens.xs ? null : <IdcardOutlined style={{ color: "var(--primary-light-9)" }} />, style: commonMenuItemStyle },
@@ -32,7 +38,9 @@ export const SiderContent: React.FC<IMainPageComponentsProps> = ({collapsed}) =>
                     mode="inline"
                     items={[...menuItems]}
                     onClick={(item) => {
-                        history.push(item.key);
+                        if (item.key === "1") {
+                            handleCalendarClick(token,dispatch)
+                        }
                         if (item.key === "5") {
                             sessionStorage.clear();
                             localStorage.clear();

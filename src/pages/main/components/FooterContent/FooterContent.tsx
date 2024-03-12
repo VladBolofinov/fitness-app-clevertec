@@ -15,14 +15,20 @@ import {getToken} from "@redux/selectors/getAuthState/getToken/getToken";
 import {history} from "@redux/configure-store";
 import {AppRoutes} from "../../../../router/routeConfig";
 import {getFeedbacks} from "@redux/reducers/feedbackSlice";
+import {handleCalendarClick} from "@pages/calendar/helpers/handleCalendarClick";
 export const FooterContent: React.FC<IMainPageComponentsProps> = ({ collapsed }) => {
-    const items = [
-        { title: "Расписать тренировки", icon: <HeartFilled />, buttonText: "Настройки" },
-        { title: "Назначить календарь", icon: <CalendarOutlined />, buttonText: "Календарь" },
-        { title: "Заполнить профиль", icon: <IdcardOutlined />, buttonText: "Профиль" }
-    ];
     const dispatch = useAppDispatch();
     const token = useSelector(getToken);
+    //типизируй объект items
+    const items = [
+        { title: "Расписать тренировки", icon: <HeartFilled />, buttonText: "Настройки",
+            "data-test-id": "", onClickFn: "" },
+        { title: "Назначить календарь", icon: <CalendarOutlined />, buttonText: "Календарь",
+            "data-test-id": "menu-button-calendar", onClickFn: () => handleCalendarClick(token,dispatch) },
+        { title: "Заполнить профиль", icon: <IdcardOutlined />, buttonText: "Профиль",
+            "data-test-id": "", onClickFn: "" }
+    ];
+
     return (
         <>
             <div className={`app-usage-item-wrapper ${collapsed ? "collapsed" : ""}`}>
@@ -30,7 +36,8 @@ export const FooterContent: React.FC<IMainPageComponentsProps> = ({ collapsed })
                     <div key={index} className={`app-usage-item ${collapsed ? "collapsed" : ""}`}>
                         <div className="item-title">{item.title}</div>
                         <div className="item-btn-wrapper">
-                            <Button icon={item.icon} type="link">{item.buttonText}</Button>
+                            <Button icon={item.icon} type="link" data-test-id={item["data-test-id"]}
+                                    onClick={() => item.onClickFn()}>{item.buttonText}</Button>
                         </div>
                     </div>
                 ))}

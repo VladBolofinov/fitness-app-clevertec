@@ -154,6 +154,7 @@ export const useHttp = () => {
                     Authorization: `Bearer ${token}`
                 }
             })
+            history.push(AppRoutes.CALENDAR);
             console.log(response.data);
             return response.data;
         } catch (e) {

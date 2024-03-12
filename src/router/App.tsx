@@ -8,11 +8,20 @@ import {getLocation} from "@redux/selectors/getRouterState/getLocation/getLocati
 import {history} from "@redux/configure-store";
 import {authSlice} from "@redux/reducers/authSlice";
 import {getIsLoadingRequest} from "@redux/selectors/getAuthState/getIsLoadingRequest/getIsLoadingRequest";
+import {getIsErrorGetUserTrainings} from "@redux/selectors/getCalendarState/getIsErrorGetUserTrainings/getIsErrorGetUserTrainings";
+import {errorHTTPModal} from "../sharedComponents/errorHTTPModal";
+import {calendarSlice} from "@redux/reducers/calendarSlice";
 export const App:React.FC = () => {
     const {isErrorStatus, isSuccessRequest} = useAppSelector(state => state.authSlice);
+    const isLoadingRequest = useSelector(getIsLoadingRequest);
+    const isErrorGetUserTrainings = useSelector(getIsErrorGetUserTrainings);
     const location = useSelector(getLocation);
     const dispatch = useAppDispatch();
     const {saveTokenAtStore} = authSlice.actions;
+    const {clearIsErrorTrainings} = calendarSlice.actions;
+    const onClearIsErrorTrainings = () => {
+        dispatch(clearIsErrorTrainings());
+    }
     useEffect(() => {
         if (location.search) {
             const prefix = "?accessToken=";
@@ -32,7 +41,11 @@ export const App:React.FC = () => {
             sessionStorage.clear();
         };
     }, []);
-    const isLoadingRequest = useSelector(getIsLoadingRequest);
+    useEffect(() => {
+         if (isErrorGetUserTrainings) {
+            errorHTTPModal(onClearIsErrorTrainings);
+        }
+    },[isErrorGetUserTrainings])
 return (
     <Suspense fallback={<MyLoader/>}>
         {(isLoadingRequest) ? <MyLoader/> : null}

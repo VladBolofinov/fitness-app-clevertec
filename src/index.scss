@@ -77,6 +77,14 @@ textarea.ant-input {
 .ant-modal-close-x {
     color:rgba(0, 0, 0, 0.85);
 }
+.ant-modal-confirm-error .ant-modal-confirm-body > .anticon {
+    color: var(--primary-light-6);
+}
+.errorHTTPModal-wrapper {
+    .ant-modal-confirm-btns {
+        display: none;
+    }
+}
 @media screen and (max-width: 834px) {
     html, body {
         width: var(--media-screen-width-md);
