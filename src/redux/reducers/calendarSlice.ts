@@ -8,7 +8,8 @@ const initialState: CalendarStateType = {
     isSuccessGetUserTrainings: false,
     isErrorTrainingList: false,
     isSuccessGetTrainingList: false,
-    trainingList: []
+    trainingList: [],
+    popoverOffset: [0,0]
 }
 
 export const getUserTrainings = createAsyncThunk(
@@ -40,6 +41,9 @@ export const calendarSlice = createSlice({
         },
         clearIsErrorTrainingList(state) {
             state.isErrorTrainingList = false;
+        },
+        setPopoverOffset(state, action: PayloadAction<[number, number]>) {
+            state.popoverOffset = action.payload;
         }
     },
     extraReducers:

@@ -3,5 +3,6 @@ export type CalendarStateType = {
     isSuccessGetUserTrainings: boolean;
     isErrorTrainingList: boolean;
     isSuccessGetTrainingList: boolean;
-    trainingList: []
+    trainingList: [];
+    popoverOffset: [number, number];
 }

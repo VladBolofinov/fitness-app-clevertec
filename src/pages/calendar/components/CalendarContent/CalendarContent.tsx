@@ -10,18 +10,38 @@ import "moment/locale/ru";
 import moment from "moment";
 import {errorTrainingList} from "../modalErrorTrainingList/errorTrainingList";
 import {getIsErrorTrainingList} from "@redux/selectors/getCalendarState/getIsErrorTrainingList/getIsErrorTrainingList";
+import {
+    getIsCollapseSider
+} from "@redux/selectors/getAuthState/getIsCollapseSider/getIsCollapseSider";
+import {
+    getPopoverOffset
+} from "@redux/selectors/getCalendarState/getPopoverOffset/getPopoverOffset";
+
+
+
+//console.log("Дата в формате строки:", date.format('YYYY-MM-DD'));
+//console.log("Год:", date.year());
+//console.log("Месяц (отсчитывается от 0):", date.month());
+//console.log("День:", date.date());
+//console.log("День недели (отсчитывается от 0):", date.day());
+//console.log("ISO неделя года:", date.isoWeek());
+//console.log("День в году:", date.dayOfYear());
+//const now = moment(); // Текущая дата
+//console.log("Это прошлое:", date.isBefore(moment()));
+//console.log("Это будущее:", date.isAfter(moment()));
+//console.log("Это сегодняшняя дата:", date.isSame(moment(), 'day'));
+
 
 export const CalendarContent:React.FC = () => {
     const dispatch = useAppDispatch();
     const token = useSelector(getToken);
     const isErrorTrainingList = useSelector(getIsErrorTrainingList);
-    const {clearIsErrorTrainingList} = calendarSlice.actions;
+    const isCollapsedSider = useSelector(getIsCollapseSider);
+    const popoverOffset = useSelector(getPopoverOffset);
+    const {clearIsErrorTrainingList,setPopoverOffset} = calendarSlice.actions;
     moment.locale("ru_RU", {week: {dow: 1}});
 
-    const [open, setOpen] = useState(false);
-    const hide = () => {
-        setOpen(false);
-    };
+
     const repeatGetTrainingList = () => {
         dispatch(clearIsErrorTrainingList());
         dispatch(getAllTrainings(token));
@@ -35,47 +55,110 @@ export const CalendarContent:React.FC = () => {
             <Badge color="#f50" text="Силовая" />
             <Badge color="#f50" text="Грудь" />
             <Badge color="#f50" text="Спина" />
-            <button onClick={hide}>Close</button>
+            <button>Close</button>
         </div> )
-    const handleOpenChange = (newOpen: boolean) => {
-        setOpen(newOpen);
-    };
+
     useEffect(() => {
         if (isErrorTrainingList) {
             errorTrainingList(repeatGetTrainingList);
         }
     },[isErrorTrainingList])
+
+
+    /*const getListData = (value: Moment) => {
+        let listData;
+        switch (value.date()) {
+            case 8:
+                listData = [
+                    { type: 'warning', content: 'This is warning event.' },
+                    { type: 'success', content: 'This is usual event.' },
+                ];
+                break;
+            case 10:
+                listData = [
+                    { type: 'warning', content: 'This is warning event.' },
+                    { type: 'success', content: 'This is usual event.' },
+                    { type: 'error', content: 'This is error event.' },
+                ];
+                break;
+            case 15:
+                listData = [
+                    { type: 'warning', content: 'This is warning event' },
+                    { type: 'success', content: 'This is very long usual event。。....' },
+                    { type: 'error', content: 'This is error event 1.' },
+                    { type: 'error', content: 'This is error event 2.' },
+                    { type: 'error', content: 'This is error event 3.' },
+                    { type: 'error', content: 'This is error event 4.' },
+                ];
+                break;
+            default:
+        }
+        return listData || [];
+    };*/
+    /*const dateCellRender = (value: Moment) => {
+        const listData = getListData(value);
+        return (
+            <ul className="events">
+                {listData.map(item => (
+                    <Popover>
+                        <button>sss</button>
+                    <li key={item.content}>
+                        <Badge status={item.type as BadgeProps['status']} text={item.content} />
+                    </li>
+                    </Popover>
+                ))}
+            </ul>
+        );
+    };*/
+
+
+    const [open, setOpen] = useState(false);
+    const handleOpenChange = (newOpen: boolean) => {
+        setOpen(newOpen);
+    };
+    const handleCellClick = (event,date) => {
+        event.stopPropagation();
+        setOpen(!open);
+        const rect = event.target.getBoundingClientRect();
+        let resultLeftOffset;
+        const bottomOffset = Math.floor(rect.top + window.scrollY);
+        const lastDayOffset = (isCollapsedSider) ? 1050 : 920;
+        const leftOffset = (isCollapsedSider) ? 189 : 169;
+        const dayNumber = date.day();
+        (dayNumber >= 1) ? resultLeftOffset = leftOffset*(dayNumber-1) : resultLeftOffset = lastDayOffset;
+        dispatch(setPopoverOffset([resultLeftOffset, bottomOffset-138]));
+    };
     return (
     <div className="calendar-wrapper" >
-        <button onClick={() => dispatch(getUserTrainings(token))}>get user trainings</button>
-        <button onClick={() => dispatch(getAllTrainings(token))}>get all trainings list</button>
-        <Calendar locale={localeRU} dateCellRender={(date) => {
-            if (new Date(date).getDate() === 15) {
-                return (<Popover content={content}
-                                 title="Title"
-                                 trigger="click"
-                                 overlayInnerStyle={{
-                                     borderRadius: '2px',
-                                     width: "264px",
-                                     height: "270px",
-                                     boxShadow: "0 2px 8px 0 rgba(0, 0, 0, 0.15)",
+        {/*<button onClick={() => dispatch(getUserTrainings(token))}>get user trainings</button>
+        <button onClick={() => dispatch(getAllTrainings(token))}>get all trainings list</button>*/}
+        <Popover content={content}
+                     title="Title"
+                     trigger="click"
+                     overlayInnerStyle={{
+                         position: "absolute",
+                         left: "0",
+                         top: "100px",
+                         borderRadius: '2px',
+                         width: "264px",
+                         height: "200px",
+                         boxShadow: "0 2px 8px 0 rgba(0, 0, 0, 0.15)",
+                     }}
+                     open={open}
+                     align={{offset: popoverOffset}}
+                     showArrow={false}
+                     onOpenChange={handleOpenChange}>
+            </Popover>
+        <Calendar  locale={localeRU} mode="month"
+                  dateCellRender={(date) => {
+                    return (
+                        <div className="cell-wrapper"
+                             onClick={(e) => handleCellClick(e, date)}>
+                        </div>
+                    )
                 }}
-                                 open={open}
-                                 align={{
-                                     offset: [-8, 255],
-                                 }}
-                                 showArrow={false}
-                                 onOpenChange={handleOpenChange}
-                placement="topLeft">
-                    <button>AAA</button>
-                </Popover>)
-            } else {
-                return false;
-            }
-        }}/>
-        <Popover>
-            <Button type="primary">Click me</Button>
-        </Popover>
+        />
+
     </div>
     );
 };

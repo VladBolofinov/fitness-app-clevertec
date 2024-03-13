@@ -85,6 +85,13 @@ textarea.ant-input {
         display: none;
     }
 }
+.ant-picker-calendar-full .ant-picker-panel .ant-picker-calendar-date {
+    padding: 0;
+}
+.ant-picker-calendar-full .ant-picker-panel .ant-picker-calendar-date-value {
+    margin-right: 8px;
+}
+
 @media screen and (max-width: 834px) {
     html, body {
         width: var(--media-screen-width-md);
