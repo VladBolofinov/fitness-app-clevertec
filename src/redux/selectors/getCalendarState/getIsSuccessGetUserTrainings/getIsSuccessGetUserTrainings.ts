@@ -6,3 +6,4 @@ export const getIsSuccessGetUserTrainings = createSelector(
     getCalendarState,
     (calendarSlice:CalendarStateType) => calendarSlice.isSuccessGetUserTrainings
 )
+//удали если не используешь

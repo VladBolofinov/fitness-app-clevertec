@@ -91,7 +91,25 @@ textarea.ant-input {
 .ant-picker-calendar-full .ant-picker-panel .ant-picker-calendar-date-value {
     margin-right: 8px;
 }
-
+.ant-badge-status-text {
+    font-size: 12px;
+}
+.ant-popover-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: none;
+    padding: 0 22px 0 12px;
+    margin-top: 6px;
+}
+.ant-popover-inner-content {
+    width: inherit;
+    padding: 0;
+}
+.ant-empty-image img {
+    height: 32px;
+    width: 32px;
+}
 @media screen and (max-width: 834px) {
     html, body {
         width: var(--media-screen-width-md);

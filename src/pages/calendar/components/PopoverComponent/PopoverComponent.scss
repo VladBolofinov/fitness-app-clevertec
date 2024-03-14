@@ -1,0 +1,20 @@
+.popover-title-header {
+    font-weight: 700;
+}
+.popover-middle-content {
+    width: 230px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 0 12px 0 12px;
+}
+.popover-btn-wrapper {
+    width: 100%;
+    border-top: 2px solid var(--character-light-dividers);
+    padding: 12px;
+    margin-top: 16px;
+}
+.popover-subtitle {
+    margin-left: 12px;
+    color: var(--character-light-secondary-45);
+}

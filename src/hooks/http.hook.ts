@@ -145,7 +145,7 @@ export const useHttp = () => {
             }
         }
     }
-    const getUserTrainings = async (token:string) => {
+    const getUserTraining = async (token:string) => {
         try {
             const response = await axios({
                 method: httpMethods.GET,
@@ -182,6 +182,48 @@ export const useHttp = () => {
             }
         }
     }
+    const createTraining = async (token:string) => {
+        try {
+            const response = await axios({
+                method: httpMethods.POST,
+                url: `${urls.MAIN_URL}${endpoints.TRAININGS}`,
+                headers: {
+                    Authorization: `Bearer ${token}`
+                },
+                data: {
+                    name: "Руки",
+                    date: "2024-03-20T08:20:41.602Z",
+                    isImplementation: false,
+                    parameters: {
+                        repeat: false,
+                        period: 7,
+                        jointTraining: false,
+                        participants: []
+                    },
+                    exercises: [
+                        {
+                            name: "Качаться",
+                            replays: 0,
+                            weight: 0,
+                            approaches: 0,
+                            isImplementation: false
+                        }
+                    ]
+                }
+            })
+            console.log(response.data);
+            /*return {
+                name: response.data.name,
+                date: response.data.date
+            }*/
+            return response.data;
+        } catch (e) {
+            if (axios.isAxiosError(e)) {
+                console.log(e.response);
+                return e.response?.status;
+            }
+        }
+    }
     return {
         authenticateUser,
         googleAuthenticateUser,
@@ -191,7 +233,8 @@ export const useHttp = () => {
         changePassword,
         getFeedbacks,
         sendFeedback,
-        getUserTrainings,
-        getAllTrainings
+        getUserTraining,
+        getAllTrainings,
+        createTraining
     }
 }
