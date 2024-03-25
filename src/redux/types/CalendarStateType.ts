@@ -6,7 +6,11 @@ export type CalendarStateType = {
     isPopoverOpen: boolean;
     currentDate: string;
     currentDateUserTrainings: [];
+    currentTrainingExercises: any;
+    currentSelectValue: string;
     trainingList: [];
     popoverOffset: [number, number];
     userTrainings: [];
+    isNextStepModal: boolean;
+    isOpenDrawer: boolean;
 }

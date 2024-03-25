@@ -9,11 +9,20 @@ const initialState: CalendarStateType = {
     isErrorTrainingList: false,
     isSuccessGetTrainingList: false,
     isPopoverOpen: false,
-    currentDate: '',
+    currentDate: "",
     currentDateUserTrainings: [],
+    currentTrainingExercises: [{
+        name: "",
+        replays: 0,
+        weight: 0,
+        approaches: 0,
+    }],
+    currentSelectValue: "",
     trainingList: [],
     popoverOffset: [0,0],
-    userTrainings: []
+    userTrainings: [],
+    isNextStepModal: false,
+    isOpenDrawer: false
 }
 
 export const getUserTraining = createAsyncThunk(
@@ -46,6 +55,16 @@ export const createTraining = createAsyncThunk(
         return result;
     }
 )
+export const editTraining = createAsyncThunk(
+    "calendarSlice/createTraining",
+    async (token:string, {dispatch}) => {
+        const {editTraining} = useHttp();
+        dispatch(setIsLoadingRequest(true));
+        const result = await editTraining(token);
+        dispatch(setIsLoadingRequest(false));
+        return result;
+    }
+)
 export const calendarSlice = createSlice({
     name: "feedbackSlice",
     initialState,
@@ -63,12 +82,26 @@ export const calendarSlice = createSlice({
             state.currentDate = action.payload;
         },
         setCurrentDateUserTrainings(state, action: PayloadAction<string>) {
-            console.log(action.payload);
             state.currentDateUserTrainings = state.userTrainings.filter(item => item.date === action.payload);
         },
         setIsPopoverOpen(state, action: PayloadAction<boolean>) {
             state.isPopoverOpen = action.payload;
-        }
+        },
+        setIsNextStepModal(state, action: PayloadAction<boolean>) {
+            state.isNextStepModal = action.payload;
+        },
+        setIsOpenDrawer(state, action: PayloadAction<boolean>) {
+            state.isOpenDrawer = action.payload;
+        },
+        setCurrentSelectValue(state, action: PayloadAction<string>) {
+            state.currentSelectValue = action.payload;
+        },
+        setCurrentTrainingExercises(state) {
+            state.currentTrainingExercises.name = "Становая тяга";
+            state.currentTrainingExercises.replays = 1;
+            state.currentTrainingExercises.weight = 2;
+            state.currentTrainingExercises.approaches = 2;
+        },
     },
     extraReducers:
         (builder) => {
@@ -91,16 +124,21 @@ export const calendarSlice = createSlice({
                     state.isErrorTrainingList = true;
                 } else {
                     state.isSuccessGetTrainingList = true;
-                    state.trainingList.push(action.payload);
+                    state.trainingList = action.payload.map(item => {
+                        return {
+                            label: item.name,
+                            value: item.key
+                        };
+                    });
                 }
             })
             .addCase(getAllTrainings.rejected, (state) => {
                 state.isErrorTrainingList = true;
             })
-            .addCase(createTraining.fulfilled, (state, action:PayloadAction<any>) => {
+            .addCase(editTraining.fulfilled, (state) => {
 
             })
-            .addCase(createTraining.rejected, (state) => {
+            .addCase(editTraining.rejected, (state) => {
 
             })
         }

@@ -11,6 +11,12 @@ import {getIsLoadingRequest} from "@redux/selectors/getAuthState/getIsLoadingReq
 import {getIsErrorGetUserTrainings} from "@redux/selectors/getCalendarState/getIsErrorGetUserTrainings/getIsErrorGetUserTrainings";
 import {errorHTTPModal} from "../sharedComponents/errorHTTPModal";
 import {calendarSlice} from "@redux/reducers/calendarSlice";
+import {
+    arrays_of_numbers, combinationsArray,
+    countOccurrences,
+    countsArray,
+    sortedNumbers
+} from "../keno-loto/numbers";
 export const App:React.FC = () => {
     const {isErrorStatus, isSuccessRequest} = useAppSelector(state => state.authSlice);
     const isLoadingRequest = useSelector(getIsLoadingRequest);

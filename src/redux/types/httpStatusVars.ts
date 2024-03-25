@@ -9,7 +9,9 @@ export enum httpStatusVars {
 
 export enum httpMethods {
     "POST"="post",
-    "GET" = "get"
+    "GET" = "get",
+    "PUT" = "put",
+    "DELETE" = "delete"
 }
 
 export enum endpoints {

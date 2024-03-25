@@ -191,8 +191,8 @@ export const useHttp = () => {
                     Authorization: `Bearer ${token}`
                 },
                 data: {
-                    name: "Руки",
-                    date: "2024-03-20T08:20:41.602Z",
+                    name: "Грудь",
+                    date: "2024-03-28T08:20:41.602Z",
                     isImplementation: false,
                     parameters: {
                         repeat: false,
@@ -202,7 +202,21 @@ export const useHttp = () => {
                     },
                     exercises: [
                         {
-                            name: "Качаться",
+                            name: "Жим лёжа",
+                            replays: 0,
+                            weight: 0,
+                            approaches: 0,
+                            isImplementation: false
+                        },
+                        {
+                            name: "Подтягивания",
+                            replays: 0,
+                            weight: 0,
+                            approaches: 0,
+                            isImplementation: false
+                        },
+                        {
+                            name: "Пауэрлифтинг",
                             replays: 0,
                             weight: 0,
                             approaches: 0,
@@ -224,6 +238,25 @@ export const useHttp = () => {
             }
         }
     }
+    const editTraining = async (token:string, id:string) => {
+        try {
+            const response = await axios({
+                method: httpMethods.PUT,
+                url: `${urls.MAIN_URL}${endpoints.TRAININGS}/`,
+                headers: {
+                    Authorization: `Bearer ${token}`
+                },
+                data: {}
+            })
+            console.log(response.data);
+            return response.data;
+        } catch (e) {
+            if (axios.isAxiosError(e)) {
+                console.log(e.response);
+                return e.response?.status;
+            }
+        }
+    }
     return {
         authenticateUser,
         googleAuthenticateUser,
@@ -235,6 +268,7 @@ export const useHttp = () => {
         sendFeedback,
         getUserTraining,
         getAllTrainings,
-        createTraining
+        createTraining,
+        editTraining
     }
 }
