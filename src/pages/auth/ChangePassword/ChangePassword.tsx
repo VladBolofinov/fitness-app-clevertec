@@ -17,7 +17,9 @@ export const ChangePassword:React.FC = () => {
     const {saveConfirmPasswords} = authSlice.actions;
     const isSuccessRequest = useSelector(getIsSuccessRequest);
     const sendConfirmData = (values: ForgetPasswordFields) => {
+        // @ts-ignore
         dispatch(saveConfirmPasswords({password: values.password, confirmPassword: values["password-compare"]}));
+        // @ts-ignore
         dispatch(changePassword({password: values.password, confirmPassword: values["password-compare"]}));
     }
     useEffect(() => {

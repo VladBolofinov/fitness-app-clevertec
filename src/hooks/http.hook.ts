@@ -238,7 +238,7 @@ export const useHttp = () => {
             }
         }
     }
-    const editTraining = async (token:string, id:string) => {
+    const editTraining = async (token:string) => {
         try {
             const response = await axios({
                 method: httpMethods.PUT,
