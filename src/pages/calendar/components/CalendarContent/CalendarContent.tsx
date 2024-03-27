@@ -1,13 +1,7 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import "./CalendarContent.scss";
-import {Badge, Button, Calendar, Drawer} from "antd";
-import {
-    calendarSlice,
-    createTraining,
-    deleteTraining, editTraining,
-    getAllTrainings,
-    getUserTraining
-} from "@redux/reducers/calendarSlice";
+import {Badge, Calendar, Drawer} from "antd";
+import {calendarSlice, getAllTrainings,} from "@redux/reducers/calendarSlice";
 import {useAppDispatch} from "@hooks/typed-react-redux-hooks";
 import {useSelector} from "react-redux";
 import {getToken} from "@redux/selectors/getAuthState/getToken/getToken";
@@ -23,28 +17,11 @@ import {badgeColors} from "@pages/calendar/constants/badgeColors";
 import {Dispatch} from "@reduxjs/toolkit";
 import {getIsPopoverOpen} from "@redux/selectors/getCalendarState/getIsPopoverOpen/getIsPopoverOpen";
 import {PopoverComponent} from "@pages/calendar/components/PopoverComponent/PopoverComponent";
-import {
-    getIsNextStepModal
-} from "@redux/selectors/getCalendarState/getIsNextStepModal/getIsNextStepModal";
 import {getIsOpenDrawer} from "@redux/selectors/getCalendarState/getIsOpenDrawer/getIsOpenDrawer";
-import {TestComponent} from "@pages/calendar/components/TestComponent/TestComponent";
 import {getCurrentDate} from "@redux/selectors/getCalendarState/getCurrentDate/getCurrentDate";
 import {
     getCurrentSelectValue
 } from "@redux/selectors/getCalendarState/getCurrentSelectValue/getCurrentSelectValue";
-
-
-//console.log("Дата в формате строки:", date.format('YYYY-MM-DD'));
-//console.log("Год:", date.year());
-//console.log("Месяц (отсчитывается от 0):", date.month());
-//console.log("День:", date.date());
-//console.log("День недели (отсчитывается от 0):", date.day());
-//console.log("ISO неделя года:", date.isoWeek());
-//console.log("День в году:", date.dayOfYear());
-//const now = moment(); // Текущая дата
-//console.log("Это прошлое:", date.isBefore(moment()));
-//console.log("Это будущее:", date.isAfter(moment()));
-//console.log("Это сегодняшняя дата:", date.isSame(moment(), 'day'));
 
 export const CalendarContent:React.FC = () => {
     const dispatch = useAppDispatch();
@@ -75,7 +52,9 @@ export const CalendarContent:React.FC = () => {
         return (
             <div className="cell-wrapper" onClick={(e) => handleCellClick(e, value, dispatch)}>
                 {userTrainings.map((item) =>{
+                    // @ts-ignore
                     if (item.date === value.format('YYYY-MM-DD')) {
+                        // @ts-ignore
                         return (<li><Badge color={badgeColors[item.name]} text={item.name} /></li>)
                     }})}
             </div>

@@ -28,7 +28,6 @@ export const FooterContent: React.FC<IMainPageComponentsProps> = ({ collapsed })
         { title: "Заполнить профиль", icon: <IdcardOutlined />, buttonText: "Профиль",
             "data-test-id": "", onClickFn: "" }
     ];
-
     return (
         <>
             <div className={`app-usage-item-wrapper ${collapsed ? "collapsed" : ""}`}>
@@ -37,13 +36,13 @@ export const FooterContent: React.FC<IMainPageComponentsProps> = ({ collapsed })
                         <div className="item-title">{item.title}</div>
                         <div className="item-btn-wrapper">
                             <Button icon={item.icon} type="link" data-test-id={item["data-test-id"]}
-                                    onClick={() => item.onClickFn()}>{item.buttonText}</Button>
+                                    onClick={() => item.onClickFn}>{item.buttonText}</Button>
                         </div>
                     </div>
                 ))}
             </div>
             <div className={`bottom-content-wrapper ${collapsed ? "collapsed" : ""}`}>
-                <Button type="link" data-test-id="see-reviews" onClick={()=>dispatch(getFeedbacks(token)).then(history.push(AppRoutes.FEEDBACK))}>Смотреть отзывы</Button>
+                <Button type="link" data-test-id="see-reviews" onClick={()=>dispatch(getFeedbacks(token)).then(() => history.push(AppRoutes.FEEDBACK))}>Смотреть отзывы</Button>
                 <div className="download-section">
                     <div className="download-link-descr">
                         <Button type="link">Скачать на телефон</Button>

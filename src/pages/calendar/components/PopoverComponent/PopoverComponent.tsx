@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import "./PopoverComponent.scss";
 import {ArrowLeftOutlined, CloseOutlined, EditTwoTone} from "@ant-design/icons";
 import {Badge, Button, Empty, Popover, Select} from "antd";
@@ -33,8 +33,7 @@ export const PopoverComponent: React.FC = () => {
     const {setIsPopoverOpen, setIsNextStepModal,setCurrentSelectValue,setCurrentTrainingExercises,setIsOpenDrawer} = calendarSlice.actions;
     const isBtnDisabled = (moment(currentDate, 'DD.MM.YYYY').isSame(moment(), 'day') //вынеси в отдельную переменную формат даты
         || moment(currentDate, 'DD.MM.YYYY').isBefore(moment())) ? true : false || currentDateUserTrainings.length >= 5;
-
-    const renderUserListTraining = currentDateUserTrainings.map((item) => {
+    const renderUserListTraining = currentDateUserTrainings.map((item:any) => {
         return (
             <div className="popover-middle-content">
                 <Badge color={badgeColors[item.name]} text={item.name}/>
@@ -91,7 +90,7 @@ export const PopoverComponent: React.FC = () => {
                 //value={selectedItems}
                 //onChange={setSelectedItems}
                 //notFoundContent={null}
-                onChange={(value, option) => {
+                onChange={(_, option:any) => {
                     dispatch(setCurrentSelectValue(option.label));
                 }}
                 bordered={false}

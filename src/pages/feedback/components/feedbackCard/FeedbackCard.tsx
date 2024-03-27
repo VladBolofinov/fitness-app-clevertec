@@ -3,6 +3,7 @@ import "./FeedbackCard.scss";
 import {Rate} from "antd";
 import {StarFilled, StarOutlined} from "@ant-design/icons";
 import {FeedbackCardProps} from "@pages/feedback/components/feedbackCard/FeedbackCardPropsType";
+// @ts-ignore
 import avatar from "../../../../assets/img/avatar.png";
 
 export const FeedbackCard:React.FC<FeedbackCardProps> = ({item}) => {

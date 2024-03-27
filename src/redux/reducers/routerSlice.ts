@@ -1,5 +1,6 @@
 import {createReduxHistoryContext} from "redux-first-history";
 import {createBrowserHistory} from "history";
+import {RouterState as ReduxRouterState} from "redux-first-history";
 const {routerReducer} = createReduxHistoryContext({ history: createBrowserHistory() });
 
 type RouterState = {
@@ -8,7 +9,7 @@ type RouterState = {
 
 type RouterAction = {
     type: string;
-    payload: { location: string };
+    payload: { location: any };
 };
 
 const initialState: RouterState = {
@@ -26,9 +27,9 @@ export const routerSlice = (
         };
         const updatedPreviousLocation = [previousLocation, ...state.previousLocation.slice(0, 1)];
         return {
-            ...routerReducer(state, action),
+            ...routerReducer(state as ReduxRouterState, action),
             previousLocation: updatedPreviousLocation,
         };
     }
-    return routerReducer(state, action) as RouterState;
+    return routerReducer(state as ReduxRouterState, action) as RouterState;
 }

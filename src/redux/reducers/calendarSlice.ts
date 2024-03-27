@@ -82,6 +82,7 @@ export const calendarSlice = createSlice({
             state.currentDate = action.payload;
         },
         setCurrentDateUserTrainings(state, action: PayloadAction<string>) {
+            // @ts-ignore
             state.currentDateUserTrainings = state.userTrainings.filter(item => item.date === action.payload);
         },
         setIsPopoverOpen(state, action: PayloadAction<boolean>) {
@@ -110,8 +111,10 @@ export const calendarSlice = createSlice({
                 state.isErrorGetUserTrainings = true;
             } else {
                 state.isSuccessGetUserTrainings = true;
+                // @ts-ignore
                 state.userTrainings = action.payload;
                 state.userTrainings.map((item) => {
+                    // @ts-ignore
                     item.date = new Date(item.date).toISOString().split('T')[0];
                 })
             }
@@ -124,6 +127,7 @@ export const calendarSlice = createSlice({
                     state.isErrorTrainingList = true;
                 } else {
                     state.isSuccessGetTrainingList = true;
+                    // @ts-ignore
                     state.trainingList = action.payload.map(item => {
                         return {
                             label: item.name,
@@ -134,12 +138,6 @@ export const calendarSlice = createSlice({
             })
             .addCase(getAllTrainings.rejected, (state) => {
                 state.isErrorTrainingList = true;
-            })
-            .addCase(editTraining.fulfilled, (state) => {
-
-            })
-            .addCase(editTraining.rejected, (state) => {
-
             })
         }
 })

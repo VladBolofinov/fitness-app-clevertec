@@ -11,12 +11,6 @@ import {getIsLoadingRequest} from "@redux/selectors/getAuthState/getIsLoadingReq
 import {getIsErrorGetUserTrainings} from "@redux/selectors/getCalendarState/getIsErrorGetUserTrainings/getIsErrorGetUserTrainings";
 import {errorHTTPModal} from "../sharedComponents/errorHTTPModal";
 import {calendarSlice} from "@redux/reducers/calendarSlice";
-import {
-    arrays_of_numbers, combinationsArray,
-    countOccurrences,
-    countsArray,
-    sortedNumbers
-} from "../keno-loto/numbers";
 export const App:React.FC = () => {
     const {isErrorStatus, isSuccessRequest} = useAppSelector(state => state.authSlice);
     const isLoadingRequest = useSelector(getIsLoadingRequest);
@@ -29,8 +23,10 @@ export const App:React.FC = () => {
         dispatch(clearIsErrorTrainings());
     }
     useEffect(() => {
+        // @ts-ignore
         if (location.search) {
             const prefix = "?accessToken=";
+            // @ts-ignore
             const token = (location.search.startsWith(prefix)) && location.search.substring(prefix.length);
             if (token) {
                 localStorage.setItem("jwtToken", token);
@@ -39,7 +35,9 @@ export const App:React.FC = () => {
             }
         } else {
             const jwt = localStorage.getItem("jwtToken");
+            // @ts-ignore
             if (location.pathname === AppRoutes.ROOT || location.pathname === AppRoutes.MAIN && jwt !== null) {
+                // @ts-ignore
                 dispatch(saveTokenAtStore(jwt));
             }
         }

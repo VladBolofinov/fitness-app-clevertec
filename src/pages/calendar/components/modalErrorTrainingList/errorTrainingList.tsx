@@ -15,8 +15,6 @@ export const errorTrainingList = (onOkFunc:OnResultFuncType) => {
         onOk: onOkFunc,
         centered: true,
         wrapClassName: "error-training-list-modal-wrapper",
-        okButtonProps: {style: {height: "28px", width: "99px", padding: "0", marginTop: "8px"},
-            "data-test-id": 'modal-error-user-training-button'
-        }
+        okButtonProps: {style: {height: "28px", width: "99px", padding: "0", marginTop: "8px"}}
     });
 };
